@@ -5,15 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>优乐租-成都最大的在线租房交易平台</title>
-    <style type="text/css">
-    	a:hover
-    	 { 
-    	 text-decoration:none;
-    	 color: #fff555;
-    	 } 
+    <style type="text/css"> 
     	 a
     	 {
-    	 text-decoration:none;    	 	
+    	 	text-decoration:none;    	 	
     	 }
         .body
         {
@@ -254,7 +249,7 @@
                         </div>
                         <div style="width: 350px; height: 30px; float: left; padding-top: 50px; color: #444;
                             font-size: 18px;" align="right">
-                            <a>登陆</a>&nbsp;|&nbsp;<a>注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
+                            <a>登陆</a>&nbsp;|&nbsp;<a href="register.jsp">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
                         </div>
                     </div>
                 </div>
@@ -634,7 +629,7 @@
                     </ul>
                 </div>
                 <div style="width: 250px; float: left; margin-top: 10px;">
-                    其他
+                    
                 </div>
             </div>
         </div>
