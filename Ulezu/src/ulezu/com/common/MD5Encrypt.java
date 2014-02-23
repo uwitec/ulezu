@@ -7,20 +7,20 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author 鐢抽奔宸�
- * MD5鍔犲瘑瀵嗙爜
+ * @author 申鱼川
+ * MD5加密
  *
  */
 public class MD5Encrypt {
 	/**
-	 * 瀵瑰瘑鐮佽繘琛孧D5鍔犲瘑(32涓哄姞瀵�
-	 * @param password 鐢ㄦ埛杈撳叆鐨勫瘑鐮�
+	 * MD5加密成32位
+	 * @param param 加密参数
 	 */
-	public static String encryptMD5To32(String password){
+	public static String encryptMD5To32(String param){
 		StringBuffer sb = null;
 		try{
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			md5.update(password.getBytes());
+			md5.update(param.getBytes());
 			byte b[] = md5.digest();
 			int i = 0;
 			sb = new StringBuffer("");
@@ -39,10 +39,10 @@ public class MD5Encrypt {
 	}
 	
 	/**
-	 * 瀵瑰瘑鐮佽繘琛孧D5鍔犲瘑(16浣嶄负鍔犲瘑)
-	 * @param password 鐢ㄦ埛杈撳叆鐨勫瘑鐮�
+	 * MD5加密成16位
+	 * @param param 加密参数
 	 */
-	public static String encryptMD5To16(String password){
-		return encryptMD5To32(password).substring(8,24);
+	public static String encryptMD5To16(String param){
+		return encryptMD5To32(param).substring(8,24);
 	}
 }
