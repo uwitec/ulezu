@@ -7,18 +7,19 @@
 package ulezu.com.controler.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ulezu.com.business.BUser;
+import ulezu.com.controler.servlet.common.UlezuHttpServlet;
 import ulezu.com.model.MUser;
 
 /**
  * 用户Servlet
  */
-public class CUserServlet extends HttpServlet {
+public class CUserServlet extends UlezuHttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -40,13 +41,6 @@ public class CUserServlet extends HttpServlet {
     public void init() throws ServletException {
     	this.userHander = new BUser();
     }
-    
-	/**
-	 * doGet方法
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
-	}
 
 	/**
 	 * doPost方法
@@ -56,6 +50,7 @@ public class CUserServlet extends HttpServlet {
 		String userName = request.getParameter("loginName");
 		String password = request.getParameter("password");
 		String message = "";
+		System.out.println("bbb");
 		switch(Integer.parseInt(request.getParameter("type"))){
 			case 0 :
 				//登录
@@ -91,20 +86,6 @@ public class CUserServlet extends HttpServlet {
 	 */
 	private String getJsonMsg(String args){
 		return "{\"boolean\": \"" + args + "\"}";
-	}
-	
-	/**
-	 * 往浏览器输出客户端信息
-	 * @param response response对象
-	 * @param args 输出信息
-	 */
-	private void response(HttpServletResponse response, String args){
-		response.setCharacterEncoding("UTF-8");
-		try {
-			response.getWriter().print(args);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	/**
