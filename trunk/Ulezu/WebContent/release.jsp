@@ -79,7 +79,7 @@
         }
         .selectPlug-text
         {
-            background: #FFF url(img/arrow-down.gif) right center no-repeat;
+            background: #FFF url(image/arrow-down.gif) right center no-repeat;
             outline: none;
             display: inline-block;
             border: 1px solid #ccc;
@@ -146,23 +146,27 @@
             margin-right: 5px;
         }
     </style>
-    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
     <script type="text/javascript">
         function confirmAndSubmit() {
-            $(".step1_img img").attr("src", "img/next_b.png");
-            $(".step2_img img").attr("src", "img/next.png");
+            $(".step1_img img").attr("src", "image/next_b.png");
+            $(".step2_img img").attr("src", "image/next.png");
             $("#div_info").css("display", "none");
             $("#div_email").css("display", "block");
         }
 
         function commerSubmit() {
-            $(".step2_img img").attr("src", "img/next_b.png");
-            $(".step3_img img").attr("src", "img/success.png");
-            $(".step3_img img").attr("src", "img/next.png");
-            $(".step3_img1 img").attr("src", "img/success.png");
+            $(".step2_img img").attr("src", "image/next_b.png");
+            $(".step3_img img").attr("src", "image/success.png");
+            $(".step3_img img").attr("src", "image/next.png");
+            $(".step3_img1 img").attr("src", "image/success.png");
             $(".step3_img1 img").css("display", "block");
             $("#div_email").css("display", "none");
             $("#div_success").css("display", "block");
+        }
+        
+        function returnHome(){
+        	window.location.href = "home.jsp";
         }
     </script>
 </head>
@@ -170,7 +174,7 @@
     <div class="topNavigate">
         <div style="margin-left: auto; margin-right: auto; width: 1000px; height: 50px;">
             <div style="float: left; width: 250px; height: 50px;">
-                <img src="img/ulezu2_small.jpg" />
+                <img src="image/ulezu2_small.jpg" />
             </div>
             <div style="float: left; width: 500px; height: 50px; font-size: 30px;">
             </div>
@@ -183,7 +187,7 @@
             class="step">
             <div class="step1">
                 <div class="step1_img">
-                    <img src="img/next.png" />
+                    <img src="image/next.png" />
                 </div>
                 <div class="step1_desc" style="background-color: #F6F3F3;">
                     1.填写信息
@@ -191,7 +195,7 @@
             </div>
             <div class="step2">
                 <div class="step2_img">
-                    <img src="img/next_b.png" />
+                    <img src="image/next_b.png" />
                 </div>
                 <div class="step2_desc" style="background-color: #F6F3F3;">
                     2.确认用户
@@ -199,13 +203,13 @@
             </div>
             <div class="step3">
                 <div class="step3_img">
-                    <img src="img/next_b.png"/>
+                    <img src="image/next_b.png"/>
                 </div>
                 <div class="step3_desc" style="background-color: #F6F3F3;">
                     3.发布成功
                 </div>
                 <div class="step3_img1">
-                    <img src="img/success.png" style="display: none;" />
+                    <img src="image/success.png" style="display: none;" />
                 </div>
             </div>
         </div>
@@ -490,7 +494,7 @@
             <div style="margin-left: auto; margin-right: auto; width: 500px; height: 500px; text-align: center;">
                 <div style="margin-left: auto; margin-right: auto; width: 500px; height: 250px; float: left;
                     margin-top: 30px;text-align:center;">
-                    <img src="img/ok_fabu.jpg"/>
+                    <img src="image/ok_fabu.jpg"/>
                 </div>
                  <div style="margin-left: auto; margin-right: auto; width: 500px; height: 50px; float: left;
                     margin-top: 20px;color:#777;font-size:20px;">
@@ -499,7 +503,7 @@
                 <div style="margin-left: auto; margin-right: auto; width: 500px; height: 50px; float: left;
                     margin-top: 20px;">
                     <input type="button" value="查看信息" class="btn_fabu_end" />
-                    <input type="button" value="返回首页" class="btn_fabu_end" />
+                    <input type="button" value="返回首页" class="btn_fabu_end" onclick="returnHome();"/>
                 </div>
             </div>
         </div>

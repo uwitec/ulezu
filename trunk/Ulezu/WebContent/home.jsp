@@ -244,10 +244,13 @@ a {
 					</div>
 					<div style="width: 600px; height: 80px; float: left;">
 						<div
-							style="width: 250px; height: 30px; float: left; padding-top: 50px; color: #444; font-size: 14px;">
+							style="width: 200px; height: 30px; float: left; padding-top: 50px; color: #444; font-size: 14px;">
 							成都最大的在线租房交易平台</div>
+						<div style="width: 150px; height: 80px; float: left;padding-top: 30px;">
+									<a class="detail-btn" href="release.jsp" target="_blank" >发布房源</a>
+						</div>
 						<div
-							style="width: 350px; height: 30px; float: left; padding-top: 50px; color: #444; font-size: 18px;"
+							style="width: 250px; height: 30px; float: left; padding-top: 50px; color: #444; font-size: 18px;"
 							align="right">
 							<a>登陆</a>&nbsp;|&nbsp;<a href="register.jsp">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
 						</div>
