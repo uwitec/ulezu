@@ -36,4 +36,13 @@ public class UlezuHttpServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 获取Json提示
+	 * @param args  提示的参数
+	 * @return 返回Json提示字符串
+	 */
+	protected String getJsonMsg(String args){
+		return "{\"data\": \"" + args + "\"}";
+	}
 }

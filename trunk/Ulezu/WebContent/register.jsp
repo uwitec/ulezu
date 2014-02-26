@@ -145,24 +145,52 @@
             background-color: #3f9f5f;
             width: 250px;
         }
+        
+        .confirm {
+    		margin: 30px 0px 100px;
+    		padding: 50px 50px 0px;
+		}
+		
+		.confirm .send {
+    		padding: 15px 0px 15px 75px;
+    		background: url("image/ico_mailsend.gif") no-repeat scroll left top transparent;
+		}
+		
+		.cue {
+    		color: rgb(255, 60, 0);
+		}
+		
+		.confirm .ques {
+    		background: url("image/ico_ques.gif") no-repeat scroll left top transparent;
+		}
+		
+		
     </style>
-	<script type="text/javascript" src="js/common/jquery-1.4.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/easyui.css">
+	<script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="js/common/jquery.easyui.min.js"></script>
 	<script type="text/javascript">		
 		function register(){
+			var registerVal = $("#register_value").val();
+			if(!checkInput(registerVal)) {
+				$("#register_value").html("输入信息格式不正确");
+				return;
+			}
 			$.ajax({
 				type: "GET",
 				dataType: "json",
-				url: "./userMapping?type=1&loginType=0&loginName=syc",
+				url: "./userMapping",
+				data:{type:1,loginType:0,registerVal:registerVal},
 				success: function(v){
-					if(v["boolean"] == "true"){
-						alert("注册成功!");
+					if(v["data"] == "true"){
+						$('#w').window('open');
 					}else{
-						alert("注册失败!");
-					}
-						
+						$("#register_value").html(v["data"]);
+					}	
 				}
 			});
 		}
+
 	</script>
 </head>
 <body>
@@ -206,7 +234,9 @@
                 </div>
                 <div style="margin: 10px 20px 0px 10px; width: 430px; color: #636363; text-align: center;
                     line-height: 40px;">
-                    <input type="text" value="输入邮箱，用于登陆和召回密码" class="input_email" />
+                    <input id="register_value" type="text" value="输入邮箱，用于登陆和找回密码" class="input_email" onfocus="if (this.value =='输入邮箱，用于登陆和找回密码'){this.value =''; this.style.color='black'}" onblur="if (this.value ==''){this.value='输入邮箱，用于登陆和找回密码';this.style.color='#ccc'}"/>
+                    <br/>
+                    <div id="errorMsg" style="color=red"></div>
                 </div>
                 <div style="margin: 10px 20px 0px 20px; width: 410px; color: #636363; font-size: 12px;
                     line-height: 40px;">
@@ -249,3 +279,12 @@
     </div>
 </body>
 </html>
+
+<div id="w" minimizable="false" collapsible="false" class="easyui-window" title="编辑" data-options="modal:true,closed:true" style="width:740px;height:420px;padding:10px;font-size:15px">
+	<ul class="confirm">
+		<li class="send">确认信已经成功发送到你的邮箱<span class="cue" id="window_emailAddress"></span>了<br>查看收件箱...点击确认信中的链接地址，就可以完成注册了！</li>
+		<li class="ques">如果你很长时间还没有收到ITeye的确认信，请... <br>确认邮件是否被你提供的邮箱系统自动拦截，或被误认为垃圾邮件放到垃圾箱了<br>如果你确认邮箱地址正确，可以请求<a
+			href="" id="window_resend_Address">再次发送确认信</a><br>如果还不能解决你的问题，可以发邮件给ITeye管理员寻求帮助：webmaster<img
+			src="image/email.gif" alt="Email">iteye.com</li>
+	</ul>
+</div>

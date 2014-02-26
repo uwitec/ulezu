@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/home.css" type="text/css" />
 <title>优乐租-成都最大的在线租房交易平台</title>
 <style type="text/css">
 a {

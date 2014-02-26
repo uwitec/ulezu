@@ -50,7 +50,6 @@ public class CUserServlet extends UlezuHttpServlet {
 		String userName = request.getParameter("loginName");
 		String password = request.getParameter("password");
 		String message = "";
-		System.out.println("bbb");
 		switch(Integer.parseInt(request.getParameter("type"))){
 			case 0 :
 				//登录
@@ -77,15 +76,6 @@ public class CUserServlet extends UlezuHttpServlet {
 		}
 		
 		this.response(response, message);
-	}
-	
-	/**
-	 * 获取Json提示
-	 * @param args  提示的参数
-	 * @return 返回Json提示字符串
-	 */
-	private String getJsonMsg(String args){
-		return "{\"boolean\": \"" + args + "\"}";
 	}
 	
 	/**

@@ -11,6 +11,11 @@ package ulezu.com.model;
  */
 public class MUser {
 	/*
+	 * 用户id
+	 */
+	private String id = "";
+	
+	/*
 	 * 用户名
 	 */
 	private String userName = "";
@@ -126,5 +131,13 @@ public class MUser {
 
 	public void setLastVisit(String lastVisit) {
 		this.lastVisit = lastVisit;
+	}
+	
+	public String getId() {
+		return this.id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
 	}
 }
