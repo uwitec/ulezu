@@ -16,9 +16,13 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.List;
 
+import ulezu.com.connection.ConnectionFactory;
 
+
+/**
+ * 请修改 getConnection()方法，得到自己的数据库连接
+ */
 public class BaseDao<T> extends DaoReflectUtil<T> {
-
 	public BaseDao() {
 		super();
 	}
@@ -205,15 +209,7 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 *             If there are database or parameter errors.
 	 */
 	public int update(String sql, Object... params) throws SQLException {
-		Connection conn = this.getConnection();
-		if (conn == null) {
-			throw new SQLException("Null connection");
-		}
-
-		if (sql == null) {
-			closeAll(null, null, conn);
-			throw new SQLException("Null SQL statement");
-		}
+		Connection conn = initConnection(sql);
 
 		PreparedStatement stmt = null;
 		int rows = 0;
@@ -240,10 +236,8 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	Connection getConnection() {
-		Connection con = null;
-		//con = new DataBaseHelper().getConnection();
-		return con;
+	protected Connection getConnection() {
+		return ConnectionFactory.getUlezuReadConnection();
 	}
 
 	/**
@@ -255,7 +249,7 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * 
 	 * @throws SQLException
 	 */
-	void closeAll(ResultSet rest, PreparedStatement pStmt, Connection conn) {
+	protected void closeAll(ResultSet rest, PreparedStatement pStmt, Connection conn) {
 		try {
 			if (rest != null) {
 				rest.close();
