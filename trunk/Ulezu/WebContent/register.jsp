@@ -67,7 +67,7 @@
         }
         .weibo_btn
         {
-            background: url(img/ks_login.png) no-repeat;
+            background: url(image/ks_login.png) no-repeat;
             width: 100px;
             height: 30px;
             overflow: hidden;
@@ -80,7 +80,7 @@
         }
         .qq_btn
         {
-            background: url(img/ks_login.png) no-repeat;
+            background: url(image/ks_login.png) no-repeat;
             width: 100px;
             height: 30px;
             padding-left: 4px;
