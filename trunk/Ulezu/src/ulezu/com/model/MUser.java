@@ -36,6 +36,11 @@ public class MUser {
 	private String sex = "";
 	
 	/**
+	 * 最后访问时间
+	 */
+	private String lastVisit;
+	
+	/**
 	 * 设置用户名
 	 * @param userName  用户名
 	 */
@@ -113,5 +118,13 @@ public class MUser {
 	 */
 	public String getSex(){
 		return this.sex;
+	}
+
+	public String getLastVisit() {
+		return lastVisit;
+	}
+
+	public void setLastVisit(String lastVisit) {
+		this.lastVisit = lastVisit;
 	}
 }
