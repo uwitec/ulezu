@@ -8,7 +8,7 @@ public class ConnectionFactory {
 	 * @return Ulezu连接
 	 */
 	public static Connection getUlezuReadConnection(){
-		return ConnectionHelper.getConnection("Ulezu");
+		return ConnectionHelper.getConnection("ulezu");
 	}
 	
 	/**
@@ -16,6 +16,6 @@ public class ConnectionFactory {
 	 * @return Ulezu连接
 	 */
 	public static Connection getUlezuWriteConnection(){
-		return ConnectionHelper.getConnection("Ulezu");
+		return ConnectionHelper.getConnection("ulezu");
 	}
 }

@@ -6,7 +6,6 @@
  */
 package ulezu.com.common;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
@@ -15,8 +14,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Arrays;
 import java.util.List;
-
-import ulezu.com.connection.ConnectionFactory;
 
 
 /**
@@ -41,8 +38,8 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * @return type类型的ArrayList,
 	 * @throws SQLException
 	 */
-	public List<T> queryForList(String sql, Object param) throws SQLException {
-		return this.queryForList(sql, new Object[] { param });
+	public List<T> queryForList(String sql, Connection con, Object param) throws SQLException {
+		return this.queryForList(sql, con, new Object[] { param });
 	}
 
 	/**
@@ -59,8 +56,8 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * @return type类型的ArrayList,
 	 * @throws SQLException
 	 */
-	public List<T> queryForList(String sql) throws SQLException {
-		return this.queryForList(sql, (Object[]) null);
+	public List<T> queryForList(String sql, Connection con) throws SQLException {
+		return this.queryForList(sql, con, (Object[]) null);
 	}
 
 	/**
@@ -79,27 +76,28 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * @return type类型的ArrayList,
 	 * @throws SQLException
 	 */
-	public List<T> queryForList(String sql, Object... params)
+	public List<T> queryForList(String sql,Connection con, Object... params)
 			throws SQLException {
-		Connection conn = initConnection(sql);
-
+		checkParams(sql, con);
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		List<T> result = null;
 
 		try {
-			stmt = conn.prepareStatement(sql);
+			stmt = con.prepareStatement(sql);
 			this.fillStatement(stmt, params);
 			rs = stmt.executeQuery();
 			result = handleList(rs);
 		} catch (SQLException e) {
 			this.rethrow(e, sql, params);
 		} finally {
-			closeAll(rs, stmt, conn);
+			closeAll(rs, stmt, con);
 		}
 
 		return result;
 	}
+
+	
 
 	/**
 	 * 得到对象
@@ -116,8 +114,8 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * @return 得到的type类型对象
 	 * @throws SQLException
 	 */
-	public T queryForObject(String sql, Object param) throws SQLException {
-		return this.queryForObject(sql, new Object[] { param });
+	public T queryForObject(String sql, Connection con, Object param) throws SQLException {
+		return this.queryForObject(sql, con, new Object[] { param });
 	}
 
 	/**
@@ -131,8 +129,8 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * @throws SQLException
 	 *             if a database access error occurs
 	 */
-	public T queryForObject(String sql) throws SQLException {
-		return this.queryForObject(sql, (Object[]) null);
+	public T queryForObject(String sql, Connection con) throws SQLException {
+		return this.queryForObject(sql, con, (Object[]) null);
 	}
 
 	/**
@@ -146,22 +144,21 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * @throws SQLException
 	 *             If there are database or parameter errors.
 	 */
-	public T queryForObject(String sql, Object... params) throws SQLException {
-		Connection conn = initConnection(sql);
-
+	public T queryForObject(String sql, Connection con, Object... params) throws SQLException {
+		checkParams(sql, con);
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		T result = null;
 
 		try {
-			stmt = conn.prepareStatement(sql);
+			stmt = con.prepareStatement(sql);
 			this.fillStatement(stmt, params);
 			rs = stmt.executeQuery();
 			result = handleBean(rs);
 		} catch (SQLException e) {
 			this.rethrow(e, sql, params);
 		} finally {
-			closeAll(rs, stmt, conn);
+			closeAll(rs, stmt, con);
 		}
 
 		return result;
@@ -177,8 +174,8 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 *             if a database access error occurs
 	 * @return The number of rows updated.
 	 */
-	public int update(String sql) throws SQLException {
-		return this.update(sql, (Object[]) null);
+	public int update(String sql, Connection con) throws SQLException {
+		return this.update(sql, con, (Object[]) null);
 	}
 
 	/**
@@ -193,8 +190,8 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 *             if a database access error occurs
 	 * @return The number of rows updated.
 	 */
-	public int update(String sql, Object param) throws SQLException {
-		return this.update(sql, new Object[] { param });
+	public int update(String sql, Connection con, Object param) throws SQLException {
+		return this.update(sql, con, new Object[] { param });
 	}
 
 	/**
@@ -208,36 +205,21 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * @throws SQLException
 	 *             If there are database or parameter errors.
 	 */
-	public int update(String sql, Object... params) throws SQLException {
-		Connection conn = initConnection(sql);
-
+	public int update(String sql, Connection con, Object... params) throws SQLException {
+		checkParams(sql, con);
 		PreparedStatement stmt = null;
 		int rows = 0;
-
 		try {
-			stmt = conn.prepareStatement(sql);
+			stmt = con.prepareStatement(sql);
 			this.fillStatement(stmt, params);
 			rows = stmt.executeUpdate();
 		} catch (SQLException e) {
 			this.rethrow(e, sql, params);
 		} finally {
-			closeAll(null, stmt, conn);
+			closeAll(null, stmt, con);
 		}
 
 		return rows;
-	}
-
-	/**
-	 * 创建连接对象
-	 * 
-	 * @return
-	 * 
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 * @throws IOException
-	 */
-	protected Connection getConnection() {
-		return ConnectionFactory.getUlezuReadConnection();
 	}
 
 	/**
@@ -249,7 +231,7 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	 * 
 	 * @throws SQLException
 	 */
-	protected void closeAll(ResultSet rest, PreparedStatement pStmt, Connection conn) {
+	private void closeAll(ResultSet rest, PreparedStatement pStmt, Connection conn) {
 		try {
 			if (rest != null) {
 				rest.close();
@@ -321,33 +303,6 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 	}
 
 	/**
-	 * query方法执行前的检查工作，和连接初始化
-	 * 
-	 * @author qw
-	 * @version 创建时间:2013-12-27上午11:02:29
-	 * @param <T>
-	 * @param sql
-	 *            检测的SQL
-	 * @param type
-	 *            检测 的类型
-	 * @return 数据库连接对象
-	 * @throws SQLException
-	 */
-	private Connection initConnection(String sql) throws SQLException {
-		Connection conn = this.getConnection();
-		if (conn == null) {
-			throw new SQLException("Null connection");
-		}
-
-		if (sql == null) {
-			closeAll(null, null, conn);
-			throw new SQLException("Null SQL statement");
-		}
-
-		return conn;
-	}
-
-	/**
 	 * Fill the PreparedStatement replacement parameters with the given objects
 	 * array.
 	 * 
@@ -393,4 +348,24 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 		}
 	}
 
+	/**
+	 * 检测传参数正确性
+	 * @param sql
+	 * @param con
+	 * @return
+	 *
+	 * author 秦伟
+	 * time 2014-2-27 下午05:32:24
+	 * @throws SQLException 
+	 */
+	private void checkParams(String sql, Connection con) throws SQLException {
+		if (con == null) {
+			throw new SQLException("Null connection");
+		}
+
+		if (sql == null) {
+			closeAll(null, null, con);
+			throw new SQLException("Null SQL statement");
+		}
+	}
 }

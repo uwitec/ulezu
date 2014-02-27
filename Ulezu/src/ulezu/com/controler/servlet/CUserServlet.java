@@ -47,20 +47,24 @@ public class CUserServlet extends UlezuHttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String userName = request.getParameter("loginName");
-		String password = request.getParameter("password");
+		int type = Integer.parseInt(request.getParameter("type"));
+		int loginType = Integer.parseInt(request.getParameter("loginType"));
 		String message = "";
-		switch(Integer.parseInt(request.getParameter("type"))){
+		switch(type){
 			case 0 :
 				//登录
-				if(this.userHander.login(userName, password)){
-					message = this.getJsonMsg("true");
+				String loginCode = request.getParameter("loginCode");
+				String password = request.getParameter("password");
+				MUser user = this.SetUserLoginName(loginType, loginCode, password);
+				if(this.userHander.login(user)){
+					request.getRequestDispatcher("/home.jsp").forward(request, response);
 				}else{
 					message = this.getJsonMsg("false");
 				}
 				break;
 			case 1 :
-				if(this.userHander.register(this.SetUserLoginName(Integer.parseInt(request.getParameter("loginType")), userName, password)) > 0){
+				String email = request.getParameter("email");
+				if(this.userHander.register(email)){
 					message = this.getJsonMsg("true");
 				}else{
 					message = this.getJsonMsg("false");
@@ -81,26 +85,26 @@ public class CUserServlet extends UlezuHttpServlet {
 	/**
 	 * 设置用户登录名
 	 * @param loginType 登录方式（0-用户名，1-手机号码，2-邮箱）
-	 * @param args 用户名or手机号码or邮箱
-	 * @param args 登录密码
+	 * @param loginCode 用户名or手机号码or邮箱
+	 * @param password 登录密码
 	 * @return 返回用户对象
 	 */
-	private MUser SetUserLoginName(int loginType, String args, String password){
+	private MUser SetUserLoginName(int loginType, String loginCode, String password){
 		MUser user = new MUser();
 		user.setUserPassword(password);
 		switch(loginType)
 		{
 			case 0:
-				user.setUserName(args);
+				user.setUserName(loginCode);
 				break;
 			case 1:
-				user.setPhoneNum(args);
+				user.setPhoneNum(loginCode);
 				break;
 			case 2:
-				user.setEmail(args);
+				user.setEmail(loginCode);
 				break;
 			default:
-				user.setUserName(args);
+				user.setUserName(loginCode);
 				break;
 		}
 		

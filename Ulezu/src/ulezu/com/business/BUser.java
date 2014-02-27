@@ -33,21 +33,18 @@ public class BUser {
 	/**
 	 * 判断用户是否登录
 	 * 
-	 * @param userName
-	 *            用户名
-	 * @param password
-	 *            用户密码
+	 * @param user
 	 * @return 返回bool值 true登录正确
 	 */
-	public boolean login(String userName, String password) {
+	public boolean login(MUser user) {
 		boolean isSuccess = false;
-		isSuccess = this.userDao.login(userName,
-				MD5Encrypt.encryptMD5To32(password));
+		isSuccess = this.userDao.login(user);
 		return isSuccess;
 	}
 
 	/**
 	 * 用户注册
+	 * @param user 
 	 * 
 	 * @param MUser
 	 *            用户对象
