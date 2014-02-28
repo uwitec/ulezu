@@ -6,6 +6,8 @@
 //*******************************//
 package ulezu.com.idao;
 
+import java.sql.Connection;
+
 import ulezu.com.model.MUser;
 
 /**
@@ -21,7 +23,7 @@ public interface IUserDao {
 	 * @param Connection 连接对象
 	 * @return 返回bool值 true登录正确
 	 */
-	public boolean login(String userName, String password);
+	public boolean login(MUser user, Connection con);
 	
 	/**
 	 * 用户注册
@@ -29,5 +31,5 @@ public interface IUserDao {
 	 * @param Connection 连接对象
 	 * @return 注册影响的行数
 	 */
-	public int register(MUser user);
+	public int register(MUser user, Connection con);
 }

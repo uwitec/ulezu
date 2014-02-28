@@ -6,6 +6,8 @@
 //*******************************//
 package ulezu.com.dao;
 
+import java.sql.Connection;
+
 import ulezu.com.common.BaseDao;
 import ulezu.com.idao.IUserDao;
 import ulezu.com.model.MUser;
@@ -16,26 +18,27 @@ import ulezu.com.model.MUser;
  *
  */
 public class DUserDao extends BaseDao<MUser> implements IUserDao {
+
 	/**
-	 * 判断用户是否登录
-	 * @param userName 用户名
-	 * @param password 用户密码
-	 * @return 返回bool值 true登录正确
+	 * 用户登录
+	 *@author qw
+	 *@version 创建时间:2014-2-28上午10:37:03
+	 *@see ulezu.com.idao.IUserDao#login(ulezu.com.model.MUser, java.sql.Connection)
 	 */
 	@Override
-	public boolean login(String userName, String password) {
+	public boolean login(MUser user, Connection con) {
 		// TODO Auto-generated method stub
-		
 		return false;
 	}
 
 	/**
-	 * 用户注册
-	 * @param MUser 用户对象
-	 * @return 注册影响的行数
+	 * 用户注注
+	 *@author qw
+	 *@version 创建时间:2014-2-28上午10:37:35
+	 *@see ulezu.com.idao.IUserDao#register(ulezu.com.model.MUser, java.sql.Connection)
 	 */
 	@Override
-	public int register(MUser user) {
+	public int register(MUser user, Connection con) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

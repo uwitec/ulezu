@@ -251,7 +251,6 @@
 					$(".register:eq(1)").css("display", "block");
 					$("#input_email_address").html(email);
 					login_email_address = get_login_email_address(email);
-					alert(login_email_address);
 				} else {
 					showTooltips('email_input', v.data);
 				}
