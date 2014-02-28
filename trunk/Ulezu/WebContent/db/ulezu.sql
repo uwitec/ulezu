@@ -1,8 +1,9 @@
-﻿/*
+/*
 SQLyog 企业版 - MySQL GUI v7.14 
 MySQL - 5.5.32 : Database - ulezu
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -27,7 +28,6 @@ CREATE TABLE `user` (
   `email` varchar(50) DEFAULT NULL COMMENT '用户邮箱',
   `sex` varchar(2) DEFAULT NULL COMMENT '用户性别',
   `lastVisit` datetime DEFAULT NULL COMMENT '最后访问时间',
-  `isActivate`  varchar(2) comment '是否激活',
   `A1` varchar(50) DEFAULT NULL COMMENT 'A1',
   `A2` varchar(50) DEFAULT NULL COMMENT 'A2',
   `A3` varchar(50) DEFAULT NULL COMMENT 'A3',

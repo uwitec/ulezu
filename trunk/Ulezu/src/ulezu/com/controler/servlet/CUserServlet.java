@@ -47,32 +47,37 @@ public class CUserServlet extends UlezuHttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		/*
+		 * type用请求类型，0登录，1注册（发送激活邮件），2邮件确认并修改（如果存在）或保存（如果不存在）用户信息
+		 */
 		int type = Integer.parseInt(request.getParameter("type"));
-		int loginType = Integer.parseInt(request.getParameter("loginType"));
 		String message = "";
 		switch(type){
 			case 0 :
 				//登录
 				String loginCode = request.getParameter("loginCode");
 				String password = request.getParameter("password");
-				MUser user = this.SetUserLoginName(loginType, loginCode, password);
-				if(this.userHander.login(user)){
+				int loginType = Integer.parseInt(request.getParameter("loginType"));//登录方式（0-用户名，1-手机号码，2-邮箱）
+				if(this.userHander.login(this.SetUserLoginMessage(loginType, loginCode, password))){
 					request.getRequestDispatcher("/home.jsp").forward(request, response);
 				}else{
 					message = this.getJsonMsg("false");
 				}
 				break;
+				
 			case 1 :
+				//注册
 				String email = request.getParameter("email");
-				if(this.userHander.register(email)){
+				if(this.userHander.sendActivateEmail(email)){
 					message = this.getJsonMsg("true");
 				}else{
-					message = this.getJsonMsg("false");
+					message = this.getJsonMsg("邮件发送出错");
 				}
-				//注册
+				
 				break;
 			case 2 :
-				//修改用户信息
+				//邮箱验正成功，用户修改信息
+				MUser user = new MUser();
 				break;
 			default:
 				message = this.getJsonMsg("false");
@@ -89,7 +94,7 @@ public class CUserServlet extends UlezuHttpServlet {
 	 * @param password 登录密码
 	 * @return 返回用户对象
 	 */
-	private MUser SetUserLoginName(int loginType, String loginCode, String password){
+	private MUser SetUserLoginMessage(int loginType, String loginCode, String password){
 		MUser user = new MUser();
 		user.setUserPassword(password);
 		switch(loginType)

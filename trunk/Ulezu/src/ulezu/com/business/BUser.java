@@ -38,7 +38,7 @@ public class BUser {
 	 */
 	public boolean login(MUser user) {
 		boolean isSuccess = false;
-		isSuccess = this.userDao.login(user);
+		isSuccess = this.userDao.login(user, null);
 		return isSuccess;
 	}
 
@@ -53,7 +53,19 @@ public class BUser {
 	public int register(MUser user) {
 		user.setUserPassword(MD5Encrypt.encryptMD5To32(user.getUserPassword()));
 		int rows = 0;
-		rows = this.userDao.register(user);
+		rows = this.userDao.register(user, null);
 		return rows;
+	}
+	
+	/**
+	 * 发送验证邮件
+	 *@author qw
+	 *@version 创建时间:2014-2-28上午10:33:38
+	 *@param email email地址
+	 *@return 发送成功返回true
+	 */
+	public boolean sendActivateEmail(String email) {
+		//AESEncryptAndDecrypt.encrypt(email);
+		return true;
 	}
 }
