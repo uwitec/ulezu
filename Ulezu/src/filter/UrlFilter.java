@@ -37,7 +37,6 @@ public class UrlFilter implements Filter {
 		String url = request.getServletPath();
 		if (url == null)
 			url = "";
-		System.out.println("请求地址：" + url);
 		HttpSession session = request.getSession();
 		MUser user = (MUser) session.getAttribute("user");
 		if (noFileUrl(url, request)) { // 不需要判断权限的请求如登录页面，则跳过
