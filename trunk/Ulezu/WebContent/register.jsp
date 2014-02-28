@@ -327,8 +327,9 @@
 </script>
 </head>
 <body>
+
 	<div class="topNavigate">
-		<div
+		<div 
 			style="margin-left: auto; margin-right: auto; width: 1000px; height: 50px;">
 			<div style="float: left; width: 250px; height: 50px;">
 				<img src="image/ulezu2_small.jpg" />
