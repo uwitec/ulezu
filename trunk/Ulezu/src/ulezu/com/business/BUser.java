@@ -9,7 +9,7 @@ package ulezu.com.business;
 import ulezu.com.factory.DaoFactory;
 import ulezu.com.idao.IUserDao;
 import ulezu.com.model.MUser;
-import ulezu.com.util.MD5Encrypt;
+import ulezu.com.common.MD5Encrypt;
 
 /**
  * 用户业务类

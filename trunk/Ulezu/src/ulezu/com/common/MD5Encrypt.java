@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ulezu.com.util;
+package ulezu.com.common;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
