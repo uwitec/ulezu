@@ -6,7 +6,9 @@
 //*******************************//
 package ulezu.com.factory;
 
+import ulezu.com.dao.DEmailConfig;
 import ulezu.com.dao.DUserDao;
+import ulezu.com.idao.IEmailConfig;
 import ulezu.com.idao.IUserDao;
 
 /**
@@ -21,5 +23,13 @@ public class DaoFactory {
 	 */
 	public static IUserDao getDUserDao(){
 		return new DUserDao();
+	}
+	
+	/**
+	 * 获取邮件配置数据实例
+	 * @return 邮件配置数据实例
+	 */
+	public static IEmailConfig getDEmailConfig(){
+		return new DEmailConfig();
 	}
 }
