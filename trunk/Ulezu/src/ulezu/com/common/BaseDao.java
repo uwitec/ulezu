@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * 请修改 getConnection()方法，  得到自己的数据库连接
+ * 请修改 getConnection() 方法，  得到自己的数据库连接
  */
 public class BaseDao<T> extends DaoReflectUtil<T> {
 	public BaseDao() {

@@ -1,5 +1,6 @@
 package ulezu.com.dao;
 
+import java.sql.Connection;
 import java.util.List;
 
 import ulezu.com.idao.IEmailConfig;
@@ -16,7 +17,7 @@ public class DEmailConfig implements IEmailConfig{
 	 * @return 邮件配置集合
 	 */
 	@Override
-	public List<MEmailConfig> getEmailConfigList() {
+	public List<MEmailConfig> getEmailConfigList(Connection con) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -26,7 +27,7 @@ public class DEmailConfig implements IEmailConfig{
 	 * @return 返回添加的行数
 	 */
 	@Override
-	public int addEmailConfig() {
+	public int addEmailConfig(MEmailConfig config, Connection con) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
