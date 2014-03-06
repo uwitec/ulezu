@@ -205,6 +205,12 @@
 	display: inline;
 }
 /*end Tooltips*/
+.txtRegistered{
+	width:280px;
+	height:30px;
+	font-size: 18px;
+	color: #777;
+}
 </style>
 <link rel="stylesheet" type="text/css" href="css/easyui.css">
 <script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
@@ -345,7 +351,7 @@
 		</div>
 	</div>
 	<div class="registerDiv">
-		<div class="register" style="display: block;">
+		<div class="register" style="display:block;">
 			<div class="existAccount">
 				<div style="color: #636363; font-weight: bold;">使用以下账号登陆</div>
 				<div class="otherLogin">
@@ -368,14 +374,14 @@
 				<div
 					style="margin: 10px 20px 0px 20px; width: 410px; color: #636363; font-size: 12px; text-align: right; line-height: 20px; color: #fff;">
 					优乐租</div>
-				<span class="control-group" id="email_input">
-					<div
-						style="margin: 10px 20px 0px 10px; width: 430px; color: #636363; text-align: center; line-height: 40px;">
-						<input id="email" type="text" value="输入邮箱，用于登陆和找回密码"
-							class="input_email" />
-					</div> </span>
+					<div style="float:left;margin: 10px 20px 0px 10px; width: 430px; color: #636363; text-align: center; line-height: 40px;">
+						<span class="control-group" id="email_input">
+							<input id="email" type="text" value="输入邮箱，用于登陆和找回密码"
+								class="input_email" />
+						</span>
+					</div> 
 				<div
-					style="margin: 10px 20px 0px 20px; width: 410px; color: #636363; font-size: 12px; line-height: 40px;">
+					style="float:left;margin: 10px 20px 0px 20px; width: 410px; color: #636363; font-size: 12px; line-height: 40px;">
 					<input type="checkbox" checked="checked" />我同意接受优乐租<a href="#">会员条款</a>和<a
 						href="#">免责声明</a>
 				</div>
@@ -410,6 +416,39 @@
 						<h4>没有收到验证邮件</h4>
 						1. 电子邮件偶尔会有延时状况，请耐心等待<br /> 2. 尝试到垃圾邮件里找找看<br /> 3. 如果仍然没有邮件：<a
 							href="#">重新发送验证邮件</a><br /> 4. 邮件地址写错了？<a href="#">重新注册</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="register" style="display: none;background-color:rgb(224, 241, 223);">
+			<div style="background-color:rgb(224, 241, 223);">
+				<div
+					style="width: 410px; float: left; margin: 20px 20px 0px 20px; font-size: 14px; color: #636363;background-color:rgb(224, 241, 223);">
+					<div
+						style="width: 410px; float: left; font-size: 14px; color: #636363; line-height: 20px;">
+						您已成功验证邮箱!</div>
+					<div
+						style="width: 100%; font-size: 14px; font-weight:bold;float: left; color: #636363; line-height: 20px; margin-bottom: 40px;">
+						填写用户名和密码就可以完成注册啦</div>
+					<div
+						style="width: 100%; font-size: 14px; float: left; color: #636363; line-height: 40px;">
+						<div style="color:#777;float:left;width:80px;text-align:right;">邮箱：</div><div style="color:#777;float:left;font-size: 16px;">449614531@qq.com</div>
+					</div>
+					<div
+						style="width: 100%; font-size: 14px; float: left; color: #636363; line-height: 40px;">
+						<div style="color:#777;float:left;width:80px;text-align:right;">用户名：</div> <div style="color:#777;float:left;"><input type="text" class="txtRegistered"/></div>
+					</div>
+					<div
+						style="width: 100%; font-size: 14px; float: left; color: #636363; line-height: 40px;">
+						<div style="color:#777;float:left;width:80px;text-align:right;">密码：</div> <div style="color:#777;float:left;"><input type="text" class="txtRegistered"/></div>
+					</div>
+					<div
+						style="width: 100%; font-size: 14px; float: left; color: #636363; line-height: 40px;">
+						<div style="color:#777;float:left;width:80px;text-align:right;">确认密码：</div> <div style="color:#777;float:left;"><input type="text" class="txtRegistered"/></div>
+					</div>
+					<div
+						style="width: 100%; font-size: 14px; float: left; color: #636363; text-align: center; line-height: 100px;margin-top: 10px;">
+						<input id="btn_registered_email"  type="button" class="btn_login_email" value="完成注册"/>
 					</div>
 				</div>
 			</div>
