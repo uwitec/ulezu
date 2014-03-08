@@ -1,5 +1,7 @@
 package ulezu.com.common;
 
+import java.util.Properties;
+
 /**
  * 邮件工厂
  * @author Administrator
@@ -53,11 +55,11 @@ public class EmailFactory {
 	 */
 	private static MailSenderInfo setMailSenderInfo(String emailAddress){
 		MailSenderInfo mailInfo = new MailSenderInfo();   
-	    mailInfo.setMailServerHost("smtp.qq.com");   
-	    mailInfo.setMailServerPort("25");   
-	    mailInfo.setValidate(true);   
+		mailInfo.setMailServerHost("smtp.exmail.qq.com");   
+	    mailInfo.setMailServerPort("465");   
+	    mailInfo.setValidate(true);
 	    mailInfo.setUserName("449614531@qq.com");   
-	    mailInfo.setPassword("XXXXXXXXXX");//您的邮箱密码   
+	    mailInfo.setPassword("shenyuc026963");//您的邮箱密码   
 	    mailInfo.setFromAddress("449614531@qq.com"); 
 	    // 目标邮件地址
 	    mailInfo.setToAddress(emailAddress); 
@@ -92,7 +94,7 @@ public class EmailFactory {
 	}
 	
 	public static void  main(String[] args){
-		boolean result = sendHtmlEmail("shuonar@gmail.com");
+		boolean result = sendHtmlEmail("1966225457@qq.com");
 		System.out.println(result);
 	}
 }
