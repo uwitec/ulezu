@@ -59,7 +59,7 @@ public class EmailFactory {
 	    mailInfo.setMailServerPort("465");   
 	    mailInfo.setValidate(true);
 	    mailInfo.setUserName("449614531@qq.com");   
-	    mailInfo.setPassword("shenyuc026963");//您的邮箱密码   
+	    mailInfo.setPassword("************");//您的邮箱密码   
 	    mailInfo.setFromAddress("449614531@qq.com"); 
 	    // 目标邮件地址
 	    mailInfo.setToAddress(emailAddress); 
