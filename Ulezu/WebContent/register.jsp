@@ -368,7 +368,7 @@
 						注册优乐租帐号</div>
 					<div
 						style="float: left; width: 200px; text-align: right; font-size: 12px;">
-						已有账号？<a href="#">登陆</a>
+						已有账号？<a href="login.jsp">登陆</a>
 					</div>
 				</div>
 				<div
