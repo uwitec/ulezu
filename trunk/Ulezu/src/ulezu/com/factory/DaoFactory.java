@@ -7,8 +7,10 @@
 package ulezu.com.factory;
 
 import ulezu.com.dao.DEmailConfig;
+import ulezu.com.dao.DHouseInfo;
 import ulezu.com.dao.DUserDao;
 import ulezu.com.idao.IEmailConfig;
+import ulezu.com.idao.IHouseInfo;
 import ulezu.com.idao.IUserDao;
 
 /**
@@ -31,5 +33,13 @@ public class DaoFactory {
 	 */
 	public static IEmailConfig getDEmailConfig(){
 		return new DEmailConfig();
+	}
+	
+	/**
+	 * 获取房屋信息数据实例
+	 * @return 房屋信息数据实例
+	 */
+	public static IHouseInfo getDHouseInfo(){
+		return new DHouseInfo();
 	}
 }
