@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ulezu.com.business.BHouseInfo;
-import ulezu.com.controler.servlet.common.UleResponse;
 import ulezu.com.model.MHouseInfo;
 import ulezu.com.util.JsonHelper;
 
@@ -31,11 +30,10 @@ public class CHouseInfoServlet extends HttpServlet {
     }
     
     /**
-     * @see HttpServlet#HttpServlet()
+     * @see CHouseInfoServlet
      */
     public CHouseInfoServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
