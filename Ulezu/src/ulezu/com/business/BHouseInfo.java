@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import ulezu.com.connection.ConnectionFactory;
 import ulezu.com.factory.DaoFactory;
 import ulezu.com.idao.IHouseInfo;
-import ulezu.com.model.MHoiuseInfo;
+import ulezu.com.model.MHouseInfo;
 
 /**
  * 房屋信息业务类
@@ -24,16 +24,20 @@ public class BHouseInfo {
 	 */
 	private IHouseInfo houseInfoHandler;
 	
+	/**
+	 * 构造器
+	 */
 	public BHouseInfo(){
 		this.houseInfoHandler = DaoFactory.getDHouseInfo();
 	} 
+	
 	/**
 	 * 根据id获取房屋信息
 	 * @param id ID
 	 * @return 返回房屋信息
 	 * @throws SQLException 抛出异常
 	 */
-	public MHoiuseInfo getHouseInfoById(String id) throws SQLException {
+	public MHouseInfo getHouseInfoById(String id) throws SQLException {
 		try{
 			this.con = ConnectionFactory.getUlezuReadConnection();
 			return this.houseInfoHandler.getHouseInfoById(id, this.con);
@@ -41,6 +45,18 @@ public class BHouseInfo {
 			if(!this.con.isClosed()){
 				this.con.close();
 			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		BHouseInfo dao = new BHouseInfo();
+		MHouseInfo info;
+		try {
+			info = dao.getHouseInfoById("456456456");
+			System.out.println(info.getUserName());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ulezu.com.business.BUser;
+import ulezu.com.controler.servlet.common.UleResponse;
 import ulezu.com.controler.servlet.common.UlezuHttpServlet;
 import ulezu.com.model.MUser;
 
@@ -84,7 +85,7 @@ public class CUserServlet extends UlezuHttpServlet {
 					break;
 		}
 		
-		this.response(response, message);
+		UleResponse.response(response, message);
 	}
 	
 	/**

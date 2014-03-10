@@ -7,7 +7,7 @@ import java.util.Date;
  * @author Administrator
  *
  */
-public class MHoiuseInfo {
+public class MHouseInfo {
 	/**
 	 * 信息ID
 	 */
