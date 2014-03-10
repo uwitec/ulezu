@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>Ulezu</display-name>
   <welcome-file-list>
-  	<welcome-file>home.jsp</welcome-file>
+    <welcome-file>home.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
@@ -10,20 +10,18 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <filter>     
-        <filter-name>UrlFilter</filter-name>     
-        <filter-class>ulezu.com.filter.UrlFilter</filter-class>     
-        <init-param>     
-            <param-name>onError</param-name>     
-            <param-value>/home.jsp</param-value>     
-        </init-param>     
-    </filter>     
-      
-    <filter-mapping>     
-        <filter-name>UrlFilter</filter-name>    
-        <!-- 只过滤 .jsp 结尾的url, 其余的如 .do, .html, .jpg, .css 等不作过滤-->     
-        <url-pattern>*.jsp</url-pattern>     
-    </filter-mapping> 
+  <filter>
+    <filter-name>UrlFilter</filter-name>
+    <filter-class>ulezu.com.filter.UrlFilter</filter-class>
+    <init-param>
+      <param-name>onError</param-name>
+      <param-value>/home.jsp</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>UrlFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
   <servlet>
     <description></description>
     <display-name>CUserServlet</display-name>
@@ -33,5 +31,15 @@
   <servlet-mapping>
     <servlet-name>CUserServlet</servlet-name>
     <url-pattern>/userMapping</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CHouseInfoServlet</display-name>
+    <servlet-name>CHouseInfoServlet</servlet-name>
+    <servlet-class>ulezu.com.controler.servlet.CHouseInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CHouseInfoServlet</servlet-name>
+    <url-pattern>/houseInfo.do</url-pattern>
   </servlet-mapping>
 </web-app>
