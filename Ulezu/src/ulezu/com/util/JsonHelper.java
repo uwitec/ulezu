@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class JsonHelper {
 	/**
 	 * @see 把json对象以json格式的数据输出到页面
-	 * @param Object data 是一个对象形式，类似User
+	 * @param Object obj 是一个对象形式，类似User
 	 */
 	public static void printObjectToJsonString(HttpServletResponse response, Object obj){
 		response.setCharacterEncoding("UTF-8");
