@@ -1,3 +1,4 @@
+<%@page import="ulezu.com.model.MHouseInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -45,7 +46,7 @@
     	$.ajax({
     		type: "GET",
     		dataType: "json",
-    		url: "houseInfo.do?id=456456456&type=get",
+    		url: "houseinfo.do?id=456456456&type=get",
     		success: function(v){
     			alert(v.userName);
     			
@@ -86,6 +87,15 @@
                         </div>
                     </div>
                     <div style="float:left;width:758px;">
+                    	<%-- <% MHouseInfo info = (MHouseInfo)request.getAttribute("houseBean");
+                    	if(info == null){
+
+                        	System.out.println("aa");
+                    	}else{
+
+                        	System.out.println("bb"+info.getUserName());
+                    	}
+                    	%> --%>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">价格</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
                         <span style="color:#e22;font-size: 18px;">550 </span>元/月&nbsp;&nbsp;&nbsp; <span>押一付一</span>
