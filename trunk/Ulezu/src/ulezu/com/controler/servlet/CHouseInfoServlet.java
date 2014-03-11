@@ -53,6 +53,10 @@ public class CHouseInfoServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		if(type.equals("get")){
 			JsonHelper.printObjectToJsonString(response, this.getHouseInfoById(id));
+//			request.setAttribute("houseBean", this.getHouseInfoById(id));
+//			response.sendRedirect("detail.jsp");
+		}else if(type.equals("add")){
+			
 		}		
 	}
 	
