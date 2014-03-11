@@ -39,6 +39,20 @@
             background-position: 0 -36px;
         }
     </style>
+	<script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+    	$.ajax({
+    		type: "GET",
+    		dataType: "json",
+    		url: "houseInfo.do?id=456456456&type=get",
+    		success: function(v){
+    			alert(v.userName);
+    			
+    		}
+    	});
+    });
+    </script>
 </head>
 <body>
     <div class="topNavigate">
