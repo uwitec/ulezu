@@ -1,6 +1,8 @@
 package ulezu.com.controler.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,15 +49,25 @@ public class CHouseInfoServlet extends HttpServlet {
 	 * @see doPost
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");			
-		MHouseInfo info = null;
-		try{
-			info = this.houseInfoBusi.getHouseInfoById(id);
-		}catch(Exception ex){
-			ex.printStackTrace();
+		String id = request.getParameter("id");	
+		String type = request.getParameter("type");
+		if(type.equals("get")){
+			JsonHelper.printObjectToJsonString(response, this.getHouseInfoById(id));
+		}		
+	}
+	
+	/**
+	 * 根据ID获取房屋信息
+	 * @param id ID
+	 * @return 房屋信息
+	 */
+	private MHouseInfo getHouseInfoById(String id){
+		try {
+			return this.houseInfoBusi.getHouseInfoById(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
-		
-		JsonHelper.printObjectToJsonString(response, info);
 	}
 
 }
