@@ -173,8 +173,7 @@
         	window.location.href = "home.jsp";
         }
         window.onload=function(){  
-            $('.selectpicker').selectpicker();  
-            prettyPrint();  
+            $('.selectpicker').selectpicker();   
         };  
         
     </script>
@@ -271,7 +270,7 @@
                         位置</div>
                     <div class="common_desc" style="float: left; width: 800px; height: 50px; vertical-align: middle;">
                         <span style="padding-right: 45px;"></span> 
-                        <select id="localDiduan" class="selectpicker" data-width="auto">
+                        <select id="localDiduan" class="selectpicker" data-width="auto" onmouseover="size=10;" onmouseout="size=1;" onchange="size=1;">
                             <option>--区域--</option>
                             <option value="">--新都区--</option>
                         </select>
