@@ -43,15 +43,15 @@
 	<script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
     <script type="text/javascript">
     $(function(){
-    	$.ajax({
+    	/* $.ajax({
     		type: "GET",
     		dataType: "json",
-    		url: "houseinfo.do?id=456456456&type=get",
+    		url: "houseInfo.do?id=456456456&type=get",
     		success: function(v){
     			alert(v.userName);
     			
     		}
-    	});
+    	});  */
     });
     </script>
 </head>
@@ -65,16 +65,21 @@
             </div>
             <div style="width: 250px; height: 50px; float: left; color: #444; font-size: 18px;"
                 align="right">
-                <a>登陆</a>&nbsp;|&nbsp;<a>注册</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
+                <a href="login.jsp">登陆</a>&nbsp;|&nbsp;<a href="register.jsp">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
             </div>
         </div>
         <div style="margin-left: auto;margin-right:auto;width:1000px;">
+        	<% MHouseInfo info = (MHouseInfo)request.getAttribute("houseBean");
+	        	if(info == null){
+	        		//跳转到404
+	        	}
+        	%>
             <div style="width:1000px;margin-top:30px;">
                 <div style="float:left;width:120px;font-size:20px;height:30px;line-height: 40px;color:#444;">【(单间出租)</div>
                 <div style="float:left;width:880px;font-size:20px;height:30px;line-height: 40px;color:#444;">国际花园】</div>
                 <div style="float:left;width:960px;font-size:20px;height:auto;line-height: 40px;color:#666;padding: 0px 20px 0px 50px;">红枫岭300-650单间都有SM广场音乐公园旁红枫岭300-650单间都有SM广场音乐公园旁红枫岭300-650单间都有SM广场音乐公园旁红枫岭300-650单间都有SM广场音乐公园旁红枫岭300-650单间都有SM广场音乐公园旁 </div>
              <div style="float:left;width:1000px;font-size:10px;height:15px;line-height: 20px;color:#666;">
-                <div class="small_time">2014-02-27</div>
+                <div class="small_time"><%= info.getModifyTime() %>></div>
                 <div class="small_people_num">253</div>
              </div>
                 <div style="float: left; width: 1000px; height: 500px;">
@@ -87,22 +92,13 @@
                         </div>
                     </div>
                     <div style="float:left;width:758px;">
-                    	<%-- <% MHouseInfo info = (MHouseInfo)request.getAttribute("houseBean");
-                    	if(info == null){
-
-                        	System.out.println("aa");
-                    	}else{
-
-                        	System.out.println("bb"+info.getUserName());
-                    	}
-                    	%> --%>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">价格</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                        <span style="color:#e22;font-size: 18px;">550 </span>元/月&nbsp;&nbsp;&nbsp; <span>押一付一</span>
+                        <span style="color:#e22;font-size: 18px;"><%= info.getRentMoney() %> </span>元/月&nbsp;&nbsp;&nbsp; <span>押一付一</span>
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">整体</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                            <span>1室 0厅 1卫</span>&nbsp;&nbsp;&nbsp; <span>精装修</span>
+                            <span><%= info.getHouseRoomNum()%>室 <%= info.getHouseTingNum()%>厅 <%= info.getHouseToiletNum()%>卫</span>&nbsp;&nbsp;&nbsp; <span>精装修</span>
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">楼层</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
@@ -122,7 +118,7 @@
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">联系</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                            张先生
+                            <%= info.getUserName() %>
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">电话</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;"><img src="image/dianhua.gif"/></div>
