@@ -371,7 +371,7 @@ a {
 								冰箱 空调 洗衣机 宽带</div>
 							<div style="float: left; width: 300px; height: 50px">
 								<a class="detail-btn" href="#" target="_blank">加入收藏车</a> <a
-									class="detail-btn" href="detail.jsp" target="_blank">房屋详情</a>
+									class="detail-btn" href="houseInfo.do?id=456456456&action=get" target="_blank">房屋详情</a>
 							</div>
 						</div>
 					</div>

@@ -47,16 +47,4 @@ public class BHouseInfo {
 			}
 		}
 	}
-	
-	public static void main(String[] args) {
-		BHouseInfo dao = new BHouseInfo();
-		MHouseInfo info;
-		try {
-			info = dao.getHouseInfoById("456456456");
-			System.out.println(info.getUserName());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

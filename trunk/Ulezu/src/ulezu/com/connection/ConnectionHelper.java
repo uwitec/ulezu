@@ -27,6 +27,7 @@ public class ConnectionHelper {
 	 */
 	public static Connection getConnection(String databaseName){
 		try {
+			Class.forName("com.mysql.jdbc.Driver");
 			ConnectionParameters params = new ConnectionParameters(databaseName);
 			conn=DriverManager.getConnection(params.dbUrl,params.dbUsername,params.dbPassword);
 		} catch (Exception e) {

@@ -3,6 +3,7 @@ package ulezu.com.controler.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import ulezu.com.business.BHouseInfo;
 import ulezu.com.model.MHouseInfo;
-import ulezu.com.util.JsonHelper;
 
 /**
  * CHouseInfoServlet
@@ -49,13 +49,14 @@ public class CHouseInfoServlet extends HttpServlet {
 	 * @see doPost
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");	
-		String type = request.getParameter("type");
-		if(type.equals("get")){
-			JsonHelper.printObjectToJsonString(response, this.getHouseInfoById(id));
-//			request.setAttribute("houseBean", this.getHouseInfoById(id));
-//			response.sendRedirect("detail.jsp");
-		}else if(type.equals("add")){
+		String action = request.getParameter("action");
+		System.out.println("sdf:" + action);
+		if("get".equals(action)){	
+			String id = request.getParameter("id");	
+			request.setAttribute("houseBean", this.getHouseInfoById(id));
+			RequestDispatcher rd = request.getRequestDispatcher("detail.jsp") ;
+			rd.forward(request,response) ;
+		}else if("add".equals(action)){
 			
 		}		
 	}
