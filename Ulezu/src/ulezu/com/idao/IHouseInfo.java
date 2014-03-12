@@ -1,7 +1,6 @@
 package ulezu.com.idao;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import ulezu.com.model.MHouseInfo;
 
