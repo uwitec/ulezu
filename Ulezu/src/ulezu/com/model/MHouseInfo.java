@@ -36,6 +36,23 @@ public class MHouseInfo {
 	private String linkMan;
 	private String linkCallNumber;
 	private int isValid;
+	/**
+	 * 房屋标题
+	 */
+	private String houseTitle;
+	/**
+	 * 地址
+	 */
+	private String	address;
+	/**
+	 * 位置（区域)
+	 */
+	private String addressArea;
+	/**
+	 * 位置（商圈
+	 */
+	private String addressCircle;
+
 	private String A1;
 	private String A2;
 	private String A3;
@@ -506,6 +523,34 @@ public class MHouseInfo {
 	public String getA30(){
 		return this.A30;
 	}
+	
+	/**
+	 * 获取房屋标题
+	 * @return房屋标题
+	 */
+	public String getHouseTitle(){
+		return this.houseTitle;
+	}
+	
+	/**
+	 * 获取地址
+	 */
+	public String	getAddress(){
+		return this.address;
+	}
+	/**
+	 * 获取位置（区域)
+	 */
+	public String getAddressArea(){
+		return this.addressArea;
+	}
+	/**
+	 * 获取位置（商圈)
+	 */
+	public String getAddressCircle(){
+		return this.addressCircle;
+	}
+	
 	/**
 	 * 设置信息ID
 	 */
@@ -889,5 +934,32 @@ public class MHouseInfo {
 	 */
 	public void setA30(String A30){
 		this.A30 = A30;
+	}
+	
+	/**
+	 * 设置房屋标题
+	 * @param 房屋标题
+	 */
+	public void setHouseTitle(String houseTitle){
+		this.houseTitle = houseTitle;
+	}
+	
+	/**
+	 * 获取地址
+	 */
+	public void	setAddress(String address){
+		this.address = address;
+	}
+	/**
+	 * 设置位置（区域)
+	 */
+	public void setAddressArea(String addressArea){
+		this.addressArea = addressArea;
+	}
+	/**
+	 * 设置位置（商圈)
+	 */
+	public void setAddressCircle(String addressCircle){
+		this.addressCircle = addressCircle;
 	}
 }
