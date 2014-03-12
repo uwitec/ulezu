@@ -16,7 +16,26 @@ public interface IHouseInfo {
 	 * @param id ID
 	 * @param con 数据库连接
 	 * @return 返回房屋信息
-	 * @throws SQLException 抛出异常
+	 * @throws Exception 抛出异常
 	 */
-	public MHouseInfo getHouseInfoById(String id, Connection con)  throws SQLException;
+	public MHouseInfo getHouseInfoById(String id, Connection con)  throws Exception;
+	
+	/**
+	 * 更新数据访问量
+	 * @param id 房屋信息ID
+	 * @param 访问总量
+	 * @param con 数据库连接
+	 * @return 影响的行数
+	 * @throws Exception 抛出异常
+	 */
+	public int updateAccessCountById (String id, String count, Connection con)  throws Exception;
+	
+	/**
+	 * 获取数据访问量
+	 * @param id 房屋信息ID
+	 * @param con 数据库连接
+	 * @return 数据访问量
+	 * @throws Exception 抛出异常
+	 */
+	public String getAccessCountById (String id, Connection con)  throws Exception;
 }
