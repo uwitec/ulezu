@@ -70,16 +70,127 @@
         </div>
         <div style="margin-left: auto;margin-right:auto;width:1000px;">
         	<% MHouseInfo info = (MHouseInfo)request.getAttribute("houseBean");
+    			String roomType = "";
+    			String sexType = "";
+    			String rentWay = "";
+    			String decorationType = "";
+    			String estateType = "";
+    			String payType = "";
 	        	if(info == null){
-	        		//跳转到404
+	        		response.sendRedirect("404.jsp");
+	        		return;
+	        	}else{
+	        		switch(info.getRoomType()){
+		        		case 0:
+		        			roomType = "主卧";
+		        			break;
+		        		case 1:
+		        			roomType = "次卧";
+		        			break;
+		        		case 2:
+		        			roomType = "隔断";
+		        			break;
+	        			default:
+		        			roomType = "主卧";
+	        				break;
+	        		}
+
+	        		switch(info.getSexType()){
+		        		case 0:
+		        			sexType = "男女不限";
+		        			break;
+		        		case 1:
+		        			sexType = "限男性";
+		        			break;
+		        		case 2:
+		        			sexType = "限女性";
+		        			break;
+	        			default:
+	        				sexType = "男女不限";
+	        				break;
+	        		}
+
+	        		switch(info.getRentWay()){
+		        		case 0:
+		        			rentWay = "整套出租";
+		        			break;
+		        		case 1:
+		        			rentWay = "单间出租";
+		        			break;
+		        		case 2:
+		        			rentWay = "床位出租";
+		        			break;
+	        			default:
+	        				rentWay = "整套出租";
+	        				break;
+	        		}
+	        		switch(info.getDecorationType()){
+		        		case 0:
+		        			decorationType = "毛坯";
+		        			break;
+		        		case 1:
+		        			decorationType = "简装";
+		        			break;
+		        		case 2:
+		        			decorationType = "中等装修";
+		        			break;
+		        		case 3:
+		        			decorationType = "精装";
+		        			break;
+		        		case 4:
+		        			decorationType = "豪华装修";
+		        			break;
+	        			default:
+	        				decorationType = "毛坯";
+	        				break;
+	        		}
+
+	        		switch(info.getEstateType()){
+		        		case 0:
+		        			estateType = "公寓";
+		        			break;
+		        		case 1:
+		        			estateType = "住宅";
+		        			break;
+		        		case 2:
+		        			estateType = "商业";
+		        			break;
+		        		case 3:
+		        			estateType = "安置房";
+		        			break;
+	        			default:
+	        				estateType = "公寓";
+	        				break;
+        			}
+
+	        		switch(info.getPayType()){
+		        		case 0:
+		        			payType = "押一付三";
+		        			break;
+		        		case 1:
+		        			payType = "押一付一";
+		        			break;
+		        		case 2:
+		        			payType = "押一付二";
+		        			break;
+		        		case 3:
+		        			payType = "半年付";
+		        			break;
+		        		case 4:
+		        			payType = "面议支付方式";
+		        			break;
+	        			default:
+	        				payType = "押一付三";
+	        				break;
+		    		}
 	        	}
         	%>
             <div style="width:1000px;margin-top:30px;">
-                <div style="float:left;width:120px;font-size:20px;height:30px;line-height: 40px;color:#444;">【(单间出租)</div>
-                <div style="float:left;width:880px;font-size:20px;height:30px;line-height: 40px;color:#444;">国际花园】</div>
-                <div style="float:left;width:960px;font-size:20px;height:auto;line-height: 40px;color:#666;padding: 0px 20px 0px 50px;">红枫岭300-650单间都有SM广场音乐公园旁红枫岭300-650单间都有SM广场音乐公园旁红枫岭300-650单间都有SM广场音乐公园旁红枫岭300-650单间都有SM广场音乐公园旁红枫岭300-650单间都有SM广场音乐公园旁 </div>
+                <div style="float:left;width:120px;font-size:20px;height:30px;line-height: 40px;color:#444;">【(<%= rentWay %>)</div>
+                <div style="float:left;width:880px;font-size:20px;height:30px;line-height: 40px;color:#444;"><%= info.getEestateName() %>】</div>
+                <div style="float:left;width:960px;font-size:20px;height:auto;line-height: 40px;color:#666;padding: 0px 20px 0px 50px;"><%= info.getHouseTitle() %> </div>
              <div style="float:left;width:1000px;font-size:10px;height:15px;line-height: 20px;color:#666;">
-                <div class="small_time"><%= info.getModifyTime() %>></div>
+                <div class="small_time"><%= info.getModifyTime() %></div>
                 <div class="small_people_num">253</div>
              </div>
                 <div style="float: left; width: 1000px; height: 500px;">
@@ -94,27 +205,27 @@
                     <div style="float:left;width:758px;">
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">价格</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                        <span style="color:#e22;font-size: 18px;"><%= info.getRentMoney() %> </span>元/月&nbsp;&nbsp;&nbsp; <span>押一付一</span>
+                        <span style="color:#e22;font-size: 18px;"><%= info.getRentMoney() %> </span>元/月&nbsp;&nbsp;&nbsp; <span><%= payType %></span>
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">整体</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                            <span><%= info.getHouseRoomNum()%>室 <%= info.getHouseTingNum()%>厅 <%= info.getHouseToiletNum()%>卫</span>&nbsp;&nbsp;&nbsp; <span>精装修</span>
+                            <span><%= info.getHouseRoomNum()%>室 <%= info.getHouseTingNum()%>厅 <%= info.getHouseToiletNum()%>卫</span>&nbsp;&nbsp;&nbsp; <span><%= decorationType %></span>
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">楼层</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                            <span>12</span>层/<span>34</span>层
+                            <span><%= info.getLayerNum() %></span>层/<span><%= info.getTotleLayerNum() %></span>层
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">出租</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                            <span>主卧</span>&nbsp;&nbsp;&nbsp; <span>23㎡</span>&nbsp;&nbsp;&nbsp; <span>公寓</span>&nbsp;&nbsp;&nbsp; <span>男女不限</span>
+                            <span><%= roomType %></span>&nbsp;&nbsp;&nbsp; <span><%= info.getSquareMeter() %>㎡</span>&nbsp;&nbsp;&nbsp; <span><%= estateType %></span>&nbsp;&nbsp;&nbsp; <span><%= sexType %></span>
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">区域</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                            <span>成华</span> - <span>建设路</span> -<span> 红枫岭三期</span>
+                            <span><%= info.getAddressArea() %></span> - <span><%= info.getAddressCircle() %></span> -<span> <%= info.getAddressAttach() %></span>
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">地址</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
-                            <span>成都市建设南路SM广场音乐公园旁圣灯路111号</span> （<a href="#">交通地图</a>）
+                            <span><%= info.getAddress() %></span> （<a href="#">交通地图</a>）
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">联系</div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;">
