@@ -50,7 +50,6 @@ public class CHouseInfoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		System.out.println("sdf:" + action);
 		if("get".equals(action)){	
 			String id = request.getParameter("id");	
 			request.setAttribute("houseBean", this.getHouseInfoById(id));

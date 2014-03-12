@@ -52,7 +52,10 @@ public class MHouseInfo {
 	 * 位置（商圈
 	 */
 	private String addressCircle;
-
+	/**
+	 * 位置（附属)
+	 */
+	private String addressAttach;
 	private String A1;
 	private String A2;
 	private String A3;
@@ -154,6 +157,13 @@ public class MHouseInfo {
 	 */
 	public int getTotleLayerNum(){
 		return this.totleLayerNum;
+	}
+	
+	/**
+	 * 获取位置（附属)
+	 */
+	public String getAddressAttach(){
+		return this.addressAttach;
 	}
 	
 	/**
@@ -961,5 +971,13 @@ public class MHouseInfo {
 	 */
 	public void setAddressCircle(String addressCircle){
 		this.addressCircle = addressCircle;
+	}
+	
+	/**
+	 * 设置位置（附属)
+	 * @param addressAttach 位置（附属)
+	 */
+	public void setAddressAttach(String addressAttach){
+		this.addressAttach = addressAttach;
 	}
 }
