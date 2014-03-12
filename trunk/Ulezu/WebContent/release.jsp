@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title></title>
+	<link href="bootstrap-3.1.1-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="bootstrap-select/bootstrap-select.min.css">
     <style type="text/css">
         .topNavigate
         {
@@ -147,6 +149,8 @@
         }
     </style>
     <script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         function confirmAndSubmit() {
             $(".step1_img img").attr("src", "image/next_b.png");
@@ -168,6 +172,11 @@
         function returnHome(){
         	window.location.href = "home.jsp";
         }
+        window.onload=function(){  
+            $('.selectpicker').selectpicker();  
+            prettyPrint();  
+        };  
+        
     </script>
 </head>
 <body>
@@ -261,17 +270,13 @@
                     <div style="float: left; width: 60px; height: 50px; text-align: right;">
                         位置</div>
                     <div class="common_desc" style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-                        <span tabindex="0" class="selectPlug-text" value1="" style="width: 71px; margin-left: 45px;">
-                            --区域--</span>
-                        <select id="localDiduan" name="localDiduan" fdindex="3" plugindex="1" style="visibility: hidden;
-                            position: absolute; display: block;">
-                            <option value="">--区域--</option>
+                        <span style="padding-right: 45px;"></span> 
+                        <select id="localDiduan" class="selectpicker" data-width="auto">
+                            <option>--区域--</option>
                             <option value="">--新都区--</option>
                         </select>
-                        <span tabindex="0" class="selectPlug-text" value1="" style="width: 71px;">--商圈--</span>
-                        <select id="localShangquan" name="localDiduan" fdindex="3" plugindex="1" style="visibility: hidden;
-                            position: absolute; display: block;">
-                            <option value="">--商圈--</option>
+                        <select id="localDiduan" class="selectpicker" data-width="auto">
+                            <option>--商圈--</option>
                             <option value="">--万达广场--</option>
                         </select>
                         <input type="text" class="txt_address" />
@@ -317,24 +322,18 @@
                     <div class="common_desc" style="float: left; width: 800px; height: 50px; vertical-align: middle;">
                         <span style="margin-left: 45px;"></span>
                         <input type="text" class="txt_pangfang" />㎡&nbsp;&nbsp;
-                        <select name="woshi" id="woshi" f="{0}" fdindex="0" plugindex="0" style="visibility: hidden;
-                            position: absolute; display: block;">
+                        <select id="localDiduan" class="selectpicker" data-width="auto">
                             <option value="1" selected="">主卧</option>
                             <option value="2">次卧</option>
                             <option value="3">隔断</option>
                         </select>
-                        <span tabindex="0" class="selectPlug-text" value1="1" style="width: 40px;">主卧</span>
-                        <select name="xianzhi" id="xianzhi" f="{0}" fdindex="0" plugindex="1" style="visibility: hidden;
-                            position: absolute; display: block;">
+                        <select id="localDiduan" class="selectpicker" data-width="auto">
                             <option value="0">性别要求</option>
                             <option value="1" selected="">男女不限</option>
                             <option value="2">限女生</option>
                             <option value="3">限男生</option>
-                        </select>
-                        <span tabindex="0" class="selectPlug-text" value1="1" style="width: 66px; border-color: rgb(204, 204, 204);">
-                            男女不限</span>
-                        <select name="Toward" id="Toward" fdindex="0" plugindex="2" style="visibility: hidden;
-                            position: absolute; display: block;">
+                        </select>                       
+                        <select id="localDiduan" class="selectpicker" data-width="auto">
                             <option selected="selected" value="">出租间朝向</option>
                             <option value="1">东</option>
                             <option value="2">南</option>
@@ -347,9 +346,7 @@
                             <option value="11">东北</option>
                             <option value="12">西北</option>
                         </select>
-                        <span tabindex="0" class="selectPlug-text" value1="" style="width: 84px;">出租间朝向</span>
-                        <select name="FitType" id="FitType" f="{0}" fdindex="0" plugindex="3" style="visibility: hidden;
-                            position: absolute; display: block;">
+                        <select id="localDiduan" class="selectpicker" data-width="auto">
                             <option selected="selected" value="">装修情况</option>
                             <option value="1">毛坯</option>
                             <option value="2">简单装修</option>
@@ -357,9 +354,7 @@
                             <option value="4">精装修</option>
                             <option value="5">豪华装修</option>
                         </select>
-                        <span tabindex="0" class="selectPlug-text" value1="" style="width: 66px;">装修情况</span>
-                        <select name="ObjectType" id="ObjectType" f="{0}" fdindex="0" plugindex="4" style="visibility: hidden;
-                            position: absolute; display: block;">
+                        <select id="localDiduan" class="selectpicker" data-width="auto">
                             <option value="3" selected="">普通住宅</option>
                             <option value="7">商住两用</option>
                             <option value="4">公寓</option>
@@ -367,7 +362,6 @@
                             <option value="5">别墅</option>
                             <option value="6">其他</option>
                         </select>
-                        <span tabindex="0" class="selectPlug-text" value1="3" style="width: 66px;">普通住宅</span>
                     </div>
                 </div>
             </div>
@@ -382,8 +376,7 @@
                     <div class="common_desc" style="float: left; width: 800px; height: 50px; vertical-align: middle;">
                         <span style="margin-left: 45px;"></span>
                         <input type="text" class="txt_pangfang" />元/月&nbsp;&nbsp;&nbsp;
-                        <select name="fukuanfangshi" id="fukuanfangshi" fdindex="2" plugindex="0" style="visibility: hidden;
-                            position: absolute; display: none;">
+                        <select id="localDiduan" class="selectpicker" data-width="auto">
                             <option selected="selected" value="">押金方式</option>
                             <!-- 押一付三 -->
                             <option value="1">押一付一</option>
@@ -396,7 +389,6 @@
                             <option value="7">年付</option>
                             <option value="0">面议</option>
                         </select>
-                        <span tabindex="0" class="selectPlug-text" value1="3" style="width: 66px;">押一付三</span>
                     </div>
                 </div>
             </div>
