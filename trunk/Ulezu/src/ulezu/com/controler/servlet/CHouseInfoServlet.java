@@ -55,9 +55,10 @@ public class CHouseInfoServlet extends HttpServlet {
 			request.setAttribute("houseBean", this.getHouseInfoById(id));
 			RequestDispatcher rd = request.getRequestDispatcher("detail.jsp") ;
 			rd.forward(request,response) ;
-		}else if("add".equals(action)){
-			
-		}		
+		}else if("count".equals(action)){
+			String id = request.getParameter("id");
+			this.updateAccessCountById(id);
+		}
 	}
 	
 	/**
@@ -68,9 +69,23 @@ public class CHouseInfoServlet extends HttpServlet {
 	private MHouseInfo getHouseInfoById(String id){
 		try {
 			return this.houseInfoBusi.getHouseInfoById(id);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	/**
+	 * 通过ID更新访问量
+	 * @param id ID
+	 * @return 返回更新的行数
+	 */
+	private int updateAccessCountById(String id){
+		try {
+			return this.houseInfoBusi.updateAccessCountById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 

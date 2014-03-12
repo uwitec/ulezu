@@ -43,15 +43,13 @@
 	<script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
     <script type="text/javascript">
     $(function(){
-    	/* $.ajax({
-    		type: "GET",
+    	$.ajax({
+    		type: "get",
     		dataType: "json",
-    		url: "houseInfo.do?id=456456456&type=get",
-    		success: function(v){
-    			alert(v.userName);
-    			
+    		url: "houseInfo.do?action=count&id=456456456",
+    		success: function(){
     		}
-    	});  */
+    	});
     });
     </script>
 </head>
@@ -191,7 +189,7 @@
                 <div style="float:left;width:960px;font-size:20px;height:auto;line-height: 40px;color:#666;padding: 0px 20px 0px 50px;"><%= info.getHouseTitle() %> </div>
              <div style="float:left;width:1000px;font-size:10px;height:15px;line-height: 20px;color:#666;">
                 <div class="small_time"><%= info.getModifyTime() %></div>
-                <div class="small_people_num">253</div>
+                <div class="small_people_num"><%= info.getA1() %></div>
              </div>
                 <div style="float: left; width: 1000px; height: 500px;">
                     <div style="width: 240px; height: 310px; float: left; border: 1px solid #ccc; margin-top: 20px;">

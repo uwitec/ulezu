@@ -23,11 +23,11 @@ public class DHouseInfo implements IHouseInfo{
 	 * @throws SQLException  抛出异常
 	 */
 	@Override
-	public MHouseInfo getHouseInfoById(String id, Connection con) throws SQLException {
+	public MHouseInfo getHouseInfoById(String id, Connection con) throws Exception {
 		String querySql = "select id,userName,rentWay,estateName,houseTingNum,houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter" +
 				",modifyTime,roomType,sexType,decorationType,estateType,rentMoney,payType,houseTitle,address,addressArea,addressCircle" +
-				",addressAttach" +
-				" from houseinfo where isDelete=0 limit 1";
+				",addressAttach,a1" +
+				" from houseinfo where isDelete=0 and id=" + id + " limit 1";
 		PreparedStatement ps = con.prepareStatement(querySql);
 		ResultSet rs = null;
 		MHouseInfo info = null;
@@ -56,9 +56,48 @@ public class DHouseInfo implements IHouseInfo{
 			info.setAddressArea(rs.getString(20));
 			info.setAddressCircle(rs.getString(21));
 			info.setAddressAttach(rs.getString(22));
+			info.setA1(rs.getString(23));
 		}
 		
 		return info;
+	}
+
+	/**
+	 * 更新数据访问量
+	 * @param id 房屋信息ID
+	 * @param 访问总量
+	 * @param con 数据库连接
+	 * @return 影响的行数
+	 * @throws Exception 抛出异常
+	 */
+	@Override
+	public int updateAccessCountById(String id, String count, Connection con)
+			throws Exception {
+		String upadteSql = "update houseInfo set a1='" + count + "' where id='" + id + "' limit 1";
+		PreparedStatement ps = con.prepareStatement(upadteSql);
+		return ps.executeUpdate();
+	}
+
+	/**
+	 * 获取数据访问量
+	 * @param id 房屋信息ID
+	 * @param con 数据库连接
+	 * @return 数据访问量
+	 * @throws Exception 抛出异常
+	 */
+	@Override
+	public String getAccessCountById(String id, Connection con)
+			throws Exception {
+		String querySql = "select a1 from houseInfo where id='" + id + "' limit 1";
+		PreparedStatement ps = con.prepareStatement(querySql);
+		ResultSet rs = ps.executeQuery();
+		String count = "";
+		while(rs.next()) {
+			count = rs.getString(1);
+			break;
+		}
+		
+		return count;
 	}
 
 }

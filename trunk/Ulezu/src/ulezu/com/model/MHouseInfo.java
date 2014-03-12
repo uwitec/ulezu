@@ -56,6 +56,10 @@ public class MHouseInfo {
 	 * 位置（附属)
 	 */
 	private String addressAttach;
+	
+	/**
+	 * 该条数据的访问量
+	 */
 	private String A1;
 	private String A2;
 	private String A3;
@@ -295,8 +299,8 @@ public class MHouseInfo {
 	}
 	
 	/**
-	 * 获取A1
-	 * @return A1
+	 * 获取该条数据的访问量
+	 * @return 该条数据的访问量
 	 */
 	public String getA1(){
 		return this.A1;
@@ -737,7 +741,7 @@ public class MHouseInfo {
 	}
 	
 	/**
-	 * 设置A1
+	 * 设置该条数据的访问量
 	 */
 	public void setA1(String a1){
 		this.A1 = a1;
