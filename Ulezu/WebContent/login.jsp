@@ -215,6 +215,17 @@
 </style>
 <link rel="stylesheet" type="text/css" href="css/easyui.css">
 <script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+	function login(){
+    	$.ajax({
+    		type: "post",
+    		dataType: "json",
+    		url: "userMapping?type=0&userName="+$("#txtEmail").val()+"&password="+$("#txtPass").val(),
+    		success: function(v){
+    		}
+    	});    	
+	}
+</script>
 </head>
 <body>
 
@@ -260,19 +271,19 @@
 					优乐租</div>
 					<div style="float:left;margin: 10px 20px 0px 10px; width: 430px; color: #636363; text-align: center; line-height: 40px;">
 						<span class="control-group" id="email_input">
-							<input id="email" type="text" value="请输入邮箱/用户名/电话号码"
+							<input id="txtEmail" type="text" value="请输入邮箱/用户名/电话号码"
 								class="input_email" />
 						</span>
 					</div> 
 				<div
 					style="float:left;margin: 10px 20px 0px 20px; width: 410px; color: #636363; font-size: 12px; line-height: 40px;">
-					<input id="email" type="text" value="请输入密码"
+					<input id="txtPass" type="password" value="请输入密码"
 								class="input_email" />
 				</div>
 				<div
 					style="margin: 10px 20px 0px 20px; width: 410px; color: #636363; text-align: center;">
 					<input type="button" value="立即登陆" class="btn_register"
-						onclick="register();" />
+						onclick="login();" />
 				</div>
 			</div>
 		</div>

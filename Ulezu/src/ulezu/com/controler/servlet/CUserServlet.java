@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ulezu.com.business.BUser;
-import ulezu.com.controler.servlet.common.UleResponse;
 import ulezu.com.controler.servlet.common.UlezuHttpServlet;
 import ulezu.com.model.MUser;
 
@@ -56,16 +55,16 @@ public class CUserServlet extends UlezuHttpServlet {
 		switch(type){
 			case 0 :
 				//登录
-				String loginCode = request.getParameter("loginCode");
+				String loginCode = request.getParameter("userName");
 				String password = request.getParameter("password");
-				int loginType = Integer.parseInt(request.getParameter("loginType"));//登录方式（0-用户名，1-手机号码，2-邮箱）
+				int loginType = this.parseLoginType(loginCode);//登录方式（0-用户名，1-手机号码，2-邮箱）
 				if(this.userHander.login(this.SetUserLoginMessage(loginType, loginCode, password))){
 					request.getRequestDispatcher("/home.jsp").forward(request, response);
 				}else{
 					message = this.getJsonMsg("false");
 				}
-				break;
 				
+				break;				
 			case 1 :
 				//注册
 				String email = request.getParameter("email");
@@ -85,7 +84,7 @@ public class CUserServlet extends UlezuHttpServlet {
 					break;
 		}
 		
-		UleResponse.response(response, message);
+		super.response(response, message);
 	}
 	
 	/**
@@ -115,6 +114,21 @@ public class CUserServlet extends UlezuHttpServlet {
 		}
 		
 		return user;
+	}
+	
+	/**
+	 * 根据用户名解析登陆类型
+	 * @param userName 用户名
+	 * @return  返回登录方式（0-用户名，1-手机号码，2-邮箱）
+	 */
+	private int parseLoginType(String userName){
+		if(userName.contains("@")){
+			return 2;
+		}else if(userName.matches("^[1][358]\\d{9}$")){
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 
 }
