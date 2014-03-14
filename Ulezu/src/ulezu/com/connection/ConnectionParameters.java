@@ -21,9 +21,15 @@ public class ConnectionParameters {
 	public String dbPassword;
 	
 	/**
+	 * 驱动名
+	 */
+	public String driverClass;
+	
+	/**
 	 * 属性对象
 	 */
 	private Properties properties = null;
+	
 	
 	/**
 	 * 构造方法
@@ -39,5 +45,6 @@ public class ConnectionParameters {
 		dbUrl=(String) properties.get(databaseName + "url");                                                 //获取URL 
 		dbUsername=(String) properties.get(databaseName + "name");                                 //获取NAME
 		dbPassword=(String) properties.get(databaseName + "password");                           //获取密码
+		driverClass=(String) properties.get(databaseName + "driverClass");
 	}  
 }

@@ -58,7 +58,7 @@ public class CHouseInfoServlet extends HttpServlet {
 		}else if("count".equals(action)){
 			String id = request.getParameter("id");
 			this.updateAccessCountById(id);
-		}
+		} 
 	}
 	
 	/**
