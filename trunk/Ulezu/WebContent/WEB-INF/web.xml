@@ -42,4 +42,24 @@
     <servlet-name>CHouseInfoServlet</servlet-name>
     <url-pattern>/houseInfo.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SystemParamWriteInterface</display-name>
+    <servlet-name>SystemParamWriteInterface</servlet-name>
+    <servlet-class>ulezu.com.interfaces.SystemParamWriteInterface</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SystemParamWriteInterface</servlet-name>
+    <url-pattern>/SystemParamWriteInterface</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchServlet</display-name>
+    <servlet-name>SearchServlet</servlet-name>
+    <servlet-class>ulezu.com.controler.servlet.SearchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchServlet</servlet-name>
+    <url-pattern>/s.do</url-pattern>
+  </servlet-mapping>
 </web-app>

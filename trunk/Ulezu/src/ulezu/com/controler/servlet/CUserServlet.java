@@ -59,6 +59,7 @@ public class CUserServlet extends UlezuHttpServlet {
 				String password = request.getParameter("password");
 				int loginType = this.parseLoginType(loginCode);//登录方式（0-用户名，1-手机号码，2-邮箱）
 				if(this.userHander.login(this.SetUserLoginMessage(loginType, loginCode, password))){
+					
 					request.getRequestDispatcher("/home.jsp").forward(request, response);
 				}else{
 					message = this.getJsonMsg("false");
