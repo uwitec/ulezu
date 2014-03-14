@@ -1,7 +1,6 @@
 package ulezu.com.controler.servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import ulezu.com.business.BHouseInfo;
 import ulezu.com.model.MHouseInfo;
+import ulezu.com.util.AESEncryptAndDecrypt;
+import ulezu.com.util.ImageFactory;
 
 /**
  * CHouseInfoServlet
@@ -51,14 +52,21 @@ public class CHouseInfoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		if("get".equals(action)){	
-			String id = request.getParameter("id");	
-			request.setAttribute("houseBean", this.getHouseInfoById(id));
+			MHouseInfo info = this.getHouseInfoById(request.getParameter("id"));
+			if(info != null){
+				info.setLinkCallNumber(AESEncryptAndDecrypt.encrypt(info.getLinkCallNumber()));
+			}
+			
+			request.setAttribute("houseBean", info);
 			RequestDispatcher rd = request.getRequestDispatcher("detail.jsp") ;
 			rd.forward(request,response) ;
 		}else if("count".equals(action)){
 			String id = request.getParameter("id");
 			this.updateAccessCountById(id);
-		} 
+		}else if("image".equals(action)){
+			response.setContentType("image/jpeg");
+			ImageFactory.generateCellPhoneNumber(response.getOutputStream(), AESEncryptAndDecrypt.decrypt(request.getParameter("callNum")));
+		}
 	}
 	
 	/**

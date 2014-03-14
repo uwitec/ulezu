@@ -252,7 +252,7 @@ a {
 						<div
 							style="width: 250px; height: 30px; float: left; padding-top: 50px; color: #444; font-size: 18px;"
 							align="right">
-							<a>登陆</a>&nbsp;|&nbsp;<a href="register.jsp">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
+							<a href="login.jsp">登陆</a>&nbsp;|&nbsp;<a href="register.jsp">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
 						</div>
 					</div>
 				</div>

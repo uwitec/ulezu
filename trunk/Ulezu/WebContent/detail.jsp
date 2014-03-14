@@ -230,7 +230,7 @@
                             <%= info.getUserName() %>
                         </div>
                         <div style="float:left;color: #9a9a9a;font-size:18px;width:50px;padding: 10px 10px 10px 30px;">电话</div>
-                        <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;"><img src="image/dianhua.gif"/></div>
+                        <div style="float:left;color: #9a9a9a;font-size:18px;width:648px;padding: 10px;"><img src="houseInfo.do?action=image&callNum=<%= info.getLinkCallNumber() %>"/></div>
                     </div>
                     <div style="width: 1000px; float: left;">
                         <div style="width: 1000px; float: left;">
