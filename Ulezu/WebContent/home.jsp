@@ -233,6 +233,25 @@ a {
 	margin: 0px 30px 0px 0px;
 }
 </style>
+<script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+	function search(){
+		var args = "v=" + encodeURIComponent($("#txtAddress").val()) + "&h=" + encodeURIComponent($("#hidAdd").val());
+		alert(args);
+		$.ajax({
+    		type: "get",
+    		dataType: "json",
+    		url: "s.do?" + args,
+    		success: function(v){
+    			
+    		}
+    	});
+	}
+	
+	function clearAddress(){
+		$("#txtAddress").val('');
+	}
+</script>
 </head>
 <body>
 	<div class="body">
@@ -267,7 +286,7 @@ a {
 						<span>123</span>座城市 <span>3213</span>个房东 <span>2313</span>套优乐房屋
 					</div>
 					<input type="text" id="txtAddress" class="txtAddress"
-						value="请输入商圈，学校，医院，小区，景点" /><br />
+						value="请输入商圈，学校，医院，小区，景点"  onmousedown="clearAddress();"/><br />
 					<div
 						style="float: left; width: 89px; margin-right: 9px; margin-top: 5px; font-size: 15px; font-weight: bold; color: #037b00;"
 						align="right">
@@ -279,7 +298,7 @@ a {
 						<a>环球广场</a> &nbsp;&nbsp;&nbsp;&nbsp;<a>环球广场</a> <br /> <a>环球广场</a>&nbsp;&nbsp;&nbsp;&nbsp;
 						<a>环球广场</a> &nbsp;&nbsp;&nbsp;&nbsp;<a>更多>></a>
 					</div>
-					<br /> <input type="button" class="btnSearch" value="立即搜索" />
+					<br /> <input type="hidden" id="hidAdd" value="none"/><input type="button" class="btnSearch" value="立即搜索" onclick="search();" />
 				</div>
 				<div class="areaImg">
 					<img src="image/111.jpg" />

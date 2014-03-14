@@ -1,6 +1,7 @@
 package ulezu.com.idao;
 
 import java.sql.Connection;
+import java.util.List;
 
 import ulezu.com.model.MHouseInfo;
 
@@ -37,4 +38,14 @@ public interface IHouseInfo {
 	 * @throws Exception 抛出异常
 	 */
 	public String getAccessCountById (String id, Connection con)  throws Exception;
+	
+	/**
+	 * 首页搜索
+	 * @param condition 搜索条件 
+	 * @param type 搜索条件（0-商圈，1-学校，2-医院，3-小区，4-景点，5位置）
+	 * @param con 数据库连接
+	 * @return 返回搜索信息列表
+	 * @throws Exception 抛出异常
+	 */
+	public List<MHouseInfo> homeQuery(String condition, int type, Connection con)  throws Exception;
 }

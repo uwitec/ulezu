@@ -41,16 +41,16 @@ public class UrlFilter implements Filter {
 		MUser user = (MUser) session.getAttribute("user");
 		
 		chain.doFilter(request, response);
-//		if (noFileUrl(url, request)) { // 不需要判断权限的请求如登录页面，则跳过
-//			chain.doFilter(request, response);
-//		} else if (user == null) {
-//			String action = request.getParameter("action");
-//			if (!"userMapping".equals(action)) {
-//				response.sendRedirect("/home.jsp");// 返回登录页面
-//			}
-//		} else {
-//			verifyUrl(url, user);// 判断当前user是否拥有访问此url的权限
-//		}
+		if (this.noFileUrl(url, request)) { // 不需要判断权限的请求如登录页面，则跳过
+			chain.doFilter(request, response);
+		} else if (user == null) {
+			String action = request.getParameter("action");
+			if (!"userMapping".equals(action)) {
+				response.sendRedirect("/home.jsp");// 返回登录页面
+			}
+		} else {
+			verifyUrl(url, user);// 判断当前user是否拥有访问此url的权限
+		}
 	}
 
 	/**
