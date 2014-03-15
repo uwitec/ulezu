@@ -1,6 +1,7 @@
 package ulezu.com.controler.servlet;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,13 +61,14 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 		}else if("release".equals(action)) {
 			BUser  bUser = new BUser();
 			JSONObject jsonObject = JsonHelper.readJSONObject(request);
-			if(!bUser.isAvailableUser(jsonObject.getString("email"), jsonObject.getString("userPassword"))) {
-				response(response, "0");
-			}
+			//if(!bUser.isAvailableUser(jsonObject.getString("email"), jsonObject.getString("userPassword"))) {
+			//	response(response, "0");
+			//}
 			
 			MHouseInfo houseInfo = 	(MHouseInfo)JSONObject.toBean(jsonObject, MHouseInfo.class);
+			houseInfo.setModifyTime(new Date());
 			
-			System.out.println(houseInfo.getLinkMan());
+			houseInfoBusi.addHouseInfo(houseInfo);
 		} 
 	}
 
