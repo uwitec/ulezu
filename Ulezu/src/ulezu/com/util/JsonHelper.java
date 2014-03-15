@@ -6,6 +6,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 /**
  * json处理类
  * @author shenyuc629
@@ -58,5 +60,25 @@ public class JsonHelper {
 		}
 		
 		return json.toString();
+	}
+	
+	/**
+	 * 从request中读取json对象
+	 * @param request
+	 * @return
+	 */
+	public static JSONObject readJSONObject(HttpServletRequest request){
+		StringBuffer json = new StringBuffer();
+		String line = null;
+		try {
+			BufferedReader reader = request.getReader();
+			while((line = reader.readLine()) != null) {
+				json.append(line);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return JSONObject.fromObject(json.toString());
 	}
 }

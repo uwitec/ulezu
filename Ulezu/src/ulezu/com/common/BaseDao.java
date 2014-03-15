@@ -19,9 +19,10 @@ import java.util.List;
 /**
  * 请修改 getConnection() 方法，  得到自己的数据库连接
  */
-public class BaseDao<T> extends DaoReflectUtil<T> {
+public class BaseDao<T>{
+	DaoReflectUtil<T> daoReflectUtil = null;
 	public BaseDao() {
-		super();
+		daoReflectUtil = new DaoReflectUtil<T>();
 	}
 
 	/**
@@ -87,7 +88,7 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 			stmt = con.prepareStatement(sql);
 			this.fillStatement(stmt, params);
 			rs = stmt.executeQuery();
-			result = handleList(rs);
+			result = daoReflectUtil.handleList(rs);
 		} catch (SQLException e) {
 			this.rethrow(e, sql, params);
 		} finally {
@@ -154,7 +155,7 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 			stmt = con.prepareStatement(sql);
 			this.fillStatement(stmt, params);
 			rs = stmt.executeQuery();
-			result = handleBean(rs);
+			result = daoReflectUtil.handleBean(rs);
 		} catch (SQLException e) {
 			this.rethrow(e, sql, params);
 		} finally {
@@ -163,6 +164,8 @@ public class BaseDao<T> extends DaoReflectUtil<T> {
 
 		return result;
 	}
+	
+	
 
 	/**
 	 * Executes the given INSERT, UPDATE, or DELETE SQL statement without any

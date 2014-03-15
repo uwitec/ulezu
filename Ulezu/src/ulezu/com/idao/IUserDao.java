@@ -32,4 +32,6 @@ public interface IUserDao {
 	 * @return 注册影响的行数
 	 */
 	public int register(MUser user, Connection con);
+
+	public boolean isAvailableUser(String email, String password);
 }

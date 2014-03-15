@@ -57,6 +57,10 @@ public class BUser {
 		return rows;
 	}
 	
+	public boolean isAvailableUser(String email, String password) {
+		return this.userDao.isAvailableUser(email, MD5Encrypt.encryptMD5To32(password));
+	}
+	
 	/**
 	 * 发送验证邮件
 	 *@author qw

@@ -2,6 +2,7 @@ package ulezu.com.controler.servlet.common;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class UlezuHttpServlet extends HttpServlet {
 	}
 	
 	/**
-	 * 往浏览器输出客户端信息
+	 * 往浏览器输出json格式客户端信息 
 	 * @param response response对象
 	 * @param args 输出信息
 	 */
@@ -38,11 +39,37 @@ public class UlezuHttpServlet extends HttpServlet {
 	}
 	
 	/**
+	 * 带参数跳转到指定url
+	 *@author qw
+	 *@version 创建时间:2014-3-14下午03:30:31
+	 *@param request
+	 *@param response
+	 */
+	protected void forwardToUrl(HttpServletRequest request,
+			HttpServletResponse response, String url) {
+		RequestDispatcher rd = request.getRequestDispatcher(url) ;
+		try {
+			rd.forward(request,response) ;
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * 获取Json提示
 	 * @param args  提示的参数
 	 * @return 返回Json提示字符串
 	 */
 	protected String getJsonMsg(String args){
 		return "{\"data\": \"" + args + "\"}";
+	}
+	
+	protected<T> T initObject(HttpServletRequest request) {
+		
+		return null;
 	}
 }
