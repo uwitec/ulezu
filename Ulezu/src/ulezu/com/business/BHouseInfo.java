@@ -74,23 +74,15 @@ public class BHouseInfo {
 	 *@version 创建时间:2014-3-15下午05:11:39
 	 *@param mHouseInfo
 	 *@return
+	 * @throws SQLException 
 	 */
-	public boolean addHouseInfo(MHouseInfo mHouseInfo) {
+	public boolean addHouseInfo(MHouseInfo mHouseInfo) throws SQLException {
 		this.con = ConnectionFactory.getUlezuWriteConnection();
 		try {
 			return this.houseInfoHandler.addHouseInfo(mHouseInfo, con);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			con.close();
 		}
-		return false;
 	}
 
 	

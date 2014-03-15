@@ -1,6 +1,7 @@
 package ulezu.com.controler.servlet;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -68,7 +69,12 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 			MHouseInfo houseInfo = 	(MHouseInfo)JSONObject.toBean(jsonObject, MHouseInfo.class);
 			houseInfo.setModifyTime(new Date());
 			
-			houseInfoBusi.addHouseInfo(houseInfo);
+			try {
+				houseInfoBusi.addHouseInfo(houseInfo);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} 
 	}
 
