@@ -1,6 +1,7 @@
 package ulezu.com.idao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import ulezu.com.model.MHouseInfo;
@@ -48,4 +49,6 @@ public interface IHouseInfo {
 	 * @throws Exception 抛出异常
 	 */
 	public List<MHouseInfo> homeQuery(String condition, int type, Connection con)  throws Exception;
+
+	public boolean addHouseInfo(MHouseInfo mHouseInfo, Connection con) throws SQLException;
 }
