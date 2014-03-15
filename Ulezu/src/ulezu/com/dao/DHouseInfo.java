@@ -139,7 +139,7 @@ public class DHouseInfo implements IHouseInfo{
 		String querySql = "select id,userName,rentWay,estateName,houseTingNum,houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter" +
 		",modifyTime,roomType,sexType,decorationType,estateType,rentMoney,payType,houseTitle,address,addressArea,addressCircle" +
 		",addressAttach,a1" +
-		" from houseinfo where isDelete=0 and " + sqlCondition + " like %" + condition + "% limit 1";
+		" from houseinfo where isDelete=0 and " + sqlCondition + " like %" + condition + "% limit 10";
 		PreparedStatement ps = con.prepareStatement(querySql);
 		ResultSet rs = null;
 		MHouseInfo info = null;

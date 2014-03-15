@@ -1,12 +1,17 @@
 package ulezu.com.controler.servlet;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ulezu.com.business.BHouseInfo;
+import ulezu.com.model.MHouseInfo;
 import ulezu.com.util.EscapeAndUnescapeUtil;
+import ulezu.com.util.JsonHelper;
 
 /**
  * Servlet implementation class SearchServlet
@@ -14,11 +19,24 @@ import ulezu.com.util.EscapeAndUnescapeUtil;
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	/**
+	 * 房屋信息处理
+	 */
+	private BHouseInfo houseInfoBusi = null;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public SearchServlet() {
         super();
+    }
+	
+	/**
+     * 初始化方法
+     */
+    @Override
+    public void init() throws ServletException {
+    	this.houseInfoBusi = new BHouseInfo();
     }
 
 	/**
@@ -36,15 +54,28 @@ public class SearchServlet extends HttpServlet {
 		//先从缓存中加载数据，然后再从数据库中加载数据
 		String searchValue = request.getParameter("v");
 		String searchSelectAddress = request.getParameter("h");
-		String keyword = "";
 		if("none".equals(EscapeAndUnescapeUtil.unescape(searchSelectAddress))){
 			String[] searchArr = searchValue.split(" ");
 			for (String value : searchArr) {
-				keyword = value;
+				this.homeQuery(value, response);
 			}
 		}else{
-			keyword = EscapeAndUnescapeUtil.unescape(searchSelectAddress);
+			this.homeQuery(EscapeAndUnescapeUtil.unescape(searchSelectAddress), response);
 			
+		}
+	}
+	
+	/**
+	 * 首页查询（10条）
+	 * @param keyWord 查询关键字
+	 * @param response  相应对象
+	 */
+	private void homeQuery(String keyWord, HttpServletResponse response){
+		try {
+			List<MHouseInfo> infos = this.houseInfoBusi.homeQuery(keyWord, 5);
+			JsonHelper.printObjectListToJsonString(response, infos);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
