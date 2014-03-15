@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-
+import ulezu.com.connection.ConnectionFactory;
 import ulezu.com.idao.IHouseInfo;
 import ulezu.com.model.MHouseInfo;
 
@@ -177,6 +177,81 @@ public class DHouseInfo implements IHouseInfo{
 		}
 				
 		return infoList;
+	}
+	
+	/**
+	 * 添加房屋信息
+	 *@author qw
+	 *@version 创建时间:2014-3-15上午10:48:45
+	 * @throws SQLException 
+	 * @see ulezu.com.idao.IHouseInfo#addHouseInfo(ulezu.com.model.MHouseInfo, java.sql.Connection)
+	 */
+	@Override
+	public boolean addHouseInfo(MHouseInfo mHouseInfo, Connection con) throws SQLException {
+		String sql = "insert into houseinfo(id,userName,rentWay,estateName,houseTingNum," +
+				"houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter,isHome," +
+				"modifyTime,address,addressAttach,addressArea,addressCircle,houseTitle," +
+				"isDelete,roomType,sexType,houseDirection,decorationType,estateType," +
+				"rentMoney,payType,houseDescrible,imageId,linkMan,linkCallNumber,isValid) " +
+				"values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		PreparedStatement pre = con.prepareStatement(sql);
+		pre.setObject(1, mHouseInfo.getId());
+		pre.setObject(2, mHouseInfo.getUserName());
+		pre.setObject(3, mHouseInfo.getRentWay());
+		pre.setObject(4, mHouseInfo.getEstateType());
+		pre.setObject(5, mHouseInfo.getHouseTingNum());
+		pre.setObject(6, mHouseInfo.getHouseRoomNum());
+		pre.setObject(7, mHouseInfo.getHouseToiletNum());
+		pre.setObject(8, mHouseInfo.getLayerNum());
+		pre.setObject(9, mHouseInfo.getTotleLayerNum());
+		pre.setObject(10, mHouseInfo.getSquareMeter());
+		pre.setObject(11, mHouseInfo.getIsHome());
+		pre.setObject(12, mHouseInfo.getModifyTime());
+		pre.setObject(13, mHouseInfo.getAddress());
+		pre.setObject(14, mHouseInfo.getAddressAttach());
+		pre.setObject(15, mHouseInfo.getAddressArea());
+		pre.setObject(16, mHouseInfo.getAddressCircle());
+		pre.setObject(17, mHouseInfo.getHouseTitle());
+		pre.setObject(18, mHouseInfo.getIsDelete());
+		pre.setObject(19, mHouseInfo.getRoomType());
+		pre.setObject(20, mHouseInfo.getSexType());
+		pre.setObject(21, mHouseInfo.getHouseDirection());
+		pre.setObject(22, mHouseInfo.getDecorationType());
+		pre.setObject(23, mHouseInfo.getEstateType());
+		pre.setObject(24, mHouseInfo.getRentMoney());
+		pre.setObject(25, mHouseInfo.getPayType());
+		pre.setObject(26, mHouseInfo.getHouseDescrible());
+		pre.setObject(27, mHouseInfo.getImageId());
+		pre.setObject(28, mHouseInfo.getLinkMan());
+		pre.setObject(29, mHouseInfo.getLinkCallNumber());
+		pre.setObject(30, mHouseInfo.getIsValid());
+		if(pre.executeUpdate() > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static void main(String[] args) {
+
+		Connection con = ConnectionFactory.getUlezuReadConnection();
+		try {
+			PreparedStatement pre = con.prepareStatement("select * from houseinfo");
+			ResultSet rs = pre.executeQuery();
+			java.sql.ResultSetMetaData md = rs.getMetaData();
+			int count = md.getColumnCount();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 1; i < count; i++) {
+				sb.append(md.getColumnName(i) + ",");
+			}
+			System.out.println(sb.toString());
+			rs.close();
+			pre.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
