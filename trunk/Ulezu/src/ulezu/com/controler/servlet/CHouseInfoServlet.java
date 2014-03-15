@@ -1,22 +1,22 @@
 package ulezu.com.controler.servlet;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
 import ulezu.com.business.BHouseInfo;
+import ulezu.com.business.BUser;
+import ulezu.com.controler.servlet.common.UlezuHttpServlet;
 import ulezu.com.model.MHouseInfo;
-import ulezu.com.util.AESEncryptAndDecrypt;
-import ulezu.com.util.ImageFactory;
+import ulezu.com.util.JsonHelper;
 
 /**
  * CHouseInfoServlet
  */
-public class CHouseInfoServlet extends HttpServlet {
+public class CHouseInfoServlet extends UlezuHttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	/**
@@ -40,34 +40,36 @@ public class CHouseInfoServlet extends HttpServlet {
     }
 
 	/**
-	 * @see doGet
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
-	}
-
-	/**
 	 * @see doPost
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String action = request.getParameter("action");
 		if("get".equals(action)){	
-			MHouseInfo info = this.getHouseInfoById(request.getParameter("id"));
-			if(info != null){
-				info.setLinkCallNumber(AESEncryptAndDecrypt.encrypt(info.getLinkCallNumber()));
-			}
-			
-			request.setAttribute("houseBean", info);
-			RequestDispatcher rd = request.getRequestDispatcher("detail.jsp") ;
-			rd.forward(request,response) ;
+			String id = request.getParameter("id");	
+			request.setAttribute("houseBean", this.getHouseInfoById(id));
+			forwardToUrl(request, response, "detail.jsp");
 		}else if("count".equals(action)){
 			String id = request.getParameter("id");
 			this.updateAccessCountById(id);
-		}else if("image".equals(action)){
-			response.setContentType("image/jpeg");
-			ImageFactory.generateCellPhoneNumber(response.getOutputStream(), AESEncryptAndDecrypt.decrypt(request.getParameter("callNum")));
-		}
+		}else if("release".equals(action)) {
+			BUser  bUser = new BUser();
+			JSONObject jsonObject = JsonHelper.readJSONObject(request);
+			if(!bUser.isAvailableUser(jsonObject.getString("email"), jsonObject.getString("userPassword"))) {
+				response(response, "0");
+			}
+			
+			MHouseInfo houseInfo = 	(MHouseInfo)JSONObject.toBean(jsonObject, MHouseInfo.class);
+			
+			System.out.println(houseInfo.getLinkMan());
+		} 
 	}
+
 	
 	/**
 	 * 根据ID获取房屋信息
@@ -96,5 +98,7 @@ public class CHouseInfoServlet extends HttpServlet {
 			return 0;
 		}
 	}
+	
+    
 
 }
