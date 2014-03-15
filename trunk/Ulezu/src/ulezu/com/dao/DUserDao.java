@@ -43,4 +43,16 @@ public class DUserDao extends BaseDao<MUser> implements IUserDao {
 		return 0;
 	}
 
+	/**
+	 * 
+	 *@author qw
+	 *@version 创建时间:2014-3-15上午10:01:48
+	 *@see ulezu.com.idao.IUserDao#isAvailableUser(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean isAvailableUser(String email, String password) {
+		
+		return false;
+	}
+
 }

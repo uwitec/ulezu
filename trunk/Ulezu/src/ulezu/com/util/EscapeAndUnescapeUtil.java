@@ -70,4 +70,9 @@ public class EscapeAndUnescapeUtil {
         }  
         return tmp.toString();  
     }  
+    
+    public static void main(String[] args) {
+		String s ="%E5%8F%91%E5%A4%A7%E6%B0%B4%E5%A4%BA";
+		System.out.println(escape(s));
+	}
 }
