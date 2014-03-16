@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ulezu.com.business.BUser;
+import ulezu.com.common.ParamConfigParameters;
 import ulezu.com.controler.servlet.common.UlezuHttpServlet;
 import ulezu.com.model.MUser;
 import ulezu.com.util.AESEncryptAndDecrypt;
@@ -67,7 +68,9 @@ public class CUserServlet extends UlezuHttpServlet {
 				int loginType = this.parseLoginType(loginCode);//登录方式（0-用户名，1-手机号码，2-邮箱）
 				if(this.userHander.login(this.SetUserLoginMessage(loginType, loginCode, password))){ 
 					this.session = request.getSession();
-					session.setAttribute("" + loginCode + "", AESEncryptAndDecrypt.encrypt(loginCode + "^" + password));
+					ParamConfigParameters paramConfig = new ParamConfigParameters();
+					String loginCode_KEY = paramConfig.getParameter("loginCode_KEY");
+					session.setAttribute("" + loginCode + "", AESEncryptAndDecrypt.encrypt(loginCode + "^" + password, loginCode_KEY));
 					request.getRequestDispatcher("/home.jsp").forward(request, response);
 				}else{
 					message = this.getJsonMsg("false");

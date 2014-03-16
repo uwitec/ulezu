@@ -68,17 +68,6 @@ public class JsonHelper {
 	 * @return
 	 */
 	public static JSONObject readJSONObject(HttpServletRequest request){
-		StringBuffer json = new StringBuffer();
-		String line = null;
-		try {
-			BufferedReader reader = request.getReader();
-			while((line = reader.readLine()) != null) {
-				json.append(line);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return JSONObject.fromObject(json.toString());
+		return JSONObject.fromObject(readJSONString(request));
 	}
 }
