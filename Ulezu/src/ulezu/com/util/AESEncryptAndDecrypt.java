@@ -12,7 +12,7 @@ public class AESEncryptAndDecrypt {
 	
 	private static final String AES = "AES";
 
-	private static final String CRYPT_KEY = "YUUAtestYUUAtest";
+	//private static final String CRYPT_KEY = "YUUAtestYUUAtest";
 
 	/**
 	 * 加密
@@ -74,13 +74,14 @@ public class AESEncryptAndDecrypt {
 	 * 解密
 	 * 
 	 * @param data
+	 * @param key 16位长,加密度字符key
 	 * @return
 	 * @throws Exception
 	 */
-	public final static String decrypt(String data) {
+	public final static String decrypt(String data, String key) {
 		try {
 			return new String(decrypt(hex2byte(data.getBytes()),
-					CRYPT_KEY));
+					key));
 		} catch (Exception e) {
 		}
 		return null;
@@ -90,12 +91,13 @@ public class AESEncryptAndDecrypt {
 	 * 加密
 	 * 
 	 * @param data
+	 * @param key 16位长,加密度字符key
 	 * @return
 	 * @throws Exception
 	 */
-	public final static String encrypt(String data) {
+	public final static String encrypt(String data, String key) {
 		try {
-			return byte2hex(encrypt(data.getBytes(), CRYPT_KEY));
+			return byte2hex(encrypt(data.getBytes(), key));
 		} catch (Exception e) {
 		}
 		return null;
@@ -104,10 +106,10 @@ public class AESEncryptAndDecrypt {
 
 	public static void main(String[] args) {
 		String ID = "948181218@qq.com";
-		
-		String idEncrypt = encrypt(ID);
+		String key = "EMAILEMAILEMAILE";
+		String idEncrypt = encrypt(ID, key);
 		System.out.println(idEncrypt);
-		String idDecrypt = decrypt(idEncrypt);
+		String idDecrypt = decrypt(idEncrypt, key);
 		System.out.println(idDecrypt);
 	}
 	
