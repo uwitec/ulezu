@@ -157,6 +157,14 @@
 	src="bootstrap-select/bootstrap-select.min.js"></script>
 <script src="bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+		$(function() {
+			$(".common_desc input").each(function(index,element) {
+				element.onblur = function() {
+					
+				};
+			});
+		});
+
 		//确认并发布
         function confirmAndSubmit() {
         	if(!checkInput()) {
@@ -258,7 +266,7 @@
                 <a>登陆</a>&nbsp;|&nbsp;<a>注册</a>&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
             </div>
         </div>
-        <div style="margin-left: auto; margin-right: auto; width: 1000px; height: 30px; margin-top: 5px;"
+        <div  style="margin-left: auto; margin-right: auto; width: 1000px; height: 30px; margin-top: 5px;"
             class="step">
             <div class="step1">
                 <div class="step1_img">
@@ -284,7 +292,7 @@
                     3.发布成功
                 </div>
                 <div class="step3_img1">
-                    <img src="image/success.png" style="display: none;" />
+                    <img  src="image/success.png" style="display: none;" />
                 </div>
             </div>
         </div>
@@ -391,18 +399,19 @@
                         <span style="margin-left: 45px;"></span>
                         <input id="squareMeter" type="text" class="txt_pangfang" />㎡&nbsp;&nbsp;
                         <select id="roomType" class="selectpicker" data-width="auto">
-                            <option value="0" selected="">主卧</option>
+                        	<option value="房间类型">房间类型</option>
+                            <option value="0">主卧</option>
                             <option value="1">次卧</option>
                             <option value="2">隔断</option>
                         </select>
                         <select id="sexType" class="selectpicker" data-width="auto">
                             <option value="n">性别要求</option>
-                            <option value="0" selected="">男女不限</option>
+                            <option value="0">男女不限</option>
                             <option value="1">限男生</option>
                             <option value="2">限女生</option>
                         </select>                       
                         <select id="houseDirection" class="selectpicker" data-width="auto">
-                            <option selected="selected" value="n">出租间朝向</option>
+                            <option value="n">出租间朝向</option>
                             <option value="0">东</option>
                             <option value="1">南</option>
                             <option value="2">西</option>
