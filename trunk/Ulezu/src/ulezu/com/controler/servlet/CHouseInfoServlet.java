@@ -60,22 +60,36 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 			String id = request.getParameter("id");
 			this.updateAccessCountById(id);
 		}else if("release".equals(action)) {
-			BUser  bUser = new BUser();
-			JSONObject jsonObject = JsonHelper.readJSONObject(request);
-			//if(!bUser.isAvailableUser(jsonObject.getString("email"), jsonObject.getString("userPassword"))) {
-			//	response(response, "0");
-			//}
-			
-			MHouseInfo houseInfo = 	(MHouseInfo)JSONObject.toBean(jsonObject, MHouseInfo.class);
-			houseInfo.setModifyTime(new Date());
-			
-			try {
-				houseInfoBusi.addHouseInfo(houseInfo);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			release(request, response);
 		} 
+	}
+
+	/**
+	 * 增加房屋信息
+	 *@author qw
+	 *@version 创建时间:2014-3-18下午04:34:54
+	 *@param request
+	 * @param response 
+	 */
+	private void release(HttpServletRequest request, HttpServletResponse response) {
+		BUser  bUser = new BUser();
+		JSONObject jsonObject = JsonHelper.readJSONObject(request);
+		if(!bUser.isAvailableUser(jsonObject.getString("email"), jsonObject.getString("userPassword"))) {
+			response(response, "0");
+		}
+		
+		MHouseInfo houseInfo = 	(MHouseInfo)JSONObject.toBean(jsonObject, MHouseInfo.class);
+		houseInfo.setModifyTime(new Date());
+		
+		try {
+			if(!houseInfoBusi.addHouseInfo(houseInfo)) {
+				response(response, "1");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		response(response, "发布成功");
 	}
 
 	

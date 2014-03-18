@@ -81,7 +81,9 @@ public class BHouseInfo {
 		try {
 			return this.houseInfoHandler.addHouseInfo(mHouseInfo, con);
 		} finally {
-			con.close();
+			if(!this.con.isClosed()){
+				this.con.close();
+			}
 		}
 	}
 

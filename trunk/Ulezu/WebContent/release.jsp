@@ -192,8 +192,6 @@
      	//提交信息到服务器方法,保存成功返回true,否则返回false
      	function submitMessage() {
      		var message = {};   //房屋信息
-     		message.email = $("#email").val();
-     		message.userPassword = $("#password").val();
      		message.rentWay = $('input[name="rentWay"]:checked').val();
      		message.estateName = $("#estateName").val();
      		message.houseTingNum = $("#houseTingNum").val();
@@ -217,18 +215,22 @@
      		message.addressAttach = $("#addressAttach").val();
      		
      		var jsonData = JSON.stringify(message);
+     		email = $("#email").val();
+     		userPassword = $("#password").val();
      		$.ajax({
      			type:'post',
      			dataType:'json',
      			contentType: "application/json",
      			data: jsonData,
      			async:false,
-     			url: "houseInfo.do?action=release",
+     			url: "houseInfo.do?action=release&email=" + email + "&userPassword=" + userPassword,
      	    	success: function(result){
      	    		if(result.data == "0") {
      	    			alert("用户名或密码出错！");
      	    		} else if(result.data == "1") {
      	    			alert("保存出错！");
+     	    		} else {
+     	    			alert("");
      	    		}
      	    	}
      	    });
