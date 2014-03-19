@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import ulezu.com.business.BHouseInfo;
 import ulezu.com.business.BUser;
+import ulezu.com.common.IDFactory;
 import ulezu.com.controler.servlet.common.UlezuHttpServlet;
 import ulezu.com.model.MHouseInfo;
+import ulezu.com.model.MObjectValue;
 import ulezu.com.util.JsonHelper;
 
 /**
@@ -70,25 +72,44 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 	 *@version 创建时间:2014-3-18下午04:34:54
 	 *@param request
 	 * @param response 
+	 * @throws Exception 
 	 */
 	private void release(HttpServletRequest request, HttpServletResponse response) {
-		BUser  bUser = new BUser();
-		JSONObject jsonObject = JsonHelper.readJSONObject(request);
-		if(!bUser.isAvailableUser(jsonObject.getString("email"), jsonObject.getString("userPassword"))) {
-			response(response, "0");
-		}
-		
-		MHouseInfo houseInfo = 	(MHouseInfo)JSONObject.toBean(jsonObject, MHouseInfo.class);
-		houseInfo.setModifyTime(new Date());
-		
 		try {
-			if(!houseInfoBusi.addHouseInfo(houseInfo)) {
-				response(response, "1");
-			}
-		} catch (SQLException e) {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+		//BUser  bUser = new BUser();
+	//	if(!bUser.isAvailableUser(request.getParameter("email"), request.getParameter("userPassword"))) {
+		//	response(response, "0");
+		//}
+		
+		JSONObject jsonObject = JsonHelper.readJSONObject(request);
+		MHouseInfo houseInfo = 	(MHouseInfo)JSONObject.toBean(jsonObject, MHouseInfo.class);
+		
+		
+		request.getSession().setAttribute("userName", "秦伟");//测试用
+		/*设置默认值*/
+		houseInfo.setId(IDFactory.getId("ulezu", "houseInfo"));
+		houseInfo.setUserName((String) request.getSession().getAttribute("userName"));
+		houseInfo.setIsHome(0);//0否，1是
+		houseInfo.setModifyTime(new Date());
+		houseInfo.setIsDelete(0);//0未删除，1删除
+		houseInfo.setIsValid(1);//已通过，未通过
+		houseInfo.setHouseTitle("【" + MObjectValue.rentWayElements[houseInfo.getRentWay()] + "】 " + houseInfo.getAddressCircle() + " " + MObjectValue.decorationTypeElements[houseInfo.getDecorationType()]);//title为： 【出租方试】+ 商圈 + 装修情况
+		houseInfo.setAddress(houseInfo.getAddressArea() + houseInfo.getAddressCircle() + houseInfo.getAddressAttach());//地址为 区域+商圈+附属
+		
+		
+//		try {
+//			if(!houseInfoBusi.addHouseInfo(houseInfo)) {
+//				response(response, "1");
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		response(response, "发布成功");
 	}
 

@@ -39,7 +39,7 @@ public class DHouseInfo implements IHouseInfo{
 			info.setId(rs.getString(1));
 			info.setUserName(rs.getString(2));
 			info.setRentWay(rs.getInt(3));
-			info.setEestateName(rs.getString(4));
+			info.setEstateName(rs.getString(4));
 			info.setHouseTingNum(rs.getInt(5));
 			info.setHouseRoomNum(rs.getInt(6));
 			info.setHouseToiletNum(rs.getInt(7));
@@ -152,7 +152,7 @@ public class DHouseInfo implements IHouseInfo{
 				info.setId(rs.getString(1));
 				info.setUserName(rs.getString(2));
 				info.setRentWay(rs.getInt(3));
-				info.setEestateName(rs.getString(4));
+				info.setEstateName(rs.getString(4));
 				info.setHouseTingNum(rs.getInt(5));
 				info.setHouseRoomNum(rs.getInt(6));
 				info.setHouseToiletNum(rs.getInt(7));

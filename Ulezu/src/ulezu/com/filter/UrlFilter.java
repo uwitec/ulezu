@@ -78,58 +78,58 @@ public class UrlFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		request.setCharacterEncoding("UTF-8");
-		Cookie[] cookies = request.getCookies();
-		if(cookies == null){
-			response.sendRedirect(redirectURL);
-			return;
-		}
-		String user = request.getParameter("userName");
-		if(cookies.length == 0 ||cookies.length == 1){
-			response.sendRedirect(redirectURL);
-			return;
-		}
-		
-		for(int i=0 ;i<cookies.length;i++){
-			if(!cookies[i].getName().equals("JSESSIONID") && user!=null){
-				String cookieVlaue = cookies[i].getValue();
-				String cookieJson = EscapeAndUnescapeUtil.unescape(cookieVlaue);
-				JSONObject jsonObject = null;
-				String name = "";
-				try{
-					jsonObject = new JSONObject(cookieJson);
-					name = jsonObject.getString("userName");
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-				if(cookies[i].getName().equals("user.ulezu.com") && !name.equals(user)){
-					response.sendRedirect(redirectURL);
-					return;
-				}
-			}
-			
-			if(cookies[i].getName().equals("user.ulezu.com")){
-				userName = cookies[i].getValue();
-				String cookieJson = EscapeAndUnescapeUtil.unescape(userName);
-				JSONObject jsonObject = null;
-				try{
-					jsonObject = new JSONObject(cookieJson);
-					userName = jsonObject.getString("userName");
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-				break;
-			}
-		}
-		HttpSession session = request.getSession();
-		sessionKey = (String) session.getAttribute("" + userName + "");
-		if(sessionKey==null){
-			response.sendRedirect(redirectURL);
-			return;
-		}
+//		request.setCharacterEncoding("UTF-8");
+//		Cookie[] cookies = request.getCookies();
+//		if(cookies == null){
+//			response.sendRedirect(redirectURL);
+//			return;
+//		}
+//		String user = request.getParameter("userName");
+//		if(cookies.length == 0 ||cookies.length == 1){
+//			response.sendRedirect(redirectURL);
+//			return;
+//		}
+//		
+//		for(int i=0 ;i<cookies.length;i++){
+//			if(!cookies[i].getName().equals("JSESSIONID") && user!=null){
+//				String cookieVlaue = cookies[i].getValue();
+//				String cookieJson = EscapeAndUnescapeUtil.unescape(cookieVlaue);
+//				JSONObject jsonObject = null;
+//				String name = "";
+//				try{
+//					jsonObject = new JSONObject(cookieJson);
+//					name = jsonObject.getString("userName");
+//				}
+//				catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				
+//				if(cookies[i].getName().equals("user.ulezu.com") && !name.equals(user)){
+//					response.sendRedirect(redirectURL);
+//					return;
+//				}
+//			}
+//			
+//			if(cookies[i].getName().equals("user.ulezu.com")){
+//				userName = cookies[i].getValue();
+//				String cookieJson = EscapeAndUnescapeUtil.unescape(userName);
+//				JSONObject jsonObject = null;
+//				try{
+//					jsonObject = new JSONObject(cookieJson);
+//					userName = jsonObject.getString("userName");
+//				}
+//				catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				break;
+//			}
+//		}
+//		HttpSession session = request.getSession();
+//		sessionKey = (String) session.getAttribute("" + userName + "");
+//		if(sessionKey==null){
+//			response.sendRedirect(redirectURL);
+//			return;
+//		}
 		
 		chain.doFilter(request, response);
 	}

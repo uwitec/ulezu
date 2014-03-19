@@ -157,18 +157,10 @@
 	src="bootstrap-select/bootstrap-select.min.js"></script>
 <script src="bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-		$(function() {
-			$(".common_desc input").each(function(index,element) {
-				element.onblur = function() {
-					
-				};
-			});
-		});
-
 		//确认并发布
         function confirmAndSubmit() {
         	if(!checkInput()) {
-        		return;
+        		//return;
         	}
             $(".step1_img img").attr("src", "image/next_b.png");
             $(".step2_img img").attr("src", "image/next.png");
@@ -346,12 +338,12 @@
                     <div class="common_desc" style="float: left; width: 800px; height: 50px; vertical-align: middle;">
                         <span style="padding-right: 45px;"></span> 
                             <select id="addressArea" class="selectpicker" data-width="auto" onchange="size=1;">
-                            <option>--区域--</option>
-                            <option value="">--新都区--</option>
+                            <option value="n">--区域--</option>
+                            <option value="新都区">新都区</option>
                         </select>
                         <select id="addressCircle" class="selectpicker" data-width="auto">
-                            <option>--商圈--</option>
-                            <option value="">--万达广场--</option>
+                            <option value="n">--商圈--</option>
+                            <option value="万达广场">万达广场</option>
                         </select>
                         <input id="addressAttach" type="text" class="txt_address" />
                     </div>

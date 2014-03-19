@@ -119,7 +119,7 @@ public class MHouseInfo {
 	 * 获取小区名称
 	 * @return 小区名称
 	 */
-	public String getEestateName(){
+	public String getEstateName(){
 		return this.estateName;
 	}
 	
@@ -589,7 +589,7 @@ public class MHouseInfo {
 	/**
 	 * 设置小区名称
 	 */
-	public void setEestateName(String estateName){
+	public void setEstateName(String estateName){
 		this.estateName = estateName;
 	}
 	
