@@ -102,15 +102,15 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 		houseInfo.setAddress(houseInfo.getAddressArea() + houseInfo.getAddressCircle() + houseInfo.getAddressAttach());//地址为 区域+商圈+附属
 		
 		
-//		try {
-//			if(!houseInfoBusi.addHouseInfo(houseInfo)) {
-//				response(response, "1");
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		response(response, "发布成功");
+		try {
+			if(!houseInfoBusi.addHouseInfo(houseInfo)) {
+				response(response, "1");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		response(response, super.getJsonMsg("发布成功"));
 	}
 
 	
