@@ -78,80 +78,90 @@ public class UrlFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-//		request.setCharacterEncoding("UTF-8");
-//		Cookie[] cookies = request.getCookies();
-//		if(cookies == null){
-//			response.sendRedirect(redirectURL);
-//			return;
-//		}
-//		String user = request.getParameter("userName");
-//		if(cookies.length == 0 ||cookies.length == 1){
-//			response.sendRedirect(redirectURL);
-//			return;
-//		}
-//		
-//		for(int i=0 ;i<cookies.length;i++){
-//			if(!cookies[i].getName().equals("JSESSIONID") && user!=null){
-//				String cookieVlaue = cookies[i].getValue();
-//				String cookieJson = EscapeAndUnescapeUtil.unescape(cookieVlaue);
-//				JSONObject jsonObject = null;
-//				String name = "";
-//				try{
-//					jsonObject = new JSONObject(cookieJson);
-//					name = jsonObject.getString("userName");
-//				}
-//				catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//				
-//				if(cookies[i].getName().equals("user.ulezu.com") && !name.equals(user)){
-//					response.sendRedirect(redirectURL);
-//					return;
-//				}
-//			}
-//			
-//			if(cookies[i].getName().equals("user.ulezu.com")){
-//				userName = cookies[i].getValue();
-//				String cookieJson = EscapeAndUnescapeUtil.unescape(userName);
-//				JSONObject jsonObject = null;
-//				try{
-//					jsonObject = new JSONObject(cookieJson);
-//					userName = jsonObject.getString("userName");
-//				}
-//				catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//				break;
-//			}
-//		}
-//		HttpSession session = request.getSession();
-//		sessionKey = (String) session.getAttribute("" + userName + "");
-//		if(sessionKey==null){
-//			response.sendRedirect(redirectURL);
-//			return;
-//		}
-		
+		request.setCharacterEncoding("UTF-8");
+		Cookie[] cookies = request.getCookies();
+		if(!this.checkNotRequestFilter(request)){
+			if(cookies == null){
+				response.sendRedirect(redirectURL);
+				return;
+			}
+			String user = request.getParameter("userName");
+			if(cookies.length == 0 ||cookies.length == 1){
+				response.sendRedirect(redirectURL);
+				return;
+			}
+			
+			for(int i=0 ;i<cookies.length;i++){
+				if(!cookies[i].getName().equals("JSESSIONID") && user!=null){
+					String cookieVlaue = cookies[i].getValue();
+					String cookieJson = EscapeAndUnescapeUtil.unescape(cookieVlaue);
+					JSONObject jsonObject = null;
+					String name = "";
+					try{
+						jsonObject = new JSONObject(cookieJson);
+						name = jsonObject.getString("userName");
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					if(cookies[i].getName().equals("user.ulezu.com") && !name.equals(user)){
+						response.sendRedirect(redirectURL);
+						return;
+					}
+				}
+				
+				if(cookies[i].getName().equals("user.ulezu.com")){
+					userName = cookies[i].getValue();
+					String cookieJson = EscapeAndUnescapeUtil.unescape(userName);
+					JSONObject jsonObject = null;
+					try{
+						jsonObject = new JSONObject(cookieJson);
+						userName = jsonObject.getString("userName");
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				}
+			}
+			HttpSession session = request.getSession();
+			sessionKey = (String) session.getAttribute("" + userName + "");
+			if(sessionKey==null){
+				response.sendRedirect(redirectURL);
+				return;
+			}
+		}
+			
 		chain.doFilter(request, response);
 	}
 
 	/**
-	 * 不需教研的过滤请求
+	 * 不需校验的过滤请求
 	 * @param request
 	 * @return
 	 */
 	private boolean checkNotRequestFilter(HttpServletRequest request){
-		String uri = request.getServletPath()+(request.getPathInfo()==null?"":request.getPathInfo());
+		String uri = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
 		//不包含该uri--false
 		return noCheckURLList.contains(uri);
 	}
+
+	/**
+	 * 校验Cookie
+	 * @param request 请求对象
+	 * @return 返回是否校验成功（true-成功）
+	 */
+	private boolean checkCookies(HttpServletRequest request){
+		return false;
+	}
 	
 	/**
-	 * 是否需要判断权限,如客户端浏览、登录页面则不需要判断权限
+	 * 校验session
+	 * @param request 请求对象
+	 * @return 返回是否校验成功（true-成功）
 	 */
-	protected boolean noFileUrl(String url, HttpServletRequest request) {
-		if (url.indexOf("/home.jsp") >= 0 || url.indexOf("/register.jsp") >= 0 || url.indexOf("userMapping") > 0) {
-			return true;
-		}
+	private boolean checkSessions(HttpServletRequest request){
 		return false;
 	}
 }

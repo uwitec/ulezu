@@ -70,7 +70,7 @@ public class CUserServlet extends UlezuHttpServlet {
 					this.session = request.getSession();
 					ParamConfigParameters paramConfig = new ParamConfigParameters();
 					String loginCode_KEY = paramConfig.getParameter("loginCode_KEY");
-					session.setAttribute("" + loginCode + "", AESEncryptAndDecrypt.encrypt(loginCode + "^" + password, loginCode_KEY));
+					session.setAttribute("" + loginCode + "", AESEncryptAndDecrypt.encrypt(loginCode + "^" + password, loginCode_KEY, "ulezu_login"));
 					request.getRequestDispatcher("/home.jsp").forward(request, response);
 				}else{
 					message = this.getJsonMsg("false");
