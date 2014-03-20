@@ -50,9 +50,10 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		System.out.println("action");
 		String action = request.getParameter("action");
 		if("get".equals(action)){	
 			String id = request.getParameter("id");	

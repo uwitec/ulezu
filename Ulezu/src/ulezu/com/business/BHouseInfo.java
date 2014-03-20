@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import ulezu.com.common.IDFactory;
 import ulezu.com.connection.ConnectionFactory;
 import ulezu.com.factory.DaoFactory;
 import ulezu.com.idao.IHouseInfo;
@@ -79,6 +80,7 @@ public class BHouseInfo {
 	public boolean addHouseInfo(MHouseInfo mHouseInfo) throws SQLException {
 		this.con = ConnectionFactory.getUlezuWriteConnection();
 		try {
+			mHouseInfo.setId(IDFactory.getId("ulezu", "houseInfo"));
 			return this.houseInfoHandler.addHouseInfo(mHouseInfo, con);
 		} finally {
 			if(!this.con.isClosed()){

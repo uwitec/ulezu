@@ -65,7 +65,7 @@ public class JsonHelper {
 	/**
 	 * 从request中读取json对象
 	 * @param request
-	 * @return
+	 * @return JSONObject
 	 */
 	public static JSONObject readJSONObject(HttpServletRequest request){
 		return JSONObject.fromObject(readJSONString(request));
