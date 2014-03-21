@@ -43,7 +43,7 @@ public class UrlFilter implements Filter {
 	/**
 	 * 用户名
 	 */
-	private String userName = null;
+	private String userName = "";
 
 	/**
 	 * destory
@@ -79,58 +79,8 @@ public class UrlFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		request.setCharacterEncoding("UTF-8");
-		Cookie[] cookies = request.getCookies();
-		if(!this.checkNotRequestFilter(request)){
-			if(cookies == null){
-				response.sendRedirect(redirectURL);
-				return;
-			}
-			String user = request.getParameter("userName");
-			if(cookies.length == 0 ||cookies.length == 1){
-				response.sendRedirect(redirectURL);
-				return;
-			}
-			
-			for(int i=0 ;i<cookies.length;i++){
-				if(!cookies[i].getName().equals("JSESSIONID") && user!=null){
-					String cookieVlaue = cookies[i].getValue();
-					String cookieJson = EscapeAndUnescapeUtil.unescape(cookieVlaue);
-					JSONObject jsonObject = null;
-					String name = "";
-					try{
-						jsonObject = new JSONObject(cookieJson);
-						name = jsonObject.getString("userName");
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
-					
-					if(cookies[i].getName().equals("user.ulezu.com") && !name.equals(user)){
-						response.sendRedirect(redirectURL);
-						return;
-					}
-				}
-				
-				if(cookies[i].getName().equals("user.ulezu.com")){
-					userName = cookies[i].getValue();
-					String cookieJson = EscapeAndUnescapeUtil.unescape(userName);
-					JSONObject jsonObject = null;
-					try{
-						jsonObject = new JSONObject(cookieJson);
-						userName = jsonObject.getString("userName");
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
-					break;
-				}
-			}
-			HttpSession session = request.getSession();
-			sessionKey = (String) session.getAttribute("" + userName + "");
-			if(sessionKey==null){
-				response.sendRedirect(redirectURL);
-				return;
-			}
+		if(!this.checkNotRequestFilter(request) || !this.checkCookies(request) || !this.checkSessions(request)){
+			response.sendRedirect(redirectURL);
 		}
 			
 		chain.doFilter(request, response);
@@ -143,7 +93,7 @@ public class UrlFilter implements Filter {
 	 */
 	private boolean checkNotRequestFilter(HttpServletRequest request){
 		String uri = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
-		//不包含该uri--false
+		
 		return noCheckURLList.contains(uri);
 	}
 
@@ -153,7 +103,48 @@ public class UrlFilter implements Filter {
 	 * @return 返回是否校验成功（true-成功）
 	 */
 	private boolean checkCookies(HttpServletRequest request){
-		return false;
+		Cookie[] cookies = request.getCookies();
+		if(cookies == null || cookies.length == 0 ||cookies.length == 1){
+			return false;
+		}
+
+		String user = request.getParameter("userName");
+		for(int i=0 ;i<cookies.length;i++){
+			if(!cookies[i].getName().equals("JSESSIONID") && user!=null){
+				String cookieVlaue = cookies[i].getValue();
+				String cookieJson = EscapeAndUnescapeUtil.unescape(cookieVlaue);
+				JSONObject jsonObject = null;
+				String name = "";
+				try{
+					jsonObject = new JSONObject(cookieJson);
+					name = jsonObject.getString("userName");
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				///cookies一定要随机构造，与服务端的cookie名相同，代表用户登陆过
+				if(cookies[i].getName().equals("user.ulezu.com") && !name.equals(user)){
+					return false;
+				}
+			}
+			
+			if(cookies[i].getName().equals("user.ulezu.com")){
+				userName = cookies[i].getValue();
+				String cookieJson = EscapeAndUnescapeUtil.unescape(userName);
+				JSONObject jsonObject = null;
+				try{
+					jsonObject = new JSONObject(cookieJson);
+					userName = jsonObject.getString("userName");
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			}
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -162,6 +153,12 @@ public class UrlFilter implements Filter {
 	 * @return 返回是否校验成功（true-成功）
 	 */
 	private boolean checkSessions(HttpServletRequest request){
-		return false;
+		HttpSession session = request.getSession();
+		sessionKey = (String) session.getAttribute("" + userName + "");
+		if(sessionKey==null){
+			return false;
+		}
+		
+		return true;
 	}
 }
