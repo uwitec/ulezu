@@ -185,7 +185,7 @@
         	%>
             <div style="width:1000px;margin-top:30px;">
                 <div style="float:left;width:120px;font-size:20px;height:30px;line-height: 40px;color:#444;">【(<%= rentWay %>)</div>
-                <div style="float:left;width:880px;font-size:20px;height:30px;line-height: 40px;color:#444;"><%= info.getEestateName() %>】</div>
+                <div style="float:left;width:880px;font-size:20px;height:30px;line-height: 40px;color:#444;"><%= info.getEstateName() %>】</div>
                 <div style="float:left;width:960px;font-size:20px;height:auto;line-height: 40px;color:#666;padding: 0px 20px 0px 50px;"><%= info.getHouseTitle() %> </div>
              <div style="float:left;width:1000px;font-size:10px;height:15px;line-height: 20px;color:#666;">
                 <div class="small_time"><%= info.getModifyTime() %></div>
