@@ -63,20 +63,7 @@ public class CUserServlet extends UlezuHttpServlet {
 		switch(type){
 			case 0 :
 				//登录
-				String loginCode = request.getParameter("userName");
-				String password = request.getParameter("password");
-				int loginType = this.parseLoginType(loginCode);//登录方式（0-用户名，1-手机号码，2-邮箱）
-				if(this.userHander.login(this.SetUserLoginMessage(loginType, loginCode, password))){ 
-					if(0 != loginType){
-						loginCode = this.getUserNameByLoginTypeAndLoginAccount(loginType, loginCode);
-					}
-					
-					this.setCookieAndSession(request, response, loginCode, password);
-					message = super.getJsonMsg("true");
-				}else{
-					message = super.getJsonMsg("false");
-				}
-				
+				message = this.login(request, response);				
 				break;				
 			case 1 :
 				//注册
@@ -101,17 +88,61 @@ public class CUserServlet extends UlezuHttpServlet {
 	}
 	
 	/**
+	 * 登陆
+	 * @param request 请求
+	 * @return 返回页面参数
+	 */
+	private String login(HttpServletRequest request, HttpServletResponse response){
+		String loginCode = request.getParameter("userName");
+		String password = request.getParameter("password");
+		int loginType = this.parseLoginType(loginCode);//登录方式（0-用户名，1-手机号码，2-邮箱）
+		if(this.login(loginType, loginCode, password)){ 
+			String userName = this.getUserNameByLoginTypeAndLoginAccount(loginType, loginCode);
+			if("".equals(userName)){
+				return super.getJsonMsg("false");
+			}
+			
+			this.setCookieAndSession(request, response, userName, password);
+			return super.getJsonMsg("true");
+		}else{
+			return super.getJsonMsg("false");
+		}
+	}
+	
+	/**
+	 * 登陆
+	 * @param loginType 账号类型
+	 * @param loginCode 账号
+	 * @param password 密码
+	 * @return 登陆是否成功
+	 */
+	private boolean login(int loginType, String loginCode, String password){
+		try {
+			return this.userHander.login(this.SetUserLoginMessage(loginType, loginCode, password));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	/**
 	 * 根据登陆账号和账号类型获取用户名
 	 * @param loginType 账号类型（1-手机，2-邮箱）
 	 * @param account 账号
 	 * @return 用户名
 	 */
 	private String getUserNameByLoginTypeAndLoginAccount(int loginType, String account){
-		switch(loginType){
-			case 1:
-				return this.userHander.getUserNameByPhoneNum(account);
-			case 2:
-				return this.userHander.getUserNameByEmailAccount(account);
+		try {
+			switch(loginType){
+				case 0:
+					return account;
+				case 1:
+					return this.userHander.getUserNameByPhoneNum(account);
+				case 2:
+					return this.userHander.getUserNameByEmailAccount(account);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return "";
