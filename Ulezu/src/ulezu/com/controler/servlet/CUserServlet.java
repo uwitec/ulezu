@@ -117,6 +117,7 @@ public class CUserServlet extends UlezuHttpServlet {
 	 * @return 登陆是否成功
 	 */
 	private boolean login(int loginType, String loginCode, String password){
+		
 		try {
 			return this.userHander.login(this.SetUserLoginMessage(loginType, loginCode, password));
 		} catch (Exception e) {
