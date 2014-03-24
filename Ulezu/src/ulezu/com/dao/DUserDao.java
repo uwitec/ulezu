@@ -7,8 +7,10 @@
 package ulezu.com.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import ulezu.com.common.BaseDao;
 import ulezu.com.idao.IUserDao;
 import ulezu.com.model.MUser;
 
@@ -23,11 +25,22 @@ public class DUserDao implements IUserDao {
 	 * 用户登录
 	 *@author qw
 	 *@version 创建时间:2014-2-28上午10:37:03
+	 * @throws SQLException 
 	 *@see ulezu.com.idao.IUserDao#login(ulezu.com.model.MUser, java.sql.Connection)
 	 */
 	@Override
-	public boolean login(MUser user, Connection con) {
-		String sql = "";
+	public boolean login(MUser user, Connection con) throws SQLException {
+		String sql = "select userName from userInfo where userName='"+user.getUserName()+"' or phoneNum='"+user.getPhoneNum()+"' or email='"+user.getEmail()+"' and userPassword='"+user.getUserPassword()+"' limit 1;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = null;
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			if(!("").equals(rs.getString(1))){
+				return true;
+			};
+			
+		}
+		
 		return false;
 	}
 
@@ -62,11 +75,19 @@ public class DUserDao implements IUserDao {
 	 * @param email 邮箱
 	 * @param con 数据库连接
 	 * @return 返回用户名
+	 * @throws SQLException 
 	 */
 	@Override
-	public String getUserNameByEmailAccount(String email, Connection con) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUserNameByEmailAccount(String email, Connection con) throws SQLException {
+		String sql = "select userName from userInfo where email='"+email+"' limit 1;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = null;
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			return rs.getString(1);			
+		}
+		
+		return "";
 	}
 
 	/**
@@ -76,9 +97,16 @@ public class DUserDao implements IUserDao {
 	 * @return 返回用户名
 	 */
 	@Override
-	public String getUserNameByPhoneNum(String phoneNum, Connection con) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUserNameByPhoneNum(String phoneNum, Connection con) throws SQLException  {
+		String sql = "select userName from userInfo where phoneNum='"+phoneNum+"' limit 1;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = null;
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			return rs.getString(1);			
+		}
+		
+		return "";
 	}
 
 }

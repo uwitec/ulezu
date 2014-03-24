@@ -7,10 +7,14 @@
 package ulezu.com.business;
 
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import ulezu.com.factory.DaoFactory;
 import ulezu.com.idao.IUserDao;
 import ulezu.com.model.MUser;
 import ulezu.com.common.MD5Encrypt;
+import ulezu.com.connection.ConnectionFactory;
 
 /**
  * 用户业务类
@@ -19,6 +23,11 @@ import ulezu.com.common.MD5Encrypt;
  * 
  */
 public class BUser {
+	/**
+	 * 数据库连接
+	 */
+	private Connection con = null;
+	
 	/**
 	 * 用户访问接口
 	 */
@@ -36,11 +45,17 @@ public class BUser {
 	 * 
 	 * @param user
 	 * @return 返回bool值 true登录正确
+	 * @throws Exception 抛出异常
 	 */
-	public boolean login(MUser user) {
-		boolean isSuccess = false;
-		isSuccess = this.userDao.login(user, null);
-		return isSuccess;
+	public boolean login(MUser user) throws Exception {
+		try{
+			this.con = ConnectionFactory.getUlezuReadConnection();
+			return this.userDao.login(user, this.con);
+		}finally{
+			if(!this.con.isClosed()){
+				this.con.close();
+			}
+		}
 	}
 
 	/**
@@ -79,10 +94,17 @@ public class BUser {
 	 * @param email 邮箱
 	 * @param con 数据库连接
 	 * @return 返回用户名
+	 * @throws Exception 抛出异常
 	 */
-	public String getUserNameByEmailAccount(String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUserNameByEmailAccount(String email) throws Exception {
+		try{
+			this.con = ConnectionFactory.getUlezuReadConnection();
+			return this.userDao.getUserNameByEmailAccount(email, this.con);
+		}finally{
+			if(!this.con.isClosed()){
+				this.con.close();
+			}
+		}
 	}
 
 	/**
@@ -90,9 +112,16 @@ public class BUser {
 	 * @param phoneNum 电话号码
 	 * @param con 数据库连接
 	 * @return 返回用户名
+	 * @throws Exception  抛出异常
 	 */
-	public String getUserNameByPhoneNum(String phoneNum) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUserNameByPhoneNum(String phoneNum) throws Exception {
+		try{
+			this.con = ConnectionFactory.getUlezuReadConnection();
+			return this.userDao.getUserNameByPhoneNum(phoneNum, this.con);
+		}finally{
+			if(!this.con.isClosed()){
+				this.con.close();
+			}
+		}
 	}
 }
