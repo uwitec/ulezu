@@ -17,7 +17,7 @@ import ulezu.com.model.MUser;
  * @author Administrator
  *
  */
-public class DUserDao extends BaseDao<MUser> implements IUserDao {
+public class DUserDao implements IUserDao {
 
 	/**
 	 * 用户登录
@@ -27,10 +27,11 @@ public class DUserDao extends BaseDao<MUser> implements IUserDao {
 	 */
 	@Override
 	public boolean login(MUser user, Connection con) {
-		// TODO Auto-generated method stub
-		return false;
+		String sql = "";
+		return true;
 	}
 
+	
 	/**
 	 * 用户注注
 	 *@author qw
@@ -53,6 +54,20 @@ public class DUserDao extends BaseDao<MUser> implements IUserDao {
 	public boolean isAvailableUser(String email, String password) {
 		
 		return false;
+	}
+
+
+	@Override
+	public String getUserNameByEmailAccount(String email, Connection con) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String getUserNameByPhoneNum(String phoneNum, Connection con) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

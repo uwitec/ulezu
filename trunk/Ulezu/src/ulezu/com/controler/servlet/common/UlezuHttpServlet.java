@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,5 +72,17 @@ public class UlezuHttpServlet extends HttpServlet {
 	protected<T> T initObject(HttpServletRequest request) {
 		
 		return null;
+	}
+	
+	/**
+	 * 设置cookie
+	 * @param response 响应对象
+	 * @param cookieName cookie名
+	 * @param cookieValue cookie值
+	 */
+	protected void setCookie(HttpServletResponse response, String cookieName, String cookieValue){
+		Cookie cookie = new Cookie(cookieName,cookieValue);
+		cookie.setMaxAge(90); //设置15分钟 
+		response.addCookie(cookie);
 	}
 }

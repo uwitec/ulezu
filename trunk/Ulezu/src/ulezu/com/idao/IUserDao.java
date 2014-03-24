@@ -34,4 +34,20 @@ public interface IUserDao {
 	public int register(MUser user, Connection con);
 
 	public boolean isAvailableUser(String email, String password);
+	
+	/**
+	 * 通过邮箱获取用户名
+	 * @param email 邮箱
+	 * @param con 数据库连接
+	 * @return 返回用户名
+	 */
+	public String getUserNameByEmailAccount(String email, Connection con);
+	
+	/**
+	 * 
+	 * @param email
+	 * @param con
+	 * @return
+	 */
+	public String getUserNameByPhoneNum(String phoneNum, Connection con);
 }

@@ -16,7 +16,7 @@ import ulezu.com.util.JsonHelper;
 /**
  * Servlet implementation class SearchServlet
  */
-public class SearchServlet extends HttpServlet {
+public class CSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	/**
@@ -27,7 +27,7 @@ public class SearchServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchServlet() {
+    public CSearchServlet() {
         super();
     }
 	

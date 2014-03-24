@@ -109,6 +109,7 @@
 	color: #777;
 	border: 1px solid #ccc;
 	font-style: italic;
+	margin: 0px 0px 5px 0px;
 }
 
 .btn_register {
@@ -222,8 +223,18 @@
     		dataType: "json",
     		url: "userMapping?type=0&userName="+$("#txtEmail").val()+"&password="+$("#txtPass").val(),
     		success: function(v){
+    			
     		}
     	});    	
+	}
+	function switchUserTxt(){
+		$("#txtEmailShow").css("display", "none");
+		$("#txtEmail").css("display", "block");
+	}
+	
+	function switchPassTxt(){
+		$("#txtPassShow").css("display", "none");
+		$("#txtPass").css("display", "block");
 	}
 </script>
 </head>
@@ -271,14 +282,18 @@
 					优乐租</div>
 					<div style="float:left;margin: 10px 20px 0px 10px; width: 430px; color: #636363; text-align: center; line-height: 40px;">
 						<span class="control-group" id="email_input">
-							<input id="txtEmail" type="text" value="请输入邮箱/用户名/电话号码"
-								class="input_email" />
+							<input type="text" value="请输入邮箱/用户名/电话号码" id="txtEmailShow"
+								class="input_email" onMouseDown="switchUserTxt();" style="display:block;"/>
+							<input id="txtEmail" type="text"
+								class="input_email" style="display:none;"/>
 						</span>
 					</div> 
 				<div
 					style="float:left;margin: 10px 20px 0px 20px; width: 410px; color: #636363; font-size: 12px; line-height: 40px;">
-					<input id="txtPass" type="password" value="请输入密码"
-								class="input_email" />
+					<input id="txtPassShow" type="text" value="请输入密码"
+								class="input_email" style="display:block;" onMouseDown="switchPassTxt();"/>
+					<input id="txtPass" type="password"
+								class="input_email" style="display:none;"/>
 				</div>
 				<div
 					style="margin: 10px 20px 0px 20px; width: 410px; color: #636363; text-align: center;">

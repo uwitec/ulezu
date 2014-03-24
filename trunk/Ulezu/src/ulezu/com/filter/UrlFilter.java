@@ -79,8 +79,11 @@ public class UrlFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		request.setCharacterEncoding("UTF-8");
-		if(!this.checkNotRequestFilter(request) || !this.checkCookies(request) || !this.checkSessions(request)){
-			response.sendRedirect(redirectURL);
+		if(!this.checkNotRequestFilter(request)){
+			if(!this.checkCookies(request)|| !this.checkSessions(request)){
+				response.sendRedirect(redirectURL);
+				return;
+			}
 		}
 			
 		chain.doFilter(request, response);
@@ -93,6 +96,9 @@ public class UrlFilter implements Filter {
 	 */
 	private boolean checkNotRequestFilter(HttpServletRequest request){
 		String uri = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
+		if(uri.contains("/image/")|| uri.contains("/js/")|| uri.contains("/css/") || "/userMapping".equals(uri)){
+			return true;
+		}
 		
 		return noCheckURLList.contains(uri);
 	}

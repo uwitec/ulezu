@@ -17,9 +17,9 @@ public class AESEncryptAndDecrypt {
 	 * @param encryptStr
 	 * @return
 	 */
-	private static byte[] encrypt(byte[] src, String key, String aes) throws Exception {
-		Cipher cipher = Cipher.getInstance(aes);
-		SecretKeySpec securekey = new SecretKeySpec(key.getBytes(), aes);
+	private static byte[] encrypt(byte[] src, String key) throws Exception {
+		Cipher cipher = Cipher.getInstance("AES");
+		SecretKeySpec securekey = new SecretKeySpec(key.getBytes(), key);
 		cipher.init(Cipher.ENCRYPT_MODE, securekey);//设置密钥和加密形式
 		return cipher.doFinal(src);
 	}
@@ -31,9 +31,9 @@ public class AESEncryptAndDecrypt {
 	 * @return
 	 * @throws Exception
 	 */
-	private static byte[] decrypt(byte[] src, String key, String aes)  throws Exception  {
-		Cipher cipher = Cipher.getInstance(aes);
-		SecretKeySpec securekey = new SecretKeySpec(key.getBytes(), aes);//设置加密Key
+	private static byte[] decrypt(byte[] src, String key)  throws Exception  {
+		Cipher cipher = Cipher.getInstance("AES");
+		SecretKeySpec securekey = new SecretKeySpec(key.getBytes(), key);//设置加密Key
 		cipher.init(Cipher.DECRYPT_MODE, securekey);//设置密钥和解密形式
 		return cipher.doFinal(src);
 	}
@@ -76,10 +76,10 @@ public class AESEncryptAndDecrypt {
 	 * @return
 	 * @throws Exception
 	 */
-	public final static String decrypt(String data, String key, String aes) {
+	public final static String decrypt(String data, String key) {
 		try {
 			return new String(decrypt(hex2byte(data.getBytes()),
-					key, aes));
+					key));
 		} catch (Exception e) {
 		}
 		return null;
@@ -93,12 +93,17 @@ public class AESEncryptAndDecrypt {
 	 * @return
 	 * @throws Exception
 	 */
-	public final static String encrypt(String data, String key, String aes) {
+	public final static String encrypt(String data, String key) {
 		try {
-			return byte2hex(encrypt(data.getBytes(), key, aes));
+			return byte2hex(encrypt(data.getBytes(), key));
 		} catch (Exception e) {
 		}
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		AESEncryptAndDecrypt aes = new AESEncryptAndDecrypt();
+		System.out.println(aes.encrypt("aaa", "EMAILASEKEYEMAIL"));
 	}
 	
 }
