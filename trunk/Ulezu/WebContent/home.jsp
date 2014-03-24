@@ -234,6 +234,7 @@ a {
 }
 </style>
 <script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/common/jquery.cookie.js"></script>
 <script type="text/javascript">
 	function search(){
 		var args = "v=" + encodeURIComponent($("#txtAddress").val()) + "&h=" + encodeURIComponent($("#hidAdd").val());
@@ -251,6 +252,14 @@ a {
 	function clearAddress(){
 		$("#txtAddress").val('');
 	}
+	
+	window.onload = function() {
+		var userName = $.cookie('u0.ulezu.com');
+		if(userName != null){
+			$("#linkUserName").html(userName).css("background-color", "#ccc");
+			$("#loginandregister").hide();
+		}
+	};
 </script>
 </head>
 <body>
@@ -271,7 +280,7 @@ a {
 						<div
 							style="width: 250px; height: 30px; float: left; padding-top: 50px; color: #444; font-size: 18px;"
 							align="right">
-							<a href="login.jsp">登陆</a>&nbsp;|&nbsp;<a href="register.jsp">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
+							<span id="userName"><a id="linkUserName"></a></span><span id="loginandregister"><a href="login.jsp" id="linkLogin">登陆</a>&nbsp;|&nbsp;<a href="register.jsp" id="linkRegister">注册</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>帮助</a>
 						</div>
 					</div>
 				</div>

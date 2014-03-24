@@ -6,6 +6,7 @@
 //*******************************//
 package ulezu.com.business;
 
+
 import ulezu.com.factory.DaoFactory;
 import ulezu.com.idao.IUserDao;
 import ulezu.com.model.MUser;
@@ -71,5 +72,27 @@ public class BUser {
 	public boolean sendActivateEmail(String email) {
 		//AESEncryptAndDecrypt.encrypt(email);
 		return true;
+	}
+	
+	/**
+	 * 通过邮箱获取用户名
+	 * @param email 邮箱
+	 * @param con 数据库连接
+	 * @return 返回用户名
+	 */
+	public String getUserNameByEmailAccount(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 通过电话号码获取用户名
+	 * @param phoneNum 电话号码
+	 * @param con 数据库连接
+	 * @return 返回用户名
+	 */
+	public String getUserNameByPhoneNum(String phoneNum) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

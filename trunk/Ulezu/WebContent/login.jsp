@@ -216,14 +216,29 @@
 </style>
 <link rel="stylesheet" type="text/css" href="css/easyui.css">
 <script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/common/jquery.cookie.js"></script>
 <script type="text/javascript">
 	function login(){
+		var userName = $("#txtEmail").val();
+		var password = $("#txtPass").val();
+		if(userName == ""){
+			$("#txtWarn").html("请输入用户名/手机号/邮箱").css("text-align", "left").css("color", "red").css("font-weight", "bold");
+			return;
+		}
+		if(password == ""){
+			$("#txtWarn").html("请输入密码").css("text-align", "left").css("color", "red").css("font-weight", "bold");
+			return;
+		}
     	$.ajax({
     		type: "post",
     		dataType: "json",
-    		url: "userMapping?type=0&userName="+$("#txtEmail").val()+"&password="+$("#txtPass").val(),
+    		url: "userMapping?type=0&userName="+userName+"&password="+password,
     		success: function(v){
-    			
+    			if(v.data== "true"){
+    				window.location.href = "home.jsp";
+    			}else{
+    				$("#txtWarn").html("账号或者密码不符").css("text-align", "left").css("color", "red").css("font-weight", "bold");
+    			}
     		}
     	});    	
 	}
@@ -277,7 +292,7 @@
 						没有账号？<a href="register.jsp">注册</a>
 					</div>
 				</div>
-				<div
+				<div id="txtWarn"
 					style="margin: 10px 20px 0px 20px; width: 410px; color: #636363; font-size: 12px; text-align: right; line-height: 20px; color: #fff;">
 					优乐租</div>
 					<div style="float:left;margin: 10px 20px 0px 10px; width: 430px; color: #636363; text-align: center; line-height: 40px;">

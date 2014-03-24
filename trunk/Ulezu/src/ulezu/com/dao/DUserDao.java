@@ -28,7 +28,7 @@ public class DUserDao implements IUserDao {
 	@Override
 	public boolean login(MUser user, Connection con) {
 		String sql = "";
-		return true;
+		return false;
 	}
 
 	
@@ -57,13 +57,24 @@ public class DUserDao implements IUserDao {
 	}
 
 
+	/**
+	 * 通过邮箱获取用户名
+	 * @param email 邮箱
+	 * @param con 数据库连接
+	 * @return 返回用户名
+	 */
 	@Override
 	public String getUserNameByEmailAccount(String email, Connection con) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	/**
+	 * 通过电话号码获取用户名
+	 * @param phoneNum 电话号码
+	 * @param con 数据库连接
+	 * @return 返回用户名
+	 */
 	@Override
 	public String getUserNameByPhoneNum(String phoneNum, Connection con) {
 		// TODO Auto-generated method stub
