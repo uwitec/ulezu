@@ -67,21 +67,14 @@ public class CUserServlet extends UlezuHttpServlet {
 				String password = request.getParameter("password");
 				int loginType = this.parseLoginType(loginCode);//登录方式（0-用户名，1-手机号码，2-邮箱）
 				if(this.userHander.login(this.SetUserLoginMessage(loginType, loginCode, password))){ 
-					this.session = request.getSession();
-					ParamConfigParameters paramConfig = new ParamConfigParameters();
-					String loginCode_KEY = paramConfig.getParameter("loginCode_KEY");
-					System.out.println(loginCode_KEY);
-					System.out.println(AESEncryptAndDecrypt.encrypt(loginCode + "^" + password, "ulezu_login"));
 					if(0 != loginType){
-						loginCode = "";
+						loginCode = this.getUserNameByLoginTypeAndLoginAccount(loginType, loginCode);
 					}
 					
-					session.setAttribute("" + loginCode + "", AESEncryptAndDecrypt.encrypt(loginCode + "^" + password, loginCode_KEY));
-					super.setCookie(response, "u0.ulezu.com", "shenyuc");
-					super.setCookie(response, "u1.ulezu.com", AESEncryptAndDecrypt.encrypt(loginCode + "^" + password, loginCode_KEY));
-					request.getRequestDispatcher("/home.jsp").forward(request, response);
+					this.setCookieAndSession(request, response, loginCode, password);
+					message = super.getJsonMsg("true");
 				}else{
-					message = this.getJsonMsg("false");
+					message = super.getJsonMsg("false");
 				}
 				
 				break;				
@@ -105,6 +98,44 @@ public class CUserServlet extends UlezuHttpServlet {
 		}
 		
 		super.response(response, message);
+	}
+	
+	/**
+	 * 根据登陆账号和账号类型获取用户名
+	 * @param loginType 账号类型（1-手机，2-邮箱）
+	 * @param account 账号
+	 * @return 用户名
+	 */
+	private String getUserNameByLoginTypeAndLoginAccount(int loginType, String account){
+		switch(loginType){
+			case 1:
+				return this.userHander.getUserNameByPhoneNum(account);
+			case 2:
+				return this.userHander.getUserNameByEmailAccount(account);
+		}
+		
+		return "";
+	}
+	
+	/**
+	 * 设置cookie和session
+	 * @param request request请求
+	 * @param response response响应
+	 * @param userName 用户名
+	 * @param pass  密码
+	 */
+	private void setCookieAndSession(HttpServletRequest request, HttpServletResponse response, String userName, String pass){
+
+		ParamConfigParameters paramConfig = new ParamConfigParameters();
+		String loginCode_KEY = paramConfig.getParameter("loginCode_KEY");
+		try {
+			this.session = request.getSession();
+			session.setAttribute("" + userName + "", AESEncryptAndDecrypt.encrypt(userName + "^" + pass, loginCode_KEY));
+			super.setCookie(response, "u0.ulezu.com", userName);
+			super.setCookie(response, "u1.ulezu.com", AESEncryptAndDecrypt.encrypt(userName + "^" + pass, loginCode_KEY));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

@@ -44,10 +44,10 @@ public interface IUserDao {
 	public String getUserNameByEmailAccount(String email, Connection con);
 	
 	/**
-	 * 
-	 * @param email
-	 * @param con
-	 * @return
+	 * 通过电话号码获取用户名
+	 * @param phoneNum 电话号码
+	 * @param con 数据库连接
+	 * @return 返回用户名
 	 */
 	public String getUserNameByPhoneNum(String phoneNum, Connection con);
 }
