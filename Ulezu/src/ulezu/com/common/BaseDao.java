@@ -6,6 +6,8 @@
  */
 package ulezu.com.common;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
@@ -22,7 +24,11 @@ import java.util.List;
 public class BaseDao<T>{
 	DaoReflectUtil<T> daoReflectUtil = null;
 	public BaseDao() {
-		daoReflectUtil = new DaoReflectUtil<T>();
+		Class<T> entityClass;
+		Type genType = getClass().getGenericSuperclass();
+		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+		entityClass = (Class) params[0];
+		daoReflectUtil = new DaoReflectUtil<T>(entityClass);
 	}
 
 	/**
@@ -92,7 +98,7 @@ public class BaseDao<T>{
 		} catch (SQLException e) {
 			this.rethrow(e, sql, params);
 		} finally {
-			closeAll(rs, stmt, con);
+			closeAll(rs, stmt);
 		}
 
 		return result;
@@ -159,9 +165,8 @@ public class BaseDao<T>{
 		} catch (SQLException e) {
 			this.rethrow(e, sql, params);
 		} finally {
-			closeAll(rs, stmt, con);
+			closeAll(rs, stmt);
 		}
-
 		return result;
 	}
 	
@@ -219,7 +224,7 @@ public class BaseDao<T>{
 		} catch (SQLException e) {
 			this.rethrow(e, sql, params);
 		} finally {
-			closeAll(null, stmt, con);
+			closeAll(null, stmt);
 		}
 
 		return rows;
@@ -234,7 +239,7 @@ public class BaseDao<T>{
 	 * 
 	 * @throws SQLException
 	 */
-	private void closeAll(ResultSet rest, PreparedStatement pStmt, Connection conn) {
+	private void closeAll(ResultSet rest, PreparedStatement pStmt) {
 		try {
 			if (rest != null) {
 				rest.close();
@@ -247,15 +252,6 @@ public class BaseDao<T>{
 			if (pStmt != null) {
 				pStmt.close();
 				pStmt = null;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			if (conn != null) {
-				conn.close();
-				conn = null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -367,7 +363,6 @@ public class BaseDao<T>{
 		}
 
 		if (sql == null) {
-			closeAll(null, null, con);
 			throw new SQLException("Null SQL statement");
 		}
 	}
