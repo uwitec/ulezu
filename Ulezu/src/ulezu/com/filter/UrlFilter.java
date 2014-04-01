@@ -96,7 +96,13 @@ public class UrlFilter implements Filter {
 	 */
 	private boolean checkNotRequestFilter(HttpServletRequest request){
 		String uri = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
-		if(uri.contains("/image/")|| uri.contains("/js/")|| uri.contains("/css/") || "/userMapping".equals(uri)){
+		if(uri.contains("/image/")
+				|| uri.contains("/js/")
+				|| uri.contains("/css/") 
+				|| "/userMapping".equals(uri)
+				|| uri.contains("bootstrap-3.1.1-dist")
+				|| uri.contains("bootstrap-select")
+				|| uri.contains("test.jsp")){
 			return true;
 		}
 		
