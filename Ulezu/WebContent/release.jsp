@@ -5,170 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link href="bootstrap-3.1.1-dist/css/bootstrap.min.css" rel="stylesheet"
-	media="screen">
-<link rel="stylesheet" type="text/css"
-	href="bootstrap-select/bootstrap-select.min.css">
-<style type="text/css">
-.topNavigate {
-	_position: static;
-	left: 0;
-	top: 0;
-	width: 100%;
-	min-width: 1000px;
-	border-bottom: 2px solid #72b088;
-	background: #ffffff;
-	text-align: left;
-	font: 12px/1.5 helvetica, arial, "hiragino sans gb", "\5b8b\4f53",
-		sans-serif;
-	color: #323232;
-	clear: both;
-	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-	height: 50px;
-}
+<link href="bootstrap-3.1.1-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/release.css" rel="stylesheet" media="screen" type="text/css" >
+<link href="bootstrap-select/bootstrap-select.min.css" rel="stylesheet" type="text/css" >
 
-.step1,.step2,.step3 {
-	color: #978679;
-	height: 30px;
-	width: 330px;
-	float: left;
-}
-
-.step1_desc,.step2_desc {
-	width: 300px;
-	height: 30px;
-	float: left;
-	text-align: center;
-	vertical-align: middle;
-	font-size: 20px;
-}
-
-.step3_desc {
-	width: 270px;
-	height: 30px;
-	float: left;
-	text-align: center;
-	vertical-align: middle;
-	font-size: 20px;
-}
-
-.step1_img,.step2_img,.step3_img {
-	float: left;
-}
-
-.common_desc ul li {
-	list-style: none;
-	float: left;
-	margin-right: 5px;
-}
-
-.txt_xiaoqu {
-	margin-left: 45px;
-	width: 300px;
-	height: 30px;
-	border: 1px solid #ccc;
-}
-
-.txt_address {
-	width: 300px;
-	height: 30px;
-	border: 1px solid #ccc;
-}
-
-.txt_num {
-	width: 50px;
-	height: 30px;
-	margin: 0px 3px 0px 3px;
-	border: 1px solid #ccc;
-}
-
-.selectPlug-text {
-	background: #FFF url(image/arrow-down.gif) right center no-repeat;
-	outline: none;
-	display: inline-block;
-	border: 1px solid #ccc;
-	padding-right: 13px;
-	padding-left: 5px;
-	vertical-align: top;
-	cursor: default;
-}
-
-.txt_pangfang {
-	width: 100px;
-	height: 30px;
-	border: 1px solid #ccc;
-}
-
-.btn_fabu {
-	width: 300px;
-	height: 36px;
-	font-weight: bold;
-	vertical-align: middle;
-	background-color: #5cad77;
-	color: #fff;
-	display: inline-block;
-	padding: 0 25px;
-	border: none;
-	border-radius: 3px;
-	overflow: visible;
-	font-size: 18px;
-	line-height: 36px;
-	font-family: "Hiragino Sans GB", "Microsoft YaHei", \9ED1\4F53,
-		\5b8b\4f53, sans-serif;
-	text-align: center;
-	cursor: pointer;
-	margin-top: 30px;
-}
-
-.txt_ok_email {
-	width: 300px;
-	height: 40px;
-	border: 1px solid #ccc;
-	margin: 20px auto 20px auto;
-	color: #777;
-	font-size: 18px;
-	vertical-align: middle;
-}
-
-.btn_fabu_end {
-	width: 150px;
-	height: 36px;
-	font-weight: bold;
-	vertical-align: middle;
-	background-color: #5cad77;
-	color: #fff;
-	display: inline-block;
-	padding: 0 25px;
-	border: none;
-	border-radius: 3px;
-	overflow: visible;
-	font-size: 18px;
-	line-height: 36px;
-	font-family: "Hiragino Sans GB", "Microsoft YaHei", \9ED1\4F53,
-		\5b8b\4f53, sans-serif;
-	text-align: center;
-	cursor: pointer;
-	margin-top: 30px;
-	margin-right: 5px;
-}
-</style>
 <script type="text/javascript" src="js/common/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="js/common/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="bootstrap-select/bootstrap-select.min.js"></script>
-<script src="bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootstrap-select/bootstrap-select.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$('[name=input]').validatebox({
-			required : true,
-			validType : 'email'
-		});
-	});
-
 	//确认并发布
 	function confirmAndSubmit() {
 		if (!checkInput()) {
-			//return;
+			return;
 		}
 		$(".step1_img img").attr("src", "image/next_b.png");
 		$(".step2_img img").attr("src", "image/next.png");
@@ -178,6 +26,11 @@
 
 	//提交信息事件
 	function commerSubmit() {
+		//检测用户名，密码
+		if(!checkUserMessage()) {
+			return;
+		}
+		
 		//if(!submitMessage()) {
 		//	return;
 		//}
@@ -192,8 +45,64 @@
 
 	//检测输入值，成功返回true,否则还回false
 	function checkInput() {
-		$("#div_info");
-		alert("TODO check input value!");
+		var flag = true;
+		//小数
+		var floatNumberRe = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+		//手机号
+		var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$/;
+		
+		$("[required=true]").each(function(index,element) {
+			$(element).parent().find('span').css("display", "none");
+			switch ($(element).attr('validType')) {
+			case 'string':
+				if(element.value == null || element.value.length == 0) {
+					$(element).parent().find('span').css("display", "inline");
+					flag = false;
+				}
+				break;
+			case 'select':
+				if($(element).val() == 'n') {
+					$(element).parent().find('span').css("display", "inline");
+					flag = false;
+				}
+				break;
+			case 'number':
+				if(!floatNumberRe.test($(element).val())) {
+					$(element).parent().find('span').css("display", "inline");
+					flag = false;
+				}
+				break;
+			case 'phone':
+				if(!phoneNumberRe.test($(element).val())) {
+					$(element).parent().find('span').css("display", "inline");
+					flag = false;
+				}
+			break;
+			default:
+				if(element.value == null || element.value.length == 0) {
+					$(element).parent().find('span').css("display", "inline");
+					flag = false;
+				}
+				break;
+			}
+		});
+		return flag;
+	}
+	
+	function checkUserMessage() {
+		$("#emailError").css("display", "none");
+		$("#passwordError").css("display", "none");
+		//邮箱
+		var emailRe = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if(!emailRe.test($("#email").val())) {
+			$("#emailError").css("display", "inline");
+			return false;
+		}
+		
+		if($("#password").val() == null || $("#password").val().length == 0) {
+			$("#passwordError").css("display", "inline");
+			return false;
+		}
 		return true;
 	}
 
@@ -255,6 +164,7 @@
 </head>
 <body>
 	<div class="topNavigate">
+	<form id="form1" action="">
 		<div
 			style="margin-left: auto; margin-right: auto; width: 1000px; height: 50px;">
 			<div style="float: left; width: 250px; height: 50px;">
@@ -314,6 +224,7 @@
 					<div
 						style="float: left; width: 60px; height: 39px; padding-top: 15px; text-align: right;">
 						出租方式</div>
+				
 					<div class="common_desc" style="float: left;">
 						<ul>
 							<li><input value="0" type="radio" checked="checked"
@@ -332,12 +243,16 @@
 				<div>
 					<div
 						style="float: left; width: 60px; height: 50px; text-align: right;">
+						
 						小区名称</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<input id="estateName" name="input" type="text" class="txt_xiaoqu" />
+						<input validType="string" required=true id="estateName" type="text" class="txt_xiaoqu"/> 
+						<span style="color:red;display: none;">*请填写小区名称*</span>
 					</div>
+
 				</div>
+
 			</div>
 			<div
 				style="float: left; width: 1000px; height: 50px; line-height: 40px; font-size: 14px; color: #978679;">
@@ -350,15 +265,18 @@
 						位置</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<span style="padding-right: 45px;"></span> <select
+						<span style="padding-right: 45px;"></span> 
+						<select
 							id="addressArea" class="selectpicker" data-width="auto"
-							onchange="size=1;">
+							onchange="size=1;"   validType="select" required=true >
 							<option value="n">--区域--</option>
 							<option value="新都区">新都区</option>
-						</select> <select id="addressCircle" class="selectpicker" data-width="auto">
+						</select> 
+						<select id="addressCircle" class="selectpicker" data-width="auto"  validType="select" required=true >
 							<option value="n">--商圈--</option>
 							<option value="万达广场">万达广场</option>
-						</select> <input  name="input"  id="addressAttach" type="text" class="txt_address" />
+						</select> <input  validType="string" required=true  id="addressAttach" type="text" class="txt_address" /> 
+						<span style="color: red; display: none;"> *请完成地理信息*</span>
 					</div>
 				</div>
 			</div>
@@ -373,10 +291,10 @@
 						房屋户型</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<input  name="input"  id="houseRoomNum" type="text" class="txt_num"
-							style="margin-left: 42px;" />室 <input  name="input"  id="houseTingNum"
-							type="text" class="txt_num" />厅 <input  name="input"  id="houseToiletNum"
-							type="text" class="txt_num" />卫
+						<input id="houseRoomNum" type="text" class="txt_num" style="margin-left: 42px;"  validType="number" required=true  />室
+						<input id="houseTingNum" type="text" class="txt_num" validType="number" required=true  />厅 
+						<input id="houseToiletNum" type="text" class="txt_num" validType="number" required=true  />卫 
+						<span style="color: red; display: none;"> *请完成户型信息*</span>
 					</div>
 				</div>
 			</div>
@@ -391,9 +309,10 @@
 						楼层</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<span style="margin-left: 45px;"> 第</span><input  name="input"  id="layerNum"
-							type="text" class="txt_num" />层&nbsp;&nbsp;&nbsp; 共<input
-							id="totleLayerNum"  name="input"  type="text" class="txt_num" />楼
+						<span style="margin-left: 45px;"> 第</span>
+						<input id="layerNum" type="text" class="txt_num"   validType="number" required=true />层&nbsp;&nbsp;&nbsp; 共
+						<input id="totleLayerNum" type="text" class="txt_num"  validType="number" required=true  />楼 
+						<span style="color: red; display: none;"> *请完成楼层息信*</span>
 					</div>
 				</div>
 			</div>
@@ -408,20 +327,21 @@
 						出租间</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<span style="margin-left: 45px;"></span> <input  name="input"  id="squareMeter"
-							type="text" class="txt_pangfang" />㎡&nbsp;&nbsp; <select
-							id="roomType" class="selectpicker" data-width="auto">
-							<option value="房间类型">房间类型</option>
+						<span style="margin-left: 45px;"></span> 
+						<input id="squareMeter" type="text" class="txt_pangfang" />㎡&nbsp;&nbsp; 
+						<select id="roomType" class="selectpicker" data-width="auto"  validType="select" required=true >
+							<option value="n">房间类型</option>
 							<option value="0">主卧</option>
 							<option value="1">次卧</option>
 							<option value="2">隔断</option>
-						</select> <select id="sexType" class="selectpicker" data-width="auto">
+						</select> 
+						<select id="sexType" class="selectpicker" data-width="auto"  validType="select" required=true >
 							<option value="n">性别要求</option>
 							<option value="0">男女不限</option>
 							<option value="1">限男生</option>
 							<option value="2">限女生</option>
-						</select> <select id="houseDirection" class="selectpicker"
-							data-width="auto">
+						</select> 
+						<select id="houseDirection" class="selectpicker" data-width="auto"  validType="select" required=true >
 							<option value="n">出租间朝向</option>
 							<option value="0">东</option>
 							<option value="1">南</option>
@@ -433,22 +353,24 @@
 							<option value="21">西南</option>
 							<option value="03">东北</option>
 							<option value="23">西北</option>
-						</select> <select id="decorationType" class="selectpicker"
-							data-width="auto">
+						</select> 
+						<select id="decorationType" class="selectpicker" data-width="auto" validType="select" required=true >
 							<option selected="selected" value="n">装修情况</option>
 							<option value="0">毛坯</option>
 							<option value="1">简单装修</option>
 							<option value="2">中等装修</option>
 							<option value="3">精装修</option>
 							<option value="4">豪华装修</option>
-						</select> <select id="estateType" class="selectpicker" data-width="auto">
-							<option value="0" selected="">普通住宅</option>
+						</select> 
+						<select id="estateType" class="selectpicker" data-width="auto"  validType="select" required=true >
+							<option value="0" >普通住宅</option>
 							<option value="1">商住两用</option>
 							<option value="2">公寓</option>
 							<option value="3">平房</option>
 							<option value="4">别墅</option>
 							<option value="5">其他</option>
-						</select>
+						</select> 
+						<span style="color: red; display: none;"> *请完成出租信息*</span>
 					</div>
 				</div>
 			</div>
@@ -463,11 +385,10 @@
 						租金</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<span style="margin-left: 45px;"></span> <input  name="input"  id="rentMoney"
-							type="text" class="txt_pangfang" />元/月&nbsp;&nbsp;&nbsp; <select
-							id="payType" class="selectpicker" data-width="auto">
+						<span style="margin-left: 45px;"></span> 
+						<input id="rentMoney" type="text" class="txt_pangfang"  validType="number" required=true />元/月&nbsp;&nbsp;&nbsp; 
+						<select id="payType" class="selectpicker" data-width="auto" validType="select" required=true >
 							<option selected="selected" value="n">押金方式</option>
-							<!-- 押一付三 -->
 							<option value="0">押一付一</option>
 							<option value="1">押一付二</option>
 							<option value="2">押一付三</option>
@@ -477,7 +398,8 @@
 							<option value="6">半年付</option>
 							<option value="7">年付</option>
 							<option value="8">面议</option>
-						</select>
+						</select> 
+						<span style="color: red; display: none;"> *请完成租金信息*</span>
 					</div>
 				</div>
 			</div>
@@ -494,7 +416,8 @@
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 						<span style="margin-left: 45px;"></span>
 						<textarea id="houseDescrible"
-							style="width: 560px; height: 400px; border: 1px solid #ccc;">这里要用一个编辑框组件</textarea>
+							style="width: 560px; height: 400px; border: 1px solid #ccc;"  validType="editor" required=true >这里要用一个编辑框组件</textarea>
+						<span style="color: red; display: none;"> *请填写房源描述*</span>
 					</div>
 				</div>
 			</div>
@@ -524,8 +447,9 @@
 						联系人</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<span style="margin-left: 45px;"></span> <input name="input"  id="linkMan"
-							type="text" class="txt_address" />
+						<span style="margin-left: 45px;"></span> 
+						<input validType="string" required=true  id="linkMan" type="text" class="txt_address" /> 
+							<span style="color: red; display: none;"> *请填写联系人*</span>
 					</div>
 				</div>
 			</div>
@@ -540,8 +464,9 @@
 						联系电话</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<span style="margin-left: 45px;"></span> <input
-							id="linkCallNumber"  name="input"  type="text" class="txt_address" />
+						<span style="margin-left: 45px;"></span>
+						 <input validType="phone" required=true id="linkCallNumber" type="text" class="txt_address" /> 
+						 <span style="color: red; display: none"> *请填写联系电话*</span>
 					</div>
 				</div>
 			</div>
@@ -556,12 +481,11 @@
 					</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<span style="margin-left: 45px;"></span> <input  name="input"  type="button"
-							value="确认并发布" class="btn_fabu" onclick="confirmAndSubmit();" />
+						<span style="margin-left: 45px;"></span> 
+						<input type="button" value="确认并发布" class="btn_fabu" onclick="confirmAndSubmit();" />
 					</div>
 				</div>
 			</div>
-
 
 		</div>
 		<div
@@ -571,13 +495,15 @@
 				style="margin-left: auto; margin-right: auto; width: 500px; height: 500px; text-align: center;">
 				<div
 					style="margin-left: auto; margin-right: auto; width: 500px; height: 50px; float: left; margin-top: 30px;">
-					<input  name="input"  id="email" type="text" value="邮箱/手机号/用户名"
-						class="txt_ok_email" />
+					<input id="email" type="text" value="邮箱/手机号/用户名"
+						class="txt_ok_email"  validType="email" required=true />
+						<span id="emailError" style="color: red; display: none;"> *邮箱格式不正确*</span>
 				</div>
 				<div
 					style="margin-left: auto; margin-right: auto; width: 500px; height: 50px; float: left; margin-top: 20px;">
-					<input  name="input"  id="password" type="password" value="密码"
+					<input id="password" type="password"  validType="password" required=true  value="密码"
 						class="txt_ok_email" />
+						<span id="passwordError" style="color: red; display: none;"> *密码不能为空*</span>
 				</div>
 				<div
 					style="margin-left: auto; margin-right: auto; width: 500px; height: 50px; float: left; margin-top: 20px;">
@@ -606,9 +532,7 @@
 				</div>
 			</div>
 		</div>
-
-
-
+		</form>
 	</div>
 </body>
 </html>
