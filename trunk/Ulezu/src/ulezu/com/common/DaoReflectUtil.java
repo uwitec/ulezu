@@ -12,8 +12,6 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -27,11 +25,9 @@ public class DaoReflectUtil<T> {
 	/**
 	 * 通过反射获得子类确定的泛型类 constractor
 	 */
-	public DaoReflectUtil() {
+	public DaoReflectUtil(Class<T> entityClass) {
 		super();
-		Type genType = getClass().getGenericSuperclass();
-		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
-		entityClass = (Class) params[0];
+		this.entityClass = entityClass;
 	}
 
 	/**
@@ -52,7 +48,7 @@ public class DaoReflectUtil<T> {
 		PropertyDescriptor[] props = this.propertyDescriptors();
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int[] columnToProperty = this.mapColumnsToProperties(rsmd, props);
-		return rs.next() ? null : this.createBean(rs, props, columnToProperty);
+		return rs.next() ? this.createBean(rs, props, columnToProperty) : null;
 	}
 
 	/**
@@ -176,10 +172,11 @@ public class DaoReflectUtil<T> {
 			if (columnToProperty[i] == -1) {
 				continue;
 			}
-
 			PropertyDescriptor prop = props[columnToProperty[i]];
-			String value = rs.getString(i);
-			this.callSetter(bean, prop, value);
+			Object value = rs.getObject(i);
+			if(value != null) {
+				this.callSetter(bean, prop, value);
+			}
 		}
 		return bean;
 	}
