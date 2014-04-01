@@ -142,7 +142,4 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 			return 0;
 		}
 	}
-	
-    
-
 }
