@@ -42,51 +42,80 @@
 		$("#div_email").css("display", "none");
 		$("#div_success").css("display", "block");
 	}
+	
+	//输入鼠标放上时方法
+	function onInputFocus(dom) {
+		
+	}
+	
+	//输入鼠标离开时方法
+	function onInputOver(dom) {
+		//小数
+		var floatNumberRe = /^[\d]+\.?[\d]*$/;
+		//整数
+		var intNumberRe = /^[0-9]*$/;
+		//手机号
+		var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$/;
+		switch ($(element).attr('validType')) {
+		case 'string':
+			if(element.value == null || element.value.length == 0) {
+				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
+				$(element).css("border-color","#F73809");
+				flag = false;
+			}
+			break;
+		case 'select':
+			if($(element).val() == 'n') {
+				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
+				$(element).css("border-color","#F73809");
+				flag = false;
+			}
+			break;
+		case 'floatNumber':
+			if(!floatNumberRe.test($(element).val())) {
+				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
+				$(element).css("border-color","#F73809");
+				flag = false;
+			}
+			break;
+		case 'intNumber':
+			if(!intNumberRe.test($(element).val())) {
+				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
+				$(element).css("border-color","#F73809");
+				flag = false;
+			}
+			break;
+		case 'phone':
+			if(!phoneNumberRe.test($(element).val())) {
+				$(element).css("border-color","#F73809");
+				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
+				flag = false;
+			}
+		break;
+		default:
+			
+			break;
+		}
+	}
 
 	//检测输入值，成功返回true,否则还回false
 	function checkInput() {
-		var flag = true;
-		//小数
-		var floatNumberRe = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
-		//手机号
-		var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$/;
-		
+		$('[name="releaseErrorMsg"]').css("display", "none");
+		$("[required=true]").css("border-color",  "#CCCCCC");
+		$("[required=true]").attr("state", true);
 		$("[required=true]").each(function(index,element) {
-			$(element).parent().find('span').css("display", "none");
-			switch ($(element).attr('validType')) {
-			case 'string':
-				if(element.value == null || element.value.length == 0) {
-					$(element).parent().find('span').css("display", "inline");
-					flag = false;
-				}
-				break;
-			case 'select':
-				if($(element).val() == 'n') {
-					$(element).parent().find('span').css("display", "inline");
-					flag = false;
-				}
-				break;
-			case 'number':
-				if(!floatNumberRe.test($(element).val())) {
-					$(element).parent().find('span').css("display", "inline");
-					flag = false;
-				}
-				break;
-			case 'phone':
-				if(!phoneNumberRe.test($(element).val())) {
-					$(element).parent().find('span').css("display", "inline");
-					flag = false;
-				}
-			break;
-			default:
-				if(element.value == null || element.value.length == 0) {
-					$(element).parent().find('span').css("display", "inline");
-					flag = false;
-				}
-				break;
+			if($(element).val() == null || $(element).val().length == 0) {//是输入框input
+				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
+				$(element).attr("state", false);
+				$(element).css("border-color","#F73809");
+			} else if($(element).val() == "n") {//是下拉框
+				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
+				$(element).attr("state", false);
+				$(element).css("border","1px");
+				$(element).css("border-color","#F73809");
 			}
 		});
-		return flag;
+		return !$('[required=true]').find("[state==false]");
 	}
 	
 	function checkUserMessage() {
@@ -247,8 +276,8 @@
 						小区名称</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<input validType="string" required=true id="estateName" type="text" class="txt_xiaoqu"/> 
-						<span style="color:red;display: none;">*请填写小区名称*</span>
+						<input validType="string" required=true state=true id="estateName" type="text" class="txt_xiaoqu"/> 
+						<span name="releaseErrorMsg" style="color:red;display: none;">*请填写小区名称*</span>
 					</div>
 
 				</div>
@@ -268,15 +297,15 @@
 						<span style="padding-right: 45px;"></span> 
 						<select
 							id="addressArea" class="selectpicker" data-width="auto"
-							onchange="size=1;"   validType="select" required=true >
+							onchange="size=1;"   validType="select" required=true state=true >
 							<option value="n">--区域--</option>
 							<option value="新都区">新都区</option>
 						</select> 
-						<select id="addressCircle" class="selectpicker" data-width="auto"  validType="select" required=true >
+						<select id="addressCircle" class="selectpicker" data-width="auto"  validType="select" required=true state=true >
 							<option value="n">--商圈--</option>
 							<option value="万达广场">万达广场</option>
-						</select> <input  validType="string" required=true  id="addressAttach" type="text" class="txt_address" /> 
-						<span style="color: red; display: none;"> *请完成地理信息*</span>
+						</select> <input  validType="string" required=true state=true  id="addressAttach" type="text" class="txt_address" /> 
+						<span name="releaseErrorMsg" style="color: red; display: none;"> *请完成地理信息*</span>
 					</div>
 				</div>
 			</div>
@@ -291,10 +320,10 @@
 						房屋户型</div>
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-						<input id="houseRoomNum" type="text" class="txt_num" style="margin-left: 42px;"  validType="number" required=true  />室
-						<input id="houseTingNum" type="text" class="txt_num" validType="number" required=true  />厅 
-						<input id="houseToiletNum" type="text" class="txt_num" validType="number" required=true  />卫 
-						<span style="color: red; display: none;"> *请完成户型信息*</span>
+						<input id="houseRoomNum" type="text" class="txt_num" style="margin-left: 42px;"  validType="number" required=true state=true  />室
+						<input id="houseTingNum" type="text" class="txt_num" validType="number" required=true state=true  />厅 
+						<input id="houseToiletNum" type="text" class="txt_num" validType="number" required=true state=true  />卫 
+						<span name="releaseErrorMsg" style="color: red; display: none;"> *请完成户型信息*</span>
 					</div>
 				</div>
 			</div>
@@ -310,9 +339,9 @@
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 						<span style="margin-left: 45px;"> 第</span>
-						<input id="layerNum" type="text" class="txt_num"   validType="number" required=true />层&nbsp;&nbsp;&nbsp; 共
-						<input id="totleLayerNum" type="text" class="txt_num"  validType="number" required=true  />楼 
-						<span style="color: red; display: none;"> *请完成楼层息信*</span>
+						<input id="layerNum" type="text" class="txt_num"   validType="intNumber" required=true state=true />层&nbsp;&nbsp;&nbsp; 共
+						<input id="totleLayerNum" type="text" class="txt_num"  validType="intNumber" required=true state=true  />楼 
+						<span name="releaseErrorMsg" style="color: red; display: none;"> *请完成楼层息信*</span>
 					</div>
 				</div>
 			</div>
@@ -328,20 +357,20 @@
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 						<span style="margin-left: 45px;"></span> 
-						<input id="squareMeter" type="text" class="txt_pangfang" />㎡&nbsp;&nbsp; 
-						<select id="roomType" class="selectpicker" data-width="auto"  validType="select" required=true >
+						<input id="squareMeter" type="text" class="txt_pangfang" validType="intNumber" required=true state=true/>㎡&nbsp;&nbsp; 
+						<select id="roomType" class="selectpicker" data-width="auto"  validType="select" required=true state=true >
 							<option value="n">房间类型</option>
 							<option value="0">主卧</option>
 							<option value="1">次卧</option>
 							<option value="2">隔断</option>
 						</select> 
-						<select id="sexType" class="selectpicker" data-width="auto"  validType="select" required=true >
+						<select id="sexType" class="selectpicker" data-width="auto"  validType="select" required=true state=true >
 							<option value="n">性别要求</option>
 							<option value="0">男女不限</option>
 							<option value="1">限男生</option>
 							<option value="2">限女生</option>
 						</select> 
-						<select id="houseDirection" class="selectpicker" data-width="auto"  validType="select" required=true >
+						<select id="houseDirection" class="selectpicker" data-width="auto"  validType="select" required=true state=true >
 							<option value="n">出租间朝向</option>
 							<option value="0">东</option>
 							<option value="1">南</option>
@@ -354,15 +383,16 @@
 							<option value="03">东北</option>
 							<option value="23">西北</option>
 						</select> 
-						<select id="decorationType" class="selectpicker" data-width="auto" validType="select" required=true >
-							<option selected="selected" value="n">装修情况</option>
+						<select id="decorationType" class="selectpicker" data-width="auto" validType="select" required=true state=true >
+							<option value="n">装修情况</option>
 							<option value="0">毛坯</option>
 							<option value="1">简单装修</option>
 							<option value="2">中等装修</option>
 							<option value="3">精装修</option>
 							<option value="4">豪华装修</option>
 						</select> 
-						<select id="estateType" class="selectpicker" data-width="auto"  validType="select" required=true >
+						<select id="estateType" class="selectpicker" data-width="auto"  validType="select" required=true state=true >
+							<option value="n" >住宅情况</option>
 							<option value="0" >普通住宅</option>
 							<option value="1">商住两用</option>
 							<option value="2">公寓</option>
@@ -370,7 +400,7 @@
 							<option value="4">别墅</option>
 							<option value="5">其他</option>
 						</select> 
-						<span style="color: red; display: none;"> *请完成出租信息*</span>
+						<span name="releaseErrorMsg" style="color: red; display: none;"> *请完成出租信息*</span>
 					</div>
 				</div>
 			</div>
@@ -386,8 +416,8 @@
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 						<span style="margin-left: 45px;"></span> 
-						<input id="rentMoney" type="text" class="txt_pangfang"  validType="number" required=true />元/月&nbsp;&nbsp;&nbsp; 
-						<select id="payType" class="selectpicker" data-width="auto" validType="select" required=true >
+						<input id="rentMoney" type="text" class="txt_pangfang"  validType="intNumber" required=true state=true />元/月&nbsp;&nbsp;&nbsp; 
+						<select id="payType" class="selectpicker" data-width="auto" validType="select" required=true state=true >
 							<option selected="selected" value="n">押金方式</option>
 							<option value="0">押一付一</option>
 							<option value="1">押一付二</option>
@@ -399,7 +429,7 @@
 							<option value="7">年付</option>
 							<option value="8">面议</option>
 						</select> 
-						<span style="color: red; display: none;"> *请完成租金信息*</span>
+						<span name="releaseErrorMsg" style="color: red; display: none;"> *请完成租金信息*</span>
 					</div>
 				</div>
 			</div>
@@ -416,8 +446,8 @@
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 						<span style="margin-left: 45px;"></span>
 						<textarea id="houseDescrible"
-							style="width: 560px; height: 400px; border: 1px solid #ccc;"  validType="editor" required=true >这里要用一个编辑框组件</textarea>
-						<span style="color: red; display: none;"> *请填写房源描述*</span>
+							style="width: 560px; height: 400px; border: 1px solid #ccc;"  validType="editor" required=true state=true >这里要用一个编辑框组件</textarea>
+						<span name="releaseErrorMsg" style="color: red; display: none;"> *请填写房源描述*</span>
 					</div>
 				</div>
 			</div>
@@ -448,8 +478,8 @@
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 						<span style="margin-left: 45px;"></span> 
-						<input validType="string" required=true  id="linkMan" type="text" class="txt_address" /> 
-							<span style="color: red; display: none;"> *请填写联系人*</span>
+						<input validType="string" required=true state=true  id="linkMan" type="text" class="txt_address" /> 
+							<span name="releaseErrorMsg" style="color: red; display: none;"> *请填写联系人*</span>
 					</div>
 				</div>
 			</div>
@@ -465,8 +495,8 @@
 					<div class="common_desc"
 						style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 						<span style="margin-left: 45px;"></span>
-						 <input validType="phone" required=true id="linkCallNumber" type="text" class="txt_address" /> 
-						 <span style="color: red; display: none"> *请填写联系电话*</span>
+						 <input validType="phone" required=true state=true id="linkCallNumber" type="text" class="txt_address" /> 
+						 <span name="releaseErrorMsg" style="color: red; display: none"> *请填写联系电话*</span>
 					</div>
 				</div>
 			</div>
@@ -496,14 +526,14 @@
 				<div
 					style="margin-left: auto; margin-right: auto; width: 500px; height: 50px; float: left; margin-top: 30px;">
 					<input id="email" type="text" value="邮箱/手机号/用户名"
-						class="txt_ok_email"  validType="email" required=true />
-						<span id="emailError" style="color: red; display: none;"> *邮箱格式不正确*</span>
+						class="txt_ok_email"  validType="email" required=true state=true />
+						<span name="userErrorMsg" id="emailError" style="color: red; display: none;"> *邮箱格式不正确*</span>
 				</div>
 				<div
 					style="margin-left: auto; margin-right: auto; width: 500px; height: 50px; float: left; margin-top: 20px;">
-					<input id="password" type="password"  validType="password" required=true  value="密码"
+					<input id="password" type="password"  validType="password" required=true state=true  value="密码"
 						class="txt_ok_email" />
-						<span id="passwordError" style="color: red; display: none;"> *密码不能为空*</span>
+						<span name="userErrorMsg" style="color: red; display: none;"> *密码不能为空*</span>
 				</div>
 				<div
 					style="margin-left: auto; margin-right: auto; width: 500px; height: 50px; float: left; margin-top: 20px;">
