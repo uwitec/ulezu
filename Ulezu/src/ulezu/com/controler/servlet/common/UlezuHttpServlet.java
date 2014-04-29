@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+import ulezu.com.util.JsonHelper;
+
 public class UlezuHttpServlet extends HttpServlet {
 	
 	/**
@@ -69,9 +72,17 @@ public class UlezuHttpServlet extends HttpServlet {
 		return "{\"data\": \"" + args + "\"}";
 	}
 	
-	protected<T> T initObject(HttpServletRequest request) {
-		
-		return null;
+	/**
+	 * 从流中得到对象
+	 *@author qw
+	 *@version 创建时间:2014-4-14下午05:04:49
+	 *@param <T>
+	 *@param request
+	 *@param type 对象类型
+	 *@return
+	 */
+	protected  <T> T getObjectFromRequset(HttpServletRequest request, Class<T> type) {
+		return (T) JSONObject.toBean(JsonHelper.readJSONObject(request), type);
 	}
 	
 	/**

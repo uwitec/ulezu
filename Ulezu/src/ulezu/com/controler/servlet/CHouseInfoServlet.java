@@ -53,7 +53,6 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 			e.printStackTrace();
 		}
 
-		System.out.println("action");
 		String action = request.getParameter("action");
 		if("get".equals(action)){	
 			String id = request.getParameter("id");	
@@ -64,7 +63,9 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 			this.updateAccessCountById(id);
 		}else if("release".equals(action)) {
 			release(request, response);
-		} 
+		}else if("test".equals(action)) {
+			
+		}
 	}
 
 	/**
@@ -76,19 +77,12 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 	 * @throws Exception 
 	 */
 	private void release(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		//BUser  bUser = new BUser();
 	//	if(!bUser.isAvailableUser(request.getParameter("email"), request.getParameter("userPassword"))) {
 		//	response(response, "0");
 		//}
 		
-		JSONObject jsonObject = JsonHelper.readJSONObject(request);
-		MHouseInfo houseInfo = 	(MHouseInfo)JSONObject.toBean(jsonObject, MHouseInfo.class);
+		MHouseInfo houseInfo = 	getObjectFromRequset(request, MHouseInfo.class);
 		
 		
 		request.getSession().setAttribute("userName", "秦伟");//测试用

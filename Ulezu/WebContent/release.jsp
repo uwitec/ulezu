@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>Ulezu用户房源发布</title>
 <link href="bootstrap-3.1.1-dist/css/bootstrap.min.css" rel="stylesheet"
 	media="screen">
 <link href="css/release.css" rel="stylesheet" media="screen"
@@ -16,13 +16,27 @@
 <script type="text/javascript"
 	src="bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript"
-	src="bootstrap-select/bootstrap-select.min.js"></script>
+	src="bootstrap-select/bootstrap-select.js"></script>
+<script type="text/javascript" src="js/ulezuJs/ajax.js"></script>
 <script type="text/javascript">
     $(function() {
-    	$('[name="releaseErrorMsg"]').parent().find("select").each(function(index,element) {
-    		$(element).on("onblur", onInputOver(element));
-    	});
+    		//输入鼠标离开时方法
+    		checkUserInputEvent($('[name="releaseErrorMsg"]').parent().find("input"), 'blur');
+    		//选择改变
+    		checkUserInputEvent($('[name="releaseErrorMsg"]').parent().find("select"), 'change');
+    	
+    	$('.selectpicker').selectpicker();
+    	
+    	var set = {user:'qinwei', age:24, sex:'男'};
+    	var body = JSON.stringify(set);
+    	var url = 'houseInfo.do?action=test';
+    	ajax(url, false, body, callBack);
     });
+    
+    function callBack(result) {
+    	alert(result.user);
+    	alert(result.age);
+    }
     
 	//确认并发布
 	function confirmAndSubmit() {
@@ -51,60 +65,7 @@
 		$("#div_success").css("display", "block");
 	}
 	
-	//输入鼠标离开时方法
-	function onInputOver(element) {
-		alert(1);
-		//小数
-		var floatNumberRe = /^[\d]+\.?[\d]*$/;
-		//整数
-		var intNumberRe = /^[0-9]*$/;
-		//手机号
-		var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$/;
-		//是否检测到错误的输入
-		var flag = false;
-		switch ($(element).attr('validType')) {
-		case 'string':
-			if(element.value == null || element.value.length == 0) {
-				flag = true;
-			}
-			break;
-		case 'select':
-			if($(element).val() == 'n') {
-				flag = true;
-			}
-			break;
-		case 'floatNumber':
-			if(!($(element).val() && floatNumberRe.test($(element).val()))) {
-				flag = true;
-			}
-			break;
-		case 'intNumber':
-			if(!($(element).val() && intNumberRe.test($(element).val()))) {
-				flag = true;
-			}
-			break;
-		case 'phone':
-			if(!($(element).val() && phoneNumberRe.test($(element).val()))) {
-				flag = true;
-			}
-		break;
-		case 'richText':
-			if(false) {
-				flag = true;
-			}
-		break;
-		default:
-			alert(element.id + "未知的validType变量;");
-			flag = true;
-			break;
-		}
-		
-		if(flag) {
-			handInputError(element);
-		} else {
-			resetStyle(element);
-		}
-	}
+	
 	
 	
 
@@ -134,6 +95,65 @@
 		}
 		
 		return flag;
+	}
+	
+	//检测 用户输入事件
+	function checkUserInputEvent(jDom, eventString) {
+		jDom.on(eventString, function () {  //输入鼠标离开时方法
+    		element = this;
+		alert(element.id);
+    		//小数
+    		var floatNumberRe = /^[\d]+\.?[\d]*$/;
+    		//整数
+    		var intNumberRe = /^[0-9]*$/;
+    		//手机号
+    		var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$/;
+    		//是否检测到错误的输入
+    		var flag = false;
+    		switch ($(element).attr('validType')) {
+    		case 'string':
+    			if(element.value == null || element.value.length == 0) {
+    				flag = true;
+    			}
+    			break;
+    		case 'select':
+    			if($(element).val() == 'n') {
+    				flag = true;
+    			}
+    			break;
+    		case 'floatNumber':
+    			if(!($(element).val() && floatNumberRe.test($(element).val()))) {
+    				flag = true;
+    			}
+    			break;
+    		case 'intNumber':
+    			if(!($(element).val() && intNumberRe.test($(element).val()))) {
+    				flag = true;
+    			}
+    			break;
+    		case 'phone':
+    			if(!($(element).val() && phoneNumberRe.test($(element).val()))) {
+    				flag = true;
+    			}
+    		break;
+    		case 'richText':
+    			if(false) {
+    				flag = true;
+    			}
+    		break;
+    		default:
+    			alert(element.id + "未知的validType变量;");
+    			flag = true;
+    			break;
+    		}
+    		
+    		if(flag) {
+    			handInputError(element);
+    		} else {
+    			resetStyle(element);
+    		}
+    	}
+    	);
 	}
 	
 	function checkUserMessage() {
@@ -203,6 +223,7 @@
 	
 	//处理检测到错误输入
 	function handInputError(element) {
+		if(element)
 		$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
 		$(element).css("border-color","#F73809");
 		$(element).attr("state", false);
@@ -220,9 +241,6 @@
 	function returnHome() {
 		window.location.href = "home.jsp";
 	}
-	window.onload = function() {
-		$('.selectpicker').selectpicker();
-	};
 </script>
 </head>
 <body>
@@ -310,7 +328,7 @@
 							小区名称</div>
 						<div class="common_desc"
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-							<input validType="string" required=true state=true onblur="onInputOver(this)"
+							<input validType="string" required=true state=true 
 								id="estateName" type="text" class="txt_xiaoqu" /> <span
 								name="releaseErrorMsg" style="color: red; display: none;">*请填写小区名称*</span>
 						</div>
@@ -329,16 +347,17 @@
 							位置</div>
 						<div class="common_desc"
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-							<span style="padding-right: 45px;"></span> <select
-								id="addressArea" class="selectpicker" data-width="auto"
-								onchange="size=1;" validType="select" required=true state=true onblur="onInputOver(this)">
+							<span style="padding-right: 45px;"></span> 
+							<select   id="addressArea" class="selectpicker" data-width="auto"
+								onchange="size=1;" validType="select" required=true state=true>
 								<option value="n">--区域--</option>
 								<option value="新都区">新都区</option>
-							</select> <select id="addressCircle" class="selectpicker"
-								data-width="auto" validType="select" required=true state=true onblur="onInputOver(this)" >
+							</select> 
+							<select  id="addressCircle" class="selectpicker"
+								data-width="auto" validType="select" required=true state=true  >
 								<option value="n">--商圈--</option>
 								<option value="万达广场">万达广场</option>
-							</select> <input validType="string" required=true state=true onblur="onInputOver(this)" 
+							</select> <input validType="string" required=true state=true  
 								id="addressAttach" type="text" class="txt_address" /> <span
 								name="releaseErrorMsg" style="color: red; display: none;">
 								*请完成地理信息*</span>
@@ -358,10 +377,10 @@
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 							<input id="houseRoomNum" type="text" class="txt_num"
 								style="margin-left: 42px;" validType="intNumber" required=true
-								state=true onblur="onInputOver(this)"  />室 <input id="houseTingNum" type="text"
-								class="txt_num" validType="intNumber" required=true state=true onblur="onInputOver(this)"  />厅
+								state=true   />室 <input id="houseTingNum" type="text"
+								class="txt_num" validType="intNumber" required=true state=true   />厅
 							<input id="houseToiletNum" type="text" class="txt_num"
-								validType="intNumber" required=true state=true onblur="onInputOver(this)"  />卫 <span
+								validType="intNumber" required=true state=true   />卫 <span
 								name="releaseErrorMsg" style="color: red; display: none;">
 								*请完成户型信息*</span>
 						</div>
@@ -380,9 +399,9 @@
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 							<span style="margin-left: 45px;"> 第</span> <input id="layerNum"
 								type="text" class="txt_num" validType="intNumber" required=true
-								state=true onblur="onInputOver(this)"  />层&nbsp;&nbsp;&nbsp; 共 <input id="totleLayerNum"
+								state=true   />层&nbsp;&nbsp;&nbsp; 共 <input id="totleLayerNum"
 								type="text" class="txt_num" validType="intNumber" required=true
-								state=true onblur="onInputOver(this)"  />楼 <span name="releaseErrorMsg"
+								state=true   />楼 <span name="releaseErrorMsg"
 								style="color: red; display: none;"> *请完成楼层息信*</span>
 						</div>
 					</div>
@@ -400,21 +419,21 @@
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 							<span style="margin-left: 45px;"></span> <input id="squareMeter"
 								type="text" class="txt_pangfang" validType="intNumber"
-								required=true state=true onblur="onInputOver(this)"  />㎡&nbsp;&nbsp; <select id="roomType"
+								required=true state=true   />㎡&nbsp;&nbsp; <select  id="roomType"
 								class="selectpicker" data-width="auto" validType="select"
-								required=true state=true onblur="onInputOver(this)" >
+								required=true state=true  >
 								<option value="n">房间类型</option>
 								<option value="0">主卧</option>
 								<option value="1">次卧</option>
 								<option value="2">隔断</option>
-							</select> <select id="sexType" class="selectpicker" data-width="auto"
-								validType="select" required=true state=true onblur="onInputOver(this)" >
+							</select> <select  id="sexType" class="selectpicker" data-width="auto"
+								validType="select" required=true state=true  >
 								<option value="n">性别要求</option>
 								<option value="0">男女不限</option>
 								<option value="1">限男生</option>
 								<option value="2">限女生</option>
-							</select> <select id="houseDirection" class="selectpicker"
-								data-width="auto" validType="select" required=true state=true onblur="onInputOver(this)" >
+							</select> <select  id="houseDirection" class="selectpicker"
+								data-width="auto" validType="select" required=true state=true  >
 								<option value="n">出租间朝向</option>
 								<option value="0">东</option>
 								<option value="1">南</option>
@@ -426,16 +445,16 @@
 								<option value="21">西南</option>
 								<option value="03">东北</option>
 								<option value="23">西北</option>
-							</select> <select id="decorationType" class="selectpicker"
-								data-width="auto" validType="select" required=true state=true onblur="onInputOver(this)" >
+							</select> <select  id="decorationType" class="selectpicker"
+								data-width="auto" validType="select" required=true state=true  >
 								<option value="n">装修情况</option>
 								<option value="0">毛坯</option>
 								<option value="1">简单装修</option>
 								<option value="2">中等装修</option>
 								<option value="3">精装修</option>
 								<option value="4">豪华装修</option>
-							</select> <select id="estateType" class="selectpicker" data-width="auto"
-								validType="select" required=true state=true onblur="onInputOver(this)" >
+							</select> <select  id="estateType" class="selectpicker" data-width="auto"
+								validType="select" required=true state=true  >
 								<option value="n">住宅情况</option>
 								<option value="0">普通住宅</option>
 								<option value="1">商住两用</option>
@@ -461,9 +480,9 @@
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 							<span style="margin-left: 45px;"></span> <input id="rentMoney"
 								type="text" class="txt_pangfang" validType="intNumber"
-								required=true state=true onblur="onInputOver(this)"  />元/月&nbsp;&nbsp;&nbsp; <select
+								required=true state=true   />元/月&nbsp;&nbsp;&nbsp; <select 
 								id="payType" class="selectpicker" data-width="auto"
-								validType="select" required=true state=true onblur="onInputOver(this)" >
+								validType="select" required=true state=true  >
 								<option selected="selected" value="n">押金方式</option>
 								<option value="0">押一付一</option>
 								<option value="1">押一付二</option>
@@ -493,7 +512,7 @@
 							<span style="margin-left: 45px;"></span>
 							<textarea id="houseDescrible"
 								style="width: 560px; height: 400px; border: 1px solid #ccc;"
-								validType="richText" required=true state=true onblur="onInputOver(this)" >这里要用一个编辑框组件</textarea>
+								validType="richText" required=true state=true  >这里要用一个编辑框组件</textarea>
 							<span name="releaseErrorMsg" style="color: red; display: none;">
 								*请填写房源描述*</span>
 						</div>
@@ -526,7 +545,7 @@
 						<div class="common_desc"
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 							<span style="margin-left: 45px;"></span> <input
-								validType="string" required=true state=true onblur="onInputOver(this)"  id="linkMan"
+								validType="string" required=true state=true   id="linkMan"
 								type="text" class="txt_address" /> <span name="releaseErrorMsg"
 								style="color: red; display: none;"> *请填写联系人*</span>
 						</div>
@@ -544,7 +563,7 @@
 						<div class="common_desc"
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 							<span style="margin-left: 45px;"></span> <input validType="phone"
-								required=true state=true onblur="onInputOver(this)"  id="linkCallNumber" type="text"
+								required=true state=true   id="linkCallNumber" type="text"
 								class="txt_address" /> <span name="releaseErrorMsg"
 								style="color: red; display: none"> *请填写联系电话*</span>
 						</div>
