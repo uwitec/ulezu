@@ -107,7 +107,7 @@
                         header +
                         searchbox +
                         actionsbox +
-                        '<ul class="dropdown-menu inner selectpicker" role="menu">' +
+                        '<ul  class="dropdown-menu inner selectpicker" role="menu">' +
                         '</ul>' +
                     '</div>' +
                 '</div>';
