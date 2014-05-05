@@ -58,7 +58,6 @@ public class JsonHelper {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 		return json.toString();
 	}
 	
@@ -68,6 +67,7 @@ public class JsonHelper {
 	 * @return JSONObject
 	 */
 	public static JSONObject readJSONObject(HttpServletRequest request){
-		return JSONObject.fromObject(readJSONString(request));
+		String jsonString = readJSONString(request);
+		return JSONObject.fromObject(jsonString);
 	}
 }

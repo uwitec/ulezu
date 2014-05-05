@@ -8,13 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
 import ulezu.com.business.BHouseInfo;
-import ulezu.com.business.BUser;
 import ulezu.com.common.IDFactory;
 import ulezu.com.controler.servlet.common.UlezuHttpServlet;
 import ulezu.com.model.MHouseInfo;
 import ulezu.com.model.MObjectValue;
+import ulezu.com.model.MTestObect;
 import ulezu.com.util.JsonHelper;
 
 /**
@@ -64,7 +63,9 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 		}else if("release".equals(action)) {
 			release(request, response);
 		}else if("test".equals(action)) {
-			
+			MTestObect m = getObjectFromRequset(request, MTestObect.class);
+			System.out.println(m);
+			JsonHelper.printObjectToJsonString(response, m);
 		}
 	}
 
@@ -82,10 +83,7 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 		//	response(response, "0");
 		//}
 		
-		MHouseInfo houseInfo = 	getObjectFromRequset(request, MHouseInfo.class);
-		
-		
-		request.getSession().setAttribute("userName", "秦伟");//测试用
+		MHouseInfo houseInfo = 	super.getObjectFromRequset(request, MHouseInfo.class);
 		/*设置默认值*/
 		houseInfo.setId(IDFactory.getId("ulezu", "houseInfo"));
 		houseInfo.setUserName((String) request.getSession().getAttribute("userName"));
@@ -93,7 +91,10 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 		houseInfo.setModifyTime(new Date());
 		houseInfo.setIsDelete(0);//0未删除，1删除
 		houseInfo.setIsValid(1);//已通过，未通过
-		houseInfo.setHouseTitle("【" + MObjectValue.rentWayElements[houseInfo.getRentWay()] + "】 " + houseInfo.getAddressCircle() + " " + MObjectValue.decorationTypeElements[houseInfo.getDecorationType()]);//title为： 【出租方试】+ 商圈 + 装修情况
+		/**
+		 * title为： 【出租方试】+ 商圈 + 装修情况
+		 */
+		houseInfo.setHouseTitle("【" + MObjectValue.rentWayElements[houseInfo.getRentWay()] + "】 " + houseInfo.getAddressCircle() + " " + MObjectValue.decorationTypeElements[houseInfo.getDecorationType()]);
 		houseInfo.setAddress(houseInfo.getAddressArea() + houseInfo.getAddressCircle() + houseInfo.getAddressAttach());//地址为 区域+商圈+附属
 		
 		

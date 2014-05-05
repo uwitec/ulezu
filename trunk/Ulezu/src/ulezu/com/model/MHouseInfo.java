@@ -964,6 +964,27 @@ public class MHouseInfo {
 	public void	setAddress(String address){
 		this.address = address;
 	}
+	@Override
+	public String toString() {
+		return "MHouseInfo [id=" + id + ", userName=" + userName + ", rentWay="
+				+ rentWay + ", estateName=" + estateName + ", houseTingNum="
+				+ houseTingNum + ", houseRoomNum=" + houseRoomNum
+				+ ", houseToiletNum=" + houseToiletNum + ", layerNum="
+				+ layerNum + ", totleLayerNum=" + totleLayerNum
+				+ ", squareMeter=" + squareMeter + ", isHome=" + isHome
+				+ ", modifyTime=" + modifyTime + ", isDelete=" + isDelete
+				+ ", roomType=" + roomType + ", sexType=" + sexType
+				+ ", houseDirection=" + houseDirection + ", decorationType="
+				+ decorationType + ", estateType=" + estateType
+				+ ", rentMoney=" + rentMoney + ", payType=" + payType
+				+ ", houseDescrible=" + houseDescrible + ", imageId=" + imageId
+				+ ", linkMan=" + linkMan + ", linkCallNumber=" + linkCallNumber
+				+ ", isValid=" + isValid + ", houseTitle=" + houseTitle
+				+ ", address=" + address + ", addressArea=" + addressArea
+				+ ", addressCircle=" + addressCircle + ", addressAttach="
+				+ addressAttach + "]";
+	}
+
 	/**
 	 * 设置位置（区域)
 	 */

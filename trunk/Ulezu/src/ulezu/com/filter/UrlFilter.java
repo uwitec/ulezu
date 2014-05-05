@@ -80,6 +80,7 @@ public class UrlFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		request.setCharacterEncoding("UTF-8");
 		if(!this.checkNotRequestFilter(request)){
+			System.out.println("拦截路径：" + request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo()));
 			if(!this.checkCookies(request)|| !this.checkSessions(request)){
 				response.sendRedirect(redirectURL);
 				return;
@@ -102,7 +103,8 @@ public class UrlFilter implements Filter {
 				|| "/userMapping".equals(uri)
 				|| uri.contains("bootstrap-3.1.1-dist")
 				|| uri.contains("bootstrap-select")
-				|| uri.contains("test.jsp")){
+				|| uri.contains("test.jsp")
+				|| uri.contains("houseInfo.do")){
 			return true;
 		}
 		
