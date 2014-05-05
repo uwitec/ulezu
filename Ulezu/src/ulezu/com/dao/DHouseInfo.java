@@ -7,34 +7,41 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import ulezu.com.common.BaseDao;
 import ulezu.com.connection.ConnectionFactory;
 import ulezu.com.idao.IHouseInfo;
 import ulezu.com.model.MHouseInfo;
 
 /**
  * 房屋信息数据库访问类
+ * 
  * @author Administrator
- *
+ * 
  */
-public class DHouseInfo implements IHouseInfo{
+public class DHouseInfo extends BaseDao<MHouseInfo> implements IHouseInfo {
 	/**
 	 * 根据id获取房屋信息
-	 * @param id ID
-	 * @param con 数据库连接
+	 * 
+	 * @param id
+	 *            ID
+	 * @param con
+	 *            数据库连接
 	 * @return 返回房屋信息
-	 * @throws SQLException  抛出异常
+	 * @throws SQLException
+	 *             抛出异常
 	 */
 	@Override
-	public MHouseInfo getHouseInfoById(String id, Connection con) throws Exception {
-		String querySql = "select id,userName,rentWay,estateName,houseTingNum,houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter" +
-				",modifyTime,roomType,sexType,decorationType,estateType,rentMoney,payType,houseTitle,address,addressArea,addressCircle" +
-				",addressAttach,a1" +
-				" from houseinfo where isDelete=0 and id=" + id + " limit 1";
+	public MHouseInfo getHouseInfoById(String id, Connection con)
+			throws Exception {
+		String querySql = "select id,userName,rentWay,estateName,houseTingNum,houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter"
+				+ ",modifyTime,roomType,sexType,decorationType,estateType,rentMoney,payType,houseTitle,address,addressArea,addressCircle"
+				+ ",addressAttach,a1"
+				+ " from houseinfo where isDelete=0 and id=" + id + " limit 1";
 		PreparedStatement ps = con.prepareStatement(querySql);
 		ResultSet rs = null;
 		MHouseInfo info = null;
 		rs = ps.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			info = new MHouseInfo();
 			info.setId(rs.getString(1));
 			info.setUserName(rs.getString(2));
@@ -60,94 +67,111 @@ public class DHouseInfo implements IHouseInfo{
 			info.setAddressAttach(rs.getString(22));
 			info.setA1(rs.getString(23));
 		}
-		
+
 		return info;
 	}
 
 	/**
 	 * 更新数据访问量
-	 * @param id 房屋信息ID
+	 * 
+	 * @param id
+	 *            房屋信息ID
 	 * @param 访问总量
-	 * @param con 数据库连接
+	 * @param con
+	 *            数据库连接
 	 * @return 影响的行数
-	 * @throws Exception 抛出异常
+	 * @throws Exception
+	 *             抛出异常
 	 */
 	@Override
 	public int updateAccessCountById(String id, String count, Connection con)
 			throws Exception {
-		String upadteSql = "update houseInfo set a1='" + count + "' where id='" + id + "' limit 1";
+		String upadteSql = "update houseInfo set a1='" + count + "' where id='"
+				+ id + "' limit 1";
 		PreparedStatement ps = con.prepareStatement(upadteSql);
 		return ps.executeUpdate();
 	}
 
 	/**
 	 * 获取数据访问量
-	 * @param id 房屋信息ID
-	 * @param con 数据库连接
+	 * 
+	 * @param id
+	 *            房屋信息ID
+	 * @param con
+	 *            数据库连接
 	 * @return 数据访问量
-	 * @throws Exception 抛出异常
+	 * @throws Exception
+	 *             抛出异常
 	 */
 	@Override
 	public String getAccessCountById(String id, Connection con)
 			throws Exception {
-		String querySql = "select a1 from houseInfo where id='" + id + "' limit 1";
+		String querySql = "select a1 from houseInfo where id='" + id
+				+ "' limit 1";
 		PreparedStatement ps = con.prepareStatement(querySql);
 		ResultSet rs = ps.executeQuery();
 		String count = "";
-		while(rs.next()) {
+		while (rs.next()) {
 			count = rs.getString(1);
 			break;
 		}
-		
+
 		return count;
 	}
-	
+
 	/**
 	 * 首页搜索
-	 * @param condition 搜索条件 
-	 * @param type 搜索条件（0-商圈，1-学校，2-医院，3-小区，4-景点，5位置）
-	 * @param con 数据库连接
+	 * 
+	 * @param condition
+	 *            搜索条件
+	 * @param type
+	 *            搜索条件（0-商圈，1-学校，2-医院，3-小区，4-景点，5位置）
+	 * @param con
+	 *            数据库连接
 	 * @return 返回搜索信息列表
-	 * @throws Exception 抛出异常
+	 * @throws Exception
+	 *             抛出异常
 	 */
 	@Override
-	public List<MHouseInfo> homeQuery(String condition, int type, Connection con) throws Exception {
+	public List<MHouseInfo> homeQuery(String condition, int type, Connection con)
+			throws Exception {
 		String sqlCondition = "";
-		switch(type){
-			case 0:
-				sqlCondition = "addressCircle";
-				break;
-			case 1:
-				sqlCondition = "addressAttach";
-				break;
-			case 2:
-				sqlCondition = "addressAttach";
-				break;
-			case 3:
-				sqlCondition = "address";
-				break;
-			case 4:
-				sqlCondition = "address";
-				break;
-			case 5:
-				sqlCondition = "address";
-				break;
-			default:
-				sqlCondition = "address";
-				break;
+		switch (type) {
+		case 0:
+			sqlCondition = "addressCircle";
+			break;
+		case 1:
+			sqlCondition = "addressAttach";
+			break;
+		case 2:
+			sqlCondition = "addressAttach";
+			break;
+		case 3:
+			sqlCondition = "address";
+			break;
+		case 4:
+			sqlCondition = "address";
+			break;
+		case 5:
+			sqlCondition = "address";
+			break;
+		default:
+			sqlCondition = "address";
+			break;
 		}
-		String querySql = "select id,userName,rentWay,estateName,houseTingNum,houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter" +
-		",modifyTime,roomType,sexType,decorationType,estateType,rentMoney,payType,houseTitle,address,addressArea,addressCircle" +
-		",addressAttach,a1" +
-		" from houseinfo where isDelete=0 and " + sqlCondition + " like %" + condition + "% limit 10";
+		String querySql = "select id,userName,rentWay,estateName,houseTingNum,houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter"
+				+ ",modifyTime,roomType,sexType,decorationType,estateType,rentMoney,payType,houseTitle,address,addressArea,addressCircle"
+				+ ",addressAttach,a1"
+				+ " from houseinfo where isDelete=0 and "
+				+ sqlCondition + " like %" + condition + "% limit 10";
 		PreparedStatement ps = con.prepareStatement(querySql);
 		ResultSet rs = null;
 		MHouseInfo info = null;
 		rs = ps.executeQuery();
 		List<MHouseInfo> infoList = null;
-		if(rs != null){
+		if (rs != null) {
 			infoList = new LinkedList<MHouseInfo>();
-			while(rs.next()) {
+			while (rs.next()) {
 				info = new MHouseInfo();
 				info.setId(rs.getString(1));
 				info.setUserName(rs.getString(2));
@@ -175,25 +199,28 @@ public class DHouseInfo implements IHouseInfo{
 				infoList.add(info);
 			}
 		}
-				
+
 		return infoList;
 	}
-	
+
 	/**
 	 * 添加房屋信息
-	 *@author qw
-	 *@version 创建时间:2014-3-15上午10:48:45
-	 * @throws SQLException 
-	 * @see ulezu.com.idao.IHouseInfo#addHouseInfo(ulezu.com.model.MHouseInfo, java.sql.Connection)
+	 * 
+	 * @author qw
+	 * @version 创建时间:2014-3-15上午10:48:45
+	 * @throws SQLException
+	 * @see ulezu.com.idao.IHouseInfo#addHouseInfo(ulezu.com.model.MHouseInfo,
+	 *      java.sql.Connection)
 	 */
 	@Override
-	public boolean addHouseInfo(MHouseInfo mHouseInfo, Connection con) throws SQLException {
-		String sql = "insert into houseinfo(id,userName,rentWay,estateName,houseTingNum," +
-				"houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter,isHome," +
-				"modifyTime,address,addressAttach,addressArea,addressCircle,houseTitle," +
-				"isDelete,roomType,sexType,houseDirection,decorationType,estateType," +
-				"rentMoney,payType,houseDescrible,imageId,linkMan,linkCallNumber,isValid) " +
-				"values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	public boolean addHouseInfo(MHouseInfo mHouseInfo, Connection con)
+			throws SQLException {
+		String sql = "insert into houseinfo(id,userName,rentWay,estateName,houseTingNum,"
+				+ "houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter,isHome,"
+				+ "modifyTime,address,addressAttach,addressArea,addressCircle,houseTitle,"
+				+ "isDelete,roomType,sexType,houseDirection,decorationType,estateType,"
+				+ "rentMoney,payType,houseDescrible,imageId,linkMan,linkCallNumber,isValid) "
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement pre = con.prepareStatement(sql);
 		pre.setObject(1, mHouseInfo.getId());
 		pre.setObject(2, mHouseInfo.getUserName());
@@ -225,33 +252,36 @@ public class DHouseInfo implements IHouseInfo{
 		pre.setObject(28, mHouseInfo.getLinkMan());
 		pre.setObject(29, mHouseInfo.getLinkCallNumber());
 		pre.setObject(30, mHouseInfo.getIsValid());
-		if(pre.executeUpdate() > 0) {
+		if (pre.executeUpdate() > 0) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public static void main(String[] args) {
 
 		Connection con = ConnectionFactory.getUlezuReadConnection();
 		try {
-			PreparedStatement pre = con.prepareStatement("select * from houseinfo");
-			ResultSet rs = pre.executeQuery();
-			java.sql.ResultSetMetaData md = rs.getMetaData();
-			int count = md.getColumnCount();
-			StringBuffer sb = new StringBuffer();
-			for (int i = 1; i < count; i++) {
-				sb.append(md.getColumnName(i) + ",");
+			DHouseInfo dao = new DHouseInfo();
+			String sql = "select * from houseinfo";
+			List<MHouseInfo> list = dao.queryForList(sql, con);
+			
+			for (MHouseInfo mHouseInfo : list) {
+				System.out.println(mHouseInfo);
 			}
-			System.out.println(sb.toString());
-			rs.close();
-			pre.close();
-			con.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
+
 	}
 
 }

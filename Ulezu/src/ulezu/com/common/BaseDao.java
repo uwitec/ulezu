@@ -17,12 +17,12 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
- * 请修改 getConnection() 方法，  得到自己的数据库连接
+ * 请修改 getConnection() 方法， 得到自己的数据库连接
  */
-public class BaseDao<T>{
+public class BaseDao<T> {
 	DaoReflectUtil<T> daoReflectUtil = null;
+
 	public BaseDao() {
 		Class<T> entityClass;
 		Type genType = getClass().getGenericSuperclass();
@@ -45,7 +45,8 @@ public class BaseDao<T>{
 	 * @return type类型的ArrayList,
 	 * @throws SQLException
 	 */
-	public List<T> queryForList(String sql, Connection con, Object param) throws SQLException {
+	public List<T> queryForList(String sql, Connection con, Object param)
+			throws SQLException {
 		return this.queryForList(sql, con, new Object[] { param });
 	}
 
@@ -83,7 +84,7 @@ public class BaseDao<T>{
 	 * @return type类型的ArrayList,
 	 * @throws SQLException
 	 */
-	public List<T> queryForList(String sql,Connection con, Object... params)
+	public List<T> queryForList(String sql, Connection con, Object... params)
 			throws SQLException {
 		checkParams(sql, con);
 		PreparedStatement stmt = null;
@@ -104,8 +105,6 @@ public class BaseDao<T>{
 		return result;
 	}
 
-	
-
 	/**
 	 * 得到对象
 	 * 
@@ -121,7 +120,8 @@ public class BaseDao<T>{
 	 * @return 得到的type类型对象
 	 * @throws SQLException
 	 */
-	public T queryForObject(String sql, Connection con, Object param) throws SQLException {
+	public T queryForObject(String sql, Connection con, Object param)
+			throws SQLException {
 		return this.queryForObject(sql, con, new Object[] { param });
 	}
 
@@ -151,7 +151,8 @@ public class BaseDao<T>{
 	 * @throws SQLException
 	 *             If there are database or parameter errors.
 	 */
-	public T queryForObject(String sql, Connection con, Object... params) throws SQLException {
+	public T queryForObject(String sql, Connection con, Object... params)
+			throws SQLException {
 		checkParams(sql, con);
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -169,8 +170,6 @@ public class BaseDao<T>{
 		}
 		return result;
 	}
-	
-	
 
 	/**
 	 * Executes the given INSERT, UPDATE, or DELETE SQL statement without any
@@ -198,7 +197,8 @@ public class BaseDao<T>{
 	 *             if a database access error occurs
 	 * @return The number of rows updated.
 	 */
-	public int update(String sql, Connection con, Object param) throws SQLException {
+	public int update(String sql, Connection con, Object param)
+			throws SQLException {
 		return this.update(sql, con, new Object[] { param });
 	}
 
@@ -213,7 +213,8 @@ public class BaseDao<T>{
 	 * @throws SQLException
 	 *             If there are database or parameter errors.
 	 */
-	public int update(String sql, Connection con, Object... params) throws SQLException {
+	public int update(String sql, Connection con, Object... params)
+			throws SQLException {
 		checkParams(sql, con);
 		PreparedStatement stmt = null;
 		int rows = 0;
@@ -349,13 +350,13 @@ public class BaseDao<T>{
 
 	/**
 	 * 检测传参数正确性
+	 * 
 	 * @param sql
 	 * @param con
 	 * @return
-	 *
-	 * author 秦伟
-	 * time 2014-2-27 下午05:32:24
-	 * @throws SQLException 
+	 * 
+	 *         author 秦伟 time 2014-2-27 下午05:32:24
+	 * @throws SQLException
 	 */
 	private void checkParams(String sql, Connection con) throws SQLException {
 		if (con == null) {

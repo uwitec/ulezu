@@ -17,7 +17,6 @@
 	src="bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="bootstrap-select/bootstrap-select.js"></script>
-<script type="text/javascript" src="js/ulezuJs/ajax.js"></script>
 <script type="text/javascript">
     $(function() {
     		//输入鼠标离开时方法
@@ -25,18 +24,8 @@
     		//选择改变
     		checkUserInputEvent($('[name="releaseErrorMsg"]').parent().find("select"), 'change');
     	
-    	$('.selectpicker').selectpicker();
-    	
-    	var set = {user:'qinwei', age:24, sex:'男'};
-    	var body = JSON.stringify(set);
-    	var url = 'houseInfo.do?action=test';
-    	ajax(url, false, body, callBack);
+    		$('.selectpicker').selectpicker();
     });
-    
-    function callBack(result) {
-    	alert(result.user);
-    	alert(result.age);
-    }
     
 	//确认并发布
 	function confirmAndSubmit() {
@@ -101,7 +90,6 @@
 	function checkUserInputEvent(jDom, eventString) {
 		jDom.on(eventString, function () {  //输入鼠标离开时方法
     		element = this;
-		alert(element.id);
     		//小数
     		var floatNumberRe = /^[\d]+\.?[\d]*$/;
     		//整数
@@ -139,7 +127,7 @@
     		case 'richText':
     			if(false) {
     				flag = true;
-    			}
+    			}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     		break;
     		default:
     			alert(element.id + "未知的validType变量;");
@@ -213,7 +201,7 @@
 				if (result.data == "0") {
 					alert("用户名或密码出错！");
 				} else if (result.data == "1") {
-					alert("保存出错！");
+					alert("发布出错！");
 				} else {
 					alert(result.data);
 				}
@@ -418,7 +406,7 @@
 						<div class="common_desc"
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 							<span style="margin-left: 45px;"></span> <input id="squareMeter"
-								type="text" class="txt_pangfang" validType="intNumber"
+								type="text" class="txt_pangfang" validType="floatNumber"
 								required=true state=true   />㎡&nbsp;&nbsp; <select  id="roomType"
 								class="selectpicker" data-width="auto" validType="select"
 								required=true state=true  >
