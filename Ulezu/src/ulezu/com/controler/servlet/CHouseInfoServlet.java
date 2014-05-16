@@ -62,10 +62,8 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 			this.updateAccessCountById(id);
 		}else if("release".equals(action)) {
 			release(request, response);
-		}else if("test".equals(action)) {
-			MTestObect m = getObjectFromRequset(request, MTestObect.class);
-			System.out.println(m);
-			JsonHelper.printObjectToJsonString(response, m);
+		}else {
+			//出错处理
 		}
 	}
 
@@ -97,7 +95,7 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 		houseInfo.setHouseTitle("【" + MObjectValue.rentWayElements[houseInfo.getRentWay()] + "】 " + houseInfo.getAddressCircle() + " " + MObjectValue.decorationTypeElements[houseInfo.getDecorationType()]);
 		houseInfo.setAddress(houseInfo.getAddressArea() + houseInfo.getAddressCircle() + houseInfo.getAddressAttach());//地址为 区域+商圈+附属
 		
-		
+		System.out.println(houseInfo);
 		try {
 			if(!houseInfoBusi.addHouseInfo(houseInfo)) {
 				response(response, "1");
