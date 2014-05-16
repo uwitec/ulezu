@@ -41,7 +41,7 @@
 	//提交信息事件
 	function commerSubmit() {
 		//检测用户名，密码
-		if(!checkUserMessage()) {
+		if((!checkUserMessage()) && (!submitMessage())) {
 			return;
 		}
 		
@@ -95,7 +95,8 @@
     		//整数
     		var intNumberRe = /^[0-9]*$/;
     		//手机号
-    		var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[8|9])\d{8}$/;
+    		//var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[2|5|8|9])\d{8}$/;
+    		var phoneNumberRe = /^(1)\d{10}$/;
     		//是否检测到错误的输入
     		var flag = false;
     		switch ($(element).attr('validType')) {
@@ -189,6 +190,7 @@
 		var jsonData = JSON.stringify(message);
 		email = $("#email").val();
 		userPassword = $("#password").val();
+		var flag = false;//记录是否保存成功
 		$.ajax({
 			type : 'post',
 			dataType : 'json',
@@ -204,9 +206,11 @@
 					alert("发布出错！");
 				} else {
 					alert(result.data);
+					flag = true;
 				}
 			}
 		});
+		return flag;
 	}
 	
 	//处理检测到错误输入
