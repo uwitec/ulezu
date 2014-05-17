@@ -8,7 +8,7 @@
     <title></title>
     <style type="text/css">
         .topNavigate
-        {
+        { 
             _position: static;
             left: 0;
             top: 0;
