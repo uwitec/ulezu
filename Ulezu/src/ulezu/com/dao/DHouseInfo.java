@@ -215,6 +215,9 @@ public class DHouseInfo extends BaseDao<MHouseInfo> implements IHouseInfo {
 	@Override
 	public boolean addHouseInfo(MHouseInfo mHouseInfo, Connection con)
 			throws SQLException {
+		if(con == null) {
+			throw new NullPointerException("数据库连接对象con为空");
+		}
 		String sql = "insert into houseinfo(id,userName,rentWay,estateName,houseTingNum,"
 				+ "houseRoomNum,houseToiletNum,layerNum,totleLayerNum,squareMeter,isHome,"
 				+ "modifyTime,address,addressAttach,addressArea,addressCircle,houseTitle,"
