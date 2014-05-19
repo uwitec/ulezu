@@ -17,6 +17,9 @@
 	src="bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="bootstrap-select/bootstrap-select.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/umeditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/umeditor/ueditor.all.js"></script>
+<script type="text/javascript" src="js/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     $(function() {
     		//输入鼠标离开时方法
@@ -41,7 +44,7 @@
 	//提交信息事件
 	function commerSubmit() {
 		//检测用户名，密码
-		if((!checkUserMessage()) && (!submitMessage())) {
+		if(!o(checkUserMessage() && submitMessage())) {
 			return;
 		}
 		
@@ -491,7 +494,7 @@
 					</div>
 				</div>
 				<div
-					style="float: left; width: 1000px; height: 400px; line-height: 40px; font-size: 14px; color: #978679;">
+					style="float: left; width: 1000px; height: 300px; line-height: 40px; font-size: 14px; color: #978679;">
 					<div
 						style="margin: 0px 5px 0px 5px; height: 50px; color: #72b088; font-weight: bold; font-size: 14px; vertical-align: middle; float: left;">
 						*</div>
@@ -502,9 +505,9 @@
 						<div class="common_desc"
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
 							<span style="margin-left: 45px;"></span>
-							<textarea id="houseDescrible"
-								style="width: 560px; height: 400px; border: 1px solid #ccc;"
-								validType="richText" required=true state=true  >这里要用一个编辑框组件</textarea>
+							<script type="text/plain" id="houseDescrible"
+								style="margin:0px 0px 0px 45px;width: 450px; height: 225px; border: 1px solid #ccc;"
+								validType="richText" required=true state=true  ></script>
 							<span name="releaseErrorMsg" style="color: red; display: none;">
 								*请填写房源描述*</span>
 						</div>
@@ -627,5 +630,24 @@
 			</div>
 		</form>
 	</div>
+	
+	<script type="text/javascript">
+	$(function() {
+		var ue = UE.getEditor('houseDescrible', {
+			toolbars: [
+			           ['fontsize', //字体
+			            'forecolor', //字体颜色
+			            'backcolor', //背景色
+			            'bold', //加粗
+			            'underline', //下划线
+			            'justifyleft', //居左对齐
+			            'justifyright', //居右对齐
+			            'justifycenter', //居中对齐
+			            'undo', 
+			            'redo']
+			       ]
+		});
+	});
+	</script>
 </body>
 </html>
