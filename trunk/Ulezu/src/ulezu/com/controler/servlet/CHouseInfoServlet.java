@@ -80,11 +80,12 @@ public class CHouseInfoServlet extends UlezuHttpServlet {
 	//	if(!bUser.isAvailableUser(request.getParameter("email"), request.getParameter("userPassword"))) {
 		//	response(response, "0");
 		//}
-		
+		System.out.println("running");
 		MHouseInfo houseInfo = 	super.getObjectFromRequset(request, MHouseInfo.class);
 		/*设置默认值*/
 		houseInfo.setId(IDFactory.getId("ulezu", "houseInfo"));
-		houseInfo.setUserName((String) request.getSession().getAttribute("userName"));
+		//houseInfo.setUserName((String) request.getSession().getAttribute("userName"));
+		houseInfo.setUserName(request.getParameter("email"));
 		houseInfo.setIsHome(0);//0否，1是
 		houseInfo.setModifyTime(new Date());
 		houseInfo.setIsDelete(0);//0未删除，1删除

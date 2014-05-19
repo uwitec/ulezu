@@ -79,6 +79,9 @@ public class BHouseInfo {
 	 */
 	public boolean addHouseInfo(MHouseInfo mHouseInfo) throws SQLException {
 		this.con = ConnectionFactory.getUlezuWriteConnection();
+		if(this.con == null) {
+			
+		}
 		try {
 			mHouseInfo.setId(IDFactory.getId("ulezu", "houseInfo"));
 			return this.houseInfoHandler.addHouseInfo(mHouseInfo, con);
