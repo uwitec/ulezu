@@ -18,7 +18,7 @@
 <script type="text/javascript"
 	src="bootstrap-select/bootstrap-select.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/umeditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/umeditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/umeditor/ueditor.all.min.js"></script>
 <script type="text/javascript" src="js/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     $(function() {
