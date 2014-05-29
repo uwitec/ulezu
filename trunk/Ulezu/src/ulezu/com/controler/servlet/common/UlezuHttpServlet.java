@@ -96,4 +96,12 @@ public class UlezuHttpServlet extends HttpServlet {
 		cookie.setMaxAge(90); //设置15分钟 
 		response.addCookie(cookie);
 	}
+	
+	/**
+	 * 检测用户是否登录
+	 */
+	protected boolean checkLogin() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }
