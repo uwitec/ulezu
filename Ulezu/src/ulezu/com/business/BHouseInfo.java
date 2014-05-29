@@ -83,7 +83,6 @@ public class BHouseInfo {
 			
 		}
 		try {
-			mHouseInfo.setId(IDFactory.getId("ulezu", "houseInfo"));
 			return this.houseInfoHandler.addHouseInfo(mHouseInfo, con);
 		} finally {
 			if(!this.con.isClosed()){

@@ -10,6 +10,7 @@ import java.util.Random;
  *
  */
 public class IDFactory {
+	static Random  random = new Random(System.currentTimeMillis());
 	/**
 	 * 获取ID
 	 * @param databaseName 数据库名
@@ -20,14 +21,11 @@ public class IDFactory {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String header = sdf.format(cal.getTime());
-		Integer random = new Random().nextInt(4);
-		String rendomStr = random.toString();
+		String rendomStr = String.valueOf(Math.abs(random.nextInt()));
 		if(rendomStr.length() != 4){
-			while (rendomStr.length() < 4) {
-				rendomStr += "0";
-			}
+			rendomStr = rendomStr.substring(0, 4);
 		}
-
+		
 		if(databaseName.length() > 4){
 			databaseName = databaseName.substring(0, 4).toLowerCase();
 		}else{
@@ -45,5 +43,13 @@ public class IDFactory {
 		}
 		
 		return header + rendomStr + databaseName + tableName + "0001"; 
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(IDFactory.getId("ulezu", "houseInfo"));
+		System.out.println(IDFactory.getId("ulezu", "houseInfo"));
+		System.out.println(IDFactory.getId("ulezu", "houseInfo"));
+		System.out.println(IDFactory.getId("ulezu", "houseInfo"));
+		System.out.println(IDFactory.getId("ulezu", "houseInfo"));
 	}
 }

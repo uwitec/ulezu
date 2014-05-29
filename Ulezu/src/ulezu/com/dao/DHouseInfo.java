@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ulezu.com.common.BaseDao;
+import ulezu.com.common.IDFactory;
 import ulezu.com.connection.ConnectionFactory;
 import ulezu.com.idao.IHouseInfo;
 import ulezu.com.model.MHouseInfo;
@@ -215,7 +216,7 @@ public class DHouseInfo extends BaseDao<MHouseInfo> implements IHouseInfo {
 	@Override
 	public boolean addHouseInfo(MHouseInfo mHouseInfo, Connection con)
 			throws SQLException {
-		if(con == null) {
+		if (con == null) {
 			throw new NullPointerException("数据库连接对象con为空");
 		}
 		String sql = "insert into houseinfo(id,userName,rentWay,estateName,houseTingNum,"
@@ -255,27 +256,28 @@ public class DHouseInfo extends BaseDao<MHouseInfo> implements IHouseInfo {
 		pre.setObject(28, mHouseInfo.getLinkMan());
 		pre.setObject(29, mHouseInfo.getLinkCallNumber());
 		pre.setObject(30, mHouseInfo.getIsValid());
-		if (pre.executeUpdate() > 0) {
-			return true;
+		try {
+			if (pre.executeUpdate() > 0) {
+				return true;
+			}
+		} finally {
+			pre.close();
+			pre = null;
 		}
 		return false;
 	}
 
-	public static void main(String[] args) {
-
+	public static void main(String[] args) throws SQLException {
 		Connection con = ConnectionFactory.getUlezuReadConnection();
+		String  sql = "select * from houseinfo where id='201405291717205484ulezhous0001'";
 		try {
 			DHouseInfo dao = new DHouseInfo();
-			String sql = "select * from houseinfo";
-			List<MHouseInfo> list = dao.queryForList(sql, con);
-			
-			for (MHouseInfo mHouseInfo : list) {
-				System.out.println(mHouseInfo);
+			MHouseInfo mHouseInfo = dao.queryForObject(sql, con);
+			System.out.println(mHouseInfo);
+			for (int i = 0; i < 1; i++) {
+				mHouseInfo.setId(IDFactory.getId("ulezu", "houseInfo"));
+				dao.addHouseInfo(mHouseInfo, con);
 			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			try {
 				con.close();
@@ -284,7 +286,6 @@ public class DHouseInfo extends BaseDao<MHouseInfo> implements IHouseInfo {
 				e.printStackTrace();
 			}
 		}
-
 	}
-
 }
+

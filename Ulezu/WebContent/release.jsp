@@ -21,15 +21,47 @@
 <script type="text/javascript" charset="utf-8" src="js/umeditor/ueditor.all.min.js"></script>
 <script type="text/javascript" src="js/umeditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-    $(function() {
-    		//输入鼠标离开时方法
-    		checkUserInputEvent($('[name="releaseErrorMsg"]').parent().find("input"), 'blur');
-    		//选择改变
-    		checkUserInputEvent($('[name="releaseErrorMsg"]').parent().find("select"), 'change');
-    	
-    		$('.selectpicker').selectpicker();
-    });
-    
+	$(function() {
+		//输入鼠标离开时方法
+		checkUserInputEvent($('[name="releaseErrorMsg"]').parent()
+				.find("input"), 'blur');
+		//选择改变
+		checkUserInputEvent($('[name="releaseErrorMsg"]').parent().find(
+				"select"), 'change');
+
+		$('.selectpicker').selectpicker();
+	});
+
+	//加载百度编辑器
+	$(function() {
+		var ue = UE.getEditor('houseDescrible', {
+			toolbars : [ [ 'fontsize', //字体
+			'forecolor', //字体颜色
+			'backcolor', //背景色
+			'bold', //加粗
+			'underline', //下划线
+			'justifyleft', //居左对齐
+			'justifyright', //居右对齐
+			'justifycenter', //居中对齐
+			'undo', 'redo' ] ]
+		});
+		
+		$("#houseDescrible").attr("state", true);
+		
+		ue.addListener('blur', function() {
+			var content = ue.getContent();
+			if(content && content.length != 0) {
+				$("#houseDescrible").css("border-color", "#CCCCCC");
+				$("#houseDescrible").attr("state", true);
+				$("#houseDescribleErrorMessage").css("display", "none");
+			} else {
+				$("#houseDescribleErrorMessage").css("display", "inline-block");
+				$("#houseDescrible").css("border-color", "#F73809");
+				$("#houseDescrible").attr("state", false);
+			}
+		});
+	});
+
 	//确认并发布
 	function confirmAndSubmit() {
 		if (!checkReleaseMsgInput()) {
@@ -44,10 +76,10 @@
 	//提交信息事件
 	function commerSubmit() {
 		//检测用户名，密码
-		if(!o(checkUserMessage() && submitMessage())) {
+		if (!(checkUserMessage() && submitMessage())) {
 			return;
 		}
-		
+
 		$(".step2_img img").attr("src", "image/next_b.png");
 		$(".step3_img img").attr("src", "image/success.png");
 		$(".step3_img img").attr("src", "image/next.png");
@@ -56,110 +88,114 @@
 		$("#div_email").css("display", "none");
 		$("#div_success").css("display", "block");
 	}
-	
-	
-	
-	
 
 	//检测输入值，是否有没有填写的项，成功返回true,否则还回false
 	function checkReleaseMsgInput() {
-		$('[name="releaseErrorMsg"]').parent().find("[required=true]").each(function(index,element) {
-			if($(element).val() == null || $(element).val().length == 0) {//是输入框input
-				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
-				$(element).attr("state", false);
-				$(element).css("border-color","#F73809");
-			} else if($(element).val() == "n") {//是下拉框
-				$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
-				$(element).attr("state", false);
-				$(element).css("border","1px");
-				$(element).css("border-color","#F73809");
-			}
-		});
-		
-		var flag = true;
-		var validInputs = $('[name="releaseErrorMsg"]').parent().find("[required=true]");
-		for (var i = 0; i < validInputs.length; i++) {
-			if($(validInputs[i]).attr("state") == 'false') {
+		$('[name="releaseErrorMsg"]').parent().find("[required=true]").each(
+				function(index, element) {
+					if ($(element).val() == null
+							|| $(element).val().length == 0) {//是输入框input
+						$(element).parent().find('[name="releaseErrorMsg"]')
+								.css("display", "inline");
+						$(element).attr("state", false);
+						$(element).css("border-color", "#F73809");
+					} else if ($(element).val() == "n") {//是下拉框
+						$(element).parent().find('[name="releaseErrorMsg"]')
+								.css("display", "inline");
+						$(element).attr("state", false);
+						$(element).css("border", "1px");
+						$(element).css("border-color", "#F73809");
+					}
+				});
+
+		var validInputs = $('[name="releaseErrorMsg"]').parent().find(
+				"[required=true]");
+		for ( var i = 0; i < validInputs.length; i++) {
+			if ($(validInputs[i]).attr("state") == 'false') {
 				$(validInputs[i]).focus();
-				flag = false;
-				break;
+				return false;
 			}
 		}
 		
-		return flag;
+		if(UE.getEditor('houseDescrible').getContent() == null || UE.getEditor('houseDescrible').getContent().length == 0) {
+			UE.getEditor('houseDescrible').focus();
+			return false;
+		}
+
+		return true;
 	}
-	
+
 	//检测 用户输入事件
 	function checkUserInputEvent(jDom, eventString) {
-		jDom.on(eventString, function () {  //输入鼠标离开时方法
-    		element = this;
-    		//小数
-    		var floatNumberRe = /^[\d]+\.?[\d]*$/;
-    		//整数
-    		var intNumberRe = /^[0-9]*$/;
-    		//手机号
-    		//var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[2|5|8|9])\d{8}$/;
-    		var phoneNumberRe = /^(1)\d{10}$/;
-    		//是否检测到错误的输入
-    		var flag = false;
-    		switch ($(element).attr('validType')) {
-    		case 'string':
-    			if(element.value == null || element.value.length == 0) {
-    				flag = true;
-    			}
-    			break;
-    		case 'select':
-    			if($(element).val() == 'n') {
-    				flag = true;
-    			}
-    			break;
-    		case 'floatNumber':
-    			if(!($(element).val() && floatNumberRe.test($(element).val()))) {
-    				flag = true;
-    			}
-    			break;
-    		case 'intNumber':
-    			if(!($(element).val() && intNumberRe.test($(element).val()))) {
-    				flag = true;
-    			}
-    			break;
-    		case 'phone':
-    			if(!($(element).val() && phoneNumberRe.test($(element).val()))) {
-    				flag = true;
-    			}
-    		break;
-    		case 'richText':
-    			if(false) {
-    				flag = true;
-    			}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-    		break;
-    		default:
-    			alert(element.id + "未知的validType变量;");
-    			flag = true;
-    			break;
-    		}
-    		
-    		if(flag) {
-    			handInputError(element);
-    		} else {
-    			resetStyle(element);
-    		}
-    	}
-    	);
+		jDom
+				.on(eventString,
+						function() { //输入鼠标离开时方法
+							element = this;
+							//小数
+							var floatNumberRe = /^[\d]+\.?[\d]*$/;
+							//整数
+							var intNumberRe = /^[0-9]*$/;
+							//手机号
+							//var phoneNumberRe = /^(13[0-9]|15[0|3|6|7|8|9]|18[2|5|8|9])\d{8}$/;
+							var phoneNumberRe = /^(1)\d{10}$/;
+							//是否检测到错误的输入
+							var flag = false;
+							switch ($(element).attr('validType')) {
+							case 'string':
+								if (element.value == null
+										|| element.value.length == 0) {
+									flag = true;
+								}
+								break;
+							case 'select':
+								if ($(element).val() == 'n') {
+									flag = true;
+								}
+								break;
+							case 'floatNumber':
+								if (!($(element).val() && floatNumberRe.test($(
+										element).val()))) {
+									flag = true;
+								}
+								break;
+							case 'intNumber':
+								if (!($(element).val() && intNumberRe.test($(
+										element).val()))) {
+									flag = true;
+								}
+								break;
+							case 'phone':
+								if (!($(element).val() && phoneNumberRe.test($(
+										element).val()))) {
+									flag = true;
+								}
+								break;
+							default:
+								alert(element.id + "未知的validType变量;");
+								flag = true;
+								break;
+							}
+
+							if (flag) {
+								handInputError(element);
+							} else {
+								resetStyle(element);
+							}
+						});
 	}
-	
+
 	function checkUserMessage() {
 		$("#emailError").css("display", "none");
 		$("#passwordError").css("display", "none");
 		//邮箱
 		var emailRe = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		if(!emailRe.test($("#email").val())) {
-			$("#emailError").css("display", "inline");
+		if (!emailRe.test($("#email").val())) {
+			$("#emailError").css("display", "inline-block");
 			return false;
 		}
-		
-		if($("#password").val() == null || $("#password").val().length == 0) {
-			$("#passwordError").css("display", "inline");
+
+		if ($("#password").val() == null || $("#password").val().length == 0) {
+			$("#passwordError").css("display", "inline-block");
 			return false;
 		}
 		return true;
@@ -183,7 +219,7 @@
 		message.estateType = $("#estateType  option:selected").val();
 		message.rentMoney = $("#rentMoney").val();
 		message.payType = $("#payType  option:selected").val();
-		message.houseDescrible = $("#houseDescrible").val();
+		message.houseDescrible = UE.getEditor('houseDescrible').getContent();
 		message.linkMan = $("#linkMan").val();
 		message.linkCallNumber = $("#linkCallNumber").val();
 		message.addressArea = $("#addressArea  option:selected").val();
@@ -208,28 +244,29 @@
 				} else if (result.data == "1") {
 					alert("发布出错！");
 				} else {
-					alert(result.data);
 					flag = true;
 				}
 			}
 		});
 		return flag;
 	}
-	
+
 	//处理检测到错误输入
 	function handInputError(element) {
-		if(element)
-		$(element).parent().find('[name="releaseErrorMsg"]').css("display", "inline");
-		$(element).css("border-color","#F73809");
+		if (element)
+			$(element).parent().find('[name="releaseErrorMsg"]').css("display",
+					"inline-block");
+		$(element).css("border-color", "#F73809");
 		$(element).attr("state", false);
 	}
-	
+
 	//返回输入正确的样式
 	function resetStyle(dom) {
-		$(dom).css("border-color",  "#CCCCCC");
+		$(dom).css("border-color", "#CCCCCC");
 		$(dom).attr("state", true);
-		if($(dom).parent().find('[state=false]').length == 0) {
-			$(dom).parent().find('[name="releaseErrorMsg"]').css("display", "none");
+		if ($(dom).parent().find('[state=false]').length == 0) {
+			$(dom).parent().find('[name="releaseErrorMsg"]').css("display",
+					"none");
 		}
 	}
 
@@ -504,12 +541,16 @@
 							房源描述</div>
 						<div class="common_desc"
 							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
-							<span style="margin-left: 45px;"></span>
+							<div style="float:left;width:500px;">
 							<script type="text/plain" id="houseDescrible"
 								style="margin:0px 0px 0px 45px;width: 450px; height: 225px; border: 1px solid #ccc;"
 								validType="richText" required=true state=true  ></script>
-							<span name="releaseErrorMsg" style="color: red; display: none;">
-								*请填写房源描述*</span>
+							</div>
+							
+							<div style="float:left;width:300px;height:30px;padding-top:250px;">
+								<span id="houseDescribleErrorMessage" style="color: red; display: none;">
+									*请填写房源描述*</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -630,24 +671,5 @@
 			</div>
 		</form>
 	</div>
-	
-	<script type="text/javascript">
-	$(function() {
-		var ue = UE.getEditor('houseDescrible', {
-			toolbars: [
-			           ['fontsize', //字体
-			            'forecolor', //字体颜色
-			            'backcolor', //背景色
-			            'bold', //加粗
-			            'underline', //下划线
-			            'justifyleft', //居左对齐
-			            'justifyright', //居右对齐
-			            'justifycenter', //居中对齐
-			            'undo', 
-			            'redo']
-			       ]
-		});
-	});
-	</script>
 </body>
 </html>
