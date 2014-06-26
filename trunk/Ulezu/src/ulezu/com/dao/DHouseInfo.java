@@ -269,12 +269,11 @@ public class DHouseInfo extends BaseDao<MHouseInfo> implements IHouseInfo {
 
 	public static void main(String[] args) throws SQLException {
 		Connection con = ConnectionFactory.getUlezuReadConnection();
-		String  sql = "select * from houseinfo where id='201405291717205484ulezhous0001'";
+		String  sql = "select * from houseinfo where id='201405301330431336ulezhous0001'";
 		try {
 			DHouseInfo dao = new DHouseInfo();
 			MHouseInfo mHouseInfo = dao.queryForObject(sql, con);
-			System.out.println(mHouseInfo);
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < 30; i++) {
 				mHouseInfo.setId(IDFactory.getId("ulezu", "houseInfo"));
 				dao.addHouseInfo(mHouseInfo, con);
 			}

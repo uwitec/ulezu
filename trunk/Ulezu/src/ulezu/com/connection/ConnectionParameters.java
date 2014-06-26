@@ -43,7 +43,6 @@ public class ConnectionParameters {
 			e.printStackTrace();
 		}
 		dbUrl=(String) properties.get(databaseName + "url");                                                 //获取URL 
-		System.out.println(dbUrl);
 		dbUsername=(String) properties.get(databaseName + "name");                                 //获取NAME
 		dbPassword=(String) properties.get(databaseName + "password");                           //获取密码
 		driverClass=(String) properties.get(databaseName + "driverClass");
