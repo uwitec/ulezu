@@ -564,8 +564,10 @@
 							style="float: left; width: 60px; height: 50px; text-align: right;">
 							上传图片</div>
 						<div class="common_desc"
-							style="float: left; width: 800px; height: 50px; vertical-align: middle;">
+							style="float: left; width: 800px; height: 400px; vertical-align: middle;">
 							<span style="margin-left: 45px;"></span>
+							<input type="file"  name="uploadify" id="uploadify" />
+							<div id="fileQueue"></div>
 						</div>
 					</div>
 				</div>
